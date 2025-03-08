@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecnologías Onix - Soluciones Tecnológicas Innovadoras para comercios</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e67e22;
+            --accent-color: #3498db;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --text-color: #333;
+            --text-light: #f8f9fa;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo span {
+            color: var(--secondary-color);
+        }
+        
+      /* Navegación */
+nav {
+    transition: max-height 0.3s ease-out;
+    
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li {
+    margin-left: 1.5rem;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+nav ul li a:hover {
+    color: var(--secondary-color);
+}
+
+/* Botón de menú hamburguesa */
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+/* Estilos para dispositivos móviles */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+    nav {
+        position: absolute;
+        top: 110%; /* Ajusta esta propiedad para desplazar el menú más abajo */
+        left: 0;
+        right: 0;
+        background-color: var(--primary-color);
+        display: none;
+        flex-direction: column;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        border-top: 2px solid var(--secondary-color);
+    }
+
+    nav.active {
+        display: flex;
+        animation: slideDown 0.3s ease-in-out;
+    }
+
+    nav ul {
+        flex-direction: column;
+        padding: 1rem 0;
+        width: 100%;
+    }
+
+    nav ul li {
+        margin: 0;
+        padding: 0.8rem;
+        width: 100%;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+    nav ul li:last-child {
+        border-bottom: none;
+    }
+
+    nav ul li a {
+        display: block;
+        width: 100%;
+        padding: 0.8rem 0;
+    }
+}
+
+    
+/* Animación para el menú */
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+        
+        .hero {
+    background: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url('/ruta/a/tu/imagen/mi-imagen.jpg') center/cover no-repeat;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+    padding: 0 1rem;
+    margin-top: 0;
+}
+        /* Resto del CSS original... */
+
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: row;
+                padding: 0;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero {
+                height: 90vh;
+                margin-top: 60px;
+            }
+        }
+
+        
+        .hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/api/placeholder/1200/800') center/cover no-repeat;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            color: white;
+            padding: 0 1rem;
+            margin-top: 0;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            animation: fadeIn 1s ease-in;
+        }
+        
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin-bottom: 2rem;
+            animation: fadeIn 1s ease-in 0.5s forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.8rem 2rem;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            animation: fadeIn 1s ease-in 1s forwards;
+            opacity: 0;
+        }
+        
+        .btn:hover {
+            background-color: #d35400;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+        
+        .section {
+            padding: 5rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background-color: var(--secondary-color);
+            margin: 0.5rem auto;
+        }
+        
+        .features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 350px;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .feature-img {
+            height: 200px;
+            background-color: #ddd;
+        }
+        
+        .feature-content {
+            padding: 1.5rem;
+        }
+        
+        .feature-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .steps {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .step {
+            flex: 1;
+            min-width: 250px;
+            margin: 1rem;
+            padding: 2rem;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+        
+        .step:hover {
+            transform: scale(1.05);
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            background-color: var(--secondary-color);
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+            line-height: 50px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+        }
+        
+        .testimonials {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 5rem 1rem;
+        }
+        
+        .testimonials .section-title {
+            color: white;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .testimonial-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 10px;
+            position: relative;
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            font-size: 5rem;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            color: rgba(255, 255, 255, 0.1);
+        }
+        
+        .client-info {
+            display: flex;
+            align-items: center;
+            margin-top: 1.5rem;
+        }
+        
+        .client-img {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin-right: 1rem;
+            background-color: #aaa;
+        }
+        
+        .client-details h4 {
+            margin-bottom: 0.2rem;
+        }
+        
+        .client-details p {
+            opacity: 0.7;
+        }
+        
+        .cta {
+            background-color: var(--light-color);
+            text-align: center;
+            padding: 5rem 1rem;
+        }
+        
+        .price-cards {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .price-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 350px;
+            transition: all 0.3s ease;
+        }
+        
+        .price-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+        }
+        
+        .price-header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .price-header h3 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .price {
+            font-size: 3rem;
+            font-weight: bold;
+        }
+        
+        .price span {
+            font-size: 1rem;
+            opacity: 0.7;
+        }
+        
+        .price-features {
+            padding: 2rem;
+        }
+        
+        .price-features ul {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+        
+        .price-features ul li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .price-features ul li:last-child {
+            border-bottom: none;
+        }
+        
+        .featured {
+            position: relative;
+            transform: scale(1.05);
+        }
+        
+        .featured::before {
+            content: 'Popular';
+            position: absolute;
+            top: 0;
+            right: 0;
+            background-color: var(--secondary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            border-bottom-left-radius: 10px;
+        }
+        
+        .contact {
+            background-color: var(--light-color);
+            padding: 5rem 1rem;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .contact-info, .contact-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-info h3, .contact-form h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--light-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+        }
+        
+        form input, form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        form textarea {
+            height: 150px;
+            resize: none;
+        }
+        
+        footer {
+            background-color: var(--dark-color);
+            color: white;
+            padding: 3rem 1rem;
+            text-align: center;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+        
+        .footer-column {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+        }
+        
+        .footer-column ul {
+            list-style: none;
+        }
+        
+        .footer-column ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-column ul li a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-column ul li a:hover {
+            color: var(--secondary-color);
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+               background-color: var(--secondary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background-color: var(--primary-color);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            margin-top: 2rem;
+            font-size: 0.9rem;
+            opacity: 0.7;
+        }
+        
+        
+        
+        /* Estilos para el botón flotante */
+#whatsapp-btn {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+}
+
+#whatsapp-btn img {
+    width: 70px; /* Tamaño adecuado para el ícono */
+    height: 70px; /* Tamaño adecuado para el ícono */
+}
+
+        
+      
+    </style>
+
+</head>
+<body>
+<!-- Botón de WhatsApp flotante -->
+<a href="https://wa.me/625240301" target="_blank" id="whatsapp-btn">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+</a>
+
+
+
+    <header>
+ <div class="header-container">
+            <a href="#" class="logo">Tecnologías <span>Onix</span></a>
+            <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+            <nav>
+                <ul>
+                    <li><a href="index.html">inicio</a></li>
+                    <li><a href="#ventajas">Ventajas</a></li>
+                    <li><a href="#proceso">Como Funciona</a></li>
+                    <li><a href="#testimonios">Testimonios</a></li>
+                    <li><a href="#precios">Precios</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    
+    <section id="inicio" class="hero">
+        <h1> La Revolucion Digital<br><span style="color: var(--accent);">en tu Escaparate</span></h1>
+        <p>Atiende a tu negocio de forma automatica incluso cuando estés cerrado o de vacaciones. Cierra ventas , encargos o citas todo el año las 24 horas del dia.</p>
+        <a href="#contacto" class="btn">Solicitar Información</a>
+    </section>
+
+    <section id="ventajas" class="section">
+        <h2 class="section-title">Ventajas para comercios</h2>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-img">
+                    <img src="https://raw.githubusercontent.com/onixmannager/Tecnologia-Onix/refs/heads/main/Leonardo_Phoenix_10_A_closeup_of_Emily_holding_her_phone_in_fr_1.jpg" alt="Desarrollo de Software" width="350" height="200">
+                </div>
+                <div class="feature-content">
+                    <h3>Abierto Para Siempre</h3>
+                     <p style="text-align: center; font-size: 1rem; color: #555; margin-bottom: 60px;"> Tecnologías Onix es la solución que tu negocio necesita para mantenerse actualizado en un mundo cada vez más digital. Con nuestra tecnología de escaneo NFC (Near Field Communication), puedes transformar la experiencia de compra de tus clientes y aumentar las ventas sin estar físicamente presente. Aquí te mostramos cómo puedes beneficiarte: <br><br> Esto no solo mejora la accesibilidad para tus clientes, sino que también incrementa tus ingresos al permitir ventas fuera de horario. ¡Nunca más perderás una venta!</p>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-img">
+                    <img src="https://raw.githubusercontent.com/onixmannager/Tecnologia-Onix/refs/heads/main/Leonardo_Phoenix_10_A_closeup_shot_of_a_modern_NFC_plate_on_th_0.jpg" alt="Aplicaciones Móviles" width="350" height="200">
+                </div>
+                <div class="feature-content">
+                    <h3>Experiencia de Compra Simplificada</h3>
+                    <p style="font-size: 1rem; color: #333; margin-bottom: 20px;">
+                    Tus clientes solo necesitan acercar su smartphone a la placa NFC para acceder a tu tienda online o servicio que estes dispuesto a ofrecer o que ya ofrezcas. El proceso es completamente sencillo y rápido, lo que garantiza una experiencia de compra fluida, sin fricciones y sin complicaciones.
+                </p>
+                <p style="font-size: 1rem; color: #333; margin-bottom: 20px;">
+                    Esta experiencia sin esfuerzo genera una mayor satisfacción y fidelidad de los clientes, ya que pueden realizar compras en cuestión de segundos desde la palma de su mano incluso cuando tu negocio fisico se encuentra cerrado.
+                </p>
+                </div>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-img">
+                    <img src="https://raw.githubusercontent.com/onixmannager/Tecnologia-Onix/refs/heads/main/Leonardo_Kino_XL_Tienda_online_incremento_de_ventas_y_lleno_de_1.jpg" alt="Sistemas de Gestión" width="350" height="200">
+                </div>
+                <div class="feature-content">
+                    <h3>Incremento de Ventas</h3>
+                  <p style="font-size: 1rem; color: #333; margin-bottom: 20px;">
+                    Con Tecnologías Onix, puedes aumentar tus ventas hasta un 30%. ¿Cómo? A través de la capacidad de recibir pedidos fuera del horario tradicional de la tienda. Ya no necesitas depender de las horas laborales: tus clientes pueden hacer compras cuando más les convenga o sin salir de casa.
+                </p>
+                <p style="font-size: 1rem; color: #333; margin-bottom: 20px;">
+                    Además, las herramientas analíticas te permiten seguir el comportamiento de los clientes y optimizar tu estrategia de marketing, ofreciendo promociones y descuentos personalizados basados en sus preferencias.
+                </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="proceso" class="section">
+        <h2 class="section-title">Como Funciona</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Escanea el NFC</h3>
+            <p>Los clientes acceden a tu tienda online o recepción virtual con solo acercar su smartphone</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Diseño</h3>
+               <h3> Compra Directa</h3>
+            <p>Realizan pedidos , reservas o compran directamente en segundos desde su dispositivo</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Aumenta Ventas</h3>
+            <p>Hasta un 30% más de ingresos con ventas fuera de horario</p>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">4</div>
+        <h3>4. Estrategia de Google Reseñas</h3>
+    <p>Con nuestra estrategia, casi todos tus clientes dejarán una reseña positiva en Google, aumentando tu reputación y visibilidad online.  
+    Esto atraerá más clientes, mejorará tu posicionamiento en búsquedas locales y generará más confianza en tu negocio.</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="testimonios" class="testimonials">
+        <h2 class="section-title">Nuestros clientes</h2>
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p>"Tecnologías Onix transformó completamente nuestro sistema de gestión. Ahora podemos procesar pedidos un 70% más rápido y hemos reducido errores en más de un 90%."</p>
+                <div class="client-info">
+                    <div class="client-img">
+                        <img src="https://raw.githubusercontent.com/onixmannager/Tecnologia-Onix/refs/heads/main/Leonardo_Kino_XL_Crea_una_imagen_realista_del_perfil_de_linked_1.jpg" alt="Cliente 1" width="60" height="60">
+                    </div>
+                    <div class="client-details">
+                        <h4>María González</h4>
+                        <p>Directora de Operaciones, Grupo Comercial</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <p>"La aplicación móvil que desarrollaron para nuestra empresa ha incrementado nuestras ventas en un 45%. La interfaz es intuitiva y nuestros clientes la adoran."</p>
+                <div class="client-info">
+                    <div class="client-img">
+                        <img src="https://raw.githubusercontent.com/onixmannager/Tecnologia-Onix/refs/heads/main/Leonardo_Kino_XL_Crea_una_imagen_realista_del_perfil_de_linked_1%20(1).jpg" alt="Cliente 2" width="60" height="60">
+                    </div>
+                    <div class="client-details">
+                        <h4>Carlos Méndez</h4>
+                        <p>CEO, Innovación Digital</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <p>"El soporte técnico de Tecnologías Onix es excepcional. Siempre están disponibles y resuelven cualquier incidencia en tiempo récord. Un socio tecnológico de confianza."</p>
+                <div class="client-info">
+                    <div class="client-img">
+                        <img src="https://raw.githubusercontent.com/onixmannager/Tecnologia-Onix/refs/heads/main/Leonardo_Kino_XL_Crea_una_imagen_realista_del_perfil_de_linked_3%20(2).jpg" alt="Cliente 3" width="60" height="60">
+                    </div>
+                    <div class="client-details">
+                        <h4>Laura Sánchez</h4>
+                        <p>Gerente IT, Corporación Avanza</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+ <section id="precios" class="cta">
+    <h2 class="section-title">Planes y Precios</h2>
+    <p>Nos especializamos en ofrecer soluciones personalizadas adaptadas a las necesidades de cada sector. Descubre cómo podemos ayudarte en tu área específica.</p>
+
+    <div class="price-cards">
+       
+        <div class="price-card">
+            <div class="price-header">
+                <h3>Plan Negocio Local</h3>
+                <p class="price-small"><span class="price-amount">Desde 325€</span> <span class="price-iva">(IVA incluido)</span></p>
+            </div>
+            <div class="price-features">
+                <ul>
+                <li><strong>1 Placa NFC  + 1 llavero NFC</strong>: <br>Instalamos y configuramos el acceso a tu servicio con dseño personalizado.</li>
+                
+                    <li><strong>Tienda Online</strong>: <br>Creamos una coleccion de hasta 30  productos  con un sistema de encargos y pedidos online.</li>
+                    
+                        <li><strong>Hosting y dominio  gratis</strong>: <br>El almacenamiento y dominio está incluido durante el primer año </li>
+                    
+                               <li><strong>Mantenimiento Pro Incluido</strong>: <br> Soporte en linea, 1 mes gratis. (Despues de la oferta cuesta 23.99€ mensuales)
+                    </li>
+                </ul>
+               <a href="https://wa.me/625240301" class="btn">Contratar Ahora</a>
+            </div>
+        </div>
+
+       
+        <div class="price-card">
+            <div class="price-header">
+                <h3>Plan Macrocomercio</h3>
+                <p class="price-small"><span class="price-amount">Desde 455€</span> <span class="price-iva">(IVA incluido)</span></p>
+            </div>
+            <div class="price-features">
+                <ul>
+                  <li><strong>1 Placa NFC  + 1 llavero NFC</strong>: <br>Instalamos y configuramos el acceso a tu servicio con dseño personalizado.</li>
+                  
+                     <li><strong>Tienda Online</strong>: <br>Creamos una coleccion de hasta 60  productos  con un sistema de encargos y pedidos online.</li>
+                    
+                     <li><strong>Hosting y dominio  gratis</strong>: <br>El almacenamiento y dominio está incluido durante el primer año </li>                 
+                                   
+                       <li><strong>Mantenimiento Pro Incluido</strong>: <br> Soporte en linea, 2 meses gratis. (Despues de la oferta cuesta 23.99€ mensuales)
+                </ul>
+             <a href="https://wa.me/625240301" class="btn">Contratar Ahora</a>
+            </div>
+        </div>
+        
+        
+         <div class="price-card">
+            <div class="price-header">
+                <h3>Mantenimiento Pro</h3>
+                <p class="price-small"><span class="price-amount">23.99€ /mes</span> <span class="price-iva">(IVA incluido)</span></p>
+            </div>
+            <div class="price-features">
+                <ul>
+                  <li><strong>Actualizaciones semanales</strong></li>
+                  
+                     <li><strong>Backup diario</strong></li>
+                    
+                     <li><strong>Soporte 24/7</strong></li>                 
+                                   
+                 
+                </ul>
+             <a href="https://wa.me/625240301" class="btn">Contratar Ahora</a>
+            </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+        
+           <div class="price-card">
+            <div class="price-header">
+                <h3>Placas NFC</h3>
+                <p class="price-small"><span class="price-amount"></span> <span class="price-iva">(IVA incluido)</span></p>
+            </div>
+            <div class="price-features">
+                <ul>
+                  <li><strong>1 Placa NFC </strong>: <br>39€</li>
+                  
+                     <li><strong>5 Placas NFC </strong>: <br>129€</li>
+                    
+                     <li><strong>Configuracion y diseño incluido</strong></li>                 
+                                   
+                 
+                </ul>
+             <a href="https://wa.me/625240301" class="btn">Comprar Ahora</a>
+            </div>
+        </div>
+        
+        
+        
+        
+        
+        
+        
+</section>   
+
+    <section id="contacto" class="contact">
+        <h2 class="section-title">Contáctanos</h2>
+        
+        <div class="contact-grid">
+            <div class="contact-info">
+                <h3>Información de contacto</h3>
+                
+                <div class="contact-detail">
+                    <div class="contact-icon">📍</div>
+                    <div>
+                        <h4>Dirección</h4>
+                        <p>C/ Río de Janeiro , Barcelona, España.</p>
+                    </div>
+                </div>
+                
+                <div class="contact-detail">
+                    <div class="contact-icon">📞</div>
+                    <div>
+                        <h4>Teléfono</h4>
+                        <p>+34 625240301</p>
+                    </div>
+                </div>
+                                
+                
+                <div class="contact-detail">
+                    <div class="contact-icon">✉️</div>
+                    <div>
+                        <h4>Email</h4>
+                        <p>info@tecnologiasonix.com</p>
+                    </div>
+                </div>
+                
+                <div class="contact-detail">
+                    <div class="contact-icon">🕒</div>
+                    <div>
+                        <h4>Horario</h4>
+                        <p>Lunes a Viernes: 9:00 - 18:00</p>
+                    </div>
+                </div>
+            </div>
+            </section>
+            
+   <!--    <div class="contact-form">
+    <h3>Envíanos un mensaje</h3>
+    <form action="mailto:info@tecnologiasonix.com" method="post" enctype="text/plain">
+        <input type="text" name="nombre" placeholder="Nombre completo" required>
+        <input type="email" name="email" placeholder="Correo electrónico" required>
+        <input type="tel" name="telefono" placeholder="Teléfono">
+        <input type="text" name="empresa" placeholder="Empresa">
+        <textarea name="mensaje" placeholder="¿En qué podemos ayudarte?"></textarea>
+        <button type="submit" class="btn">Enviar mensaje</button>
+    </form>
+</div>
+        </div>
+    </section>   -->
+
+
+   <footer>
+    <div class="footer-content">
+        <div class="footer-column">
+            <h3>Tecnologías Onix</h3>
+            <p>Impulsamos la transformación digital de tu negocio con soluciones tecnológicas innovadoras y a medida.</p>
+            <div class="social-icons">
+                <!-- Icono de Facebook -->
+                <a href="#" class="social-icon">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <!-- Icono de Twitter -->
+                <a href="#" class="social-icon">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <!-- Icono de Instagram -->
+                <a href="#" class="social-icon">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <!-- Icono de LinkedIn -->
+                <a href="#" class="social-icon">
+                    <i class="fab fa-linkedin-in"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+
+            
+            <div class="footer-column">
+                <h3>Enlaces rápidos</h3>
+                <ul>
+                    <li><a href="index.html">Inicio</a></li>
+                    <li><a href="#ventajas">Ventajas</a></li>
+                    <li><a href="#proceso">Como Funciona</a></li>
+                    <li><a href="#testimonios">Testimonios</a></li>
+                    
+                    <li><a href="#precios">Precios</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Servicios</h3>
+                <ul>
+                    <li><a href="#">Desarrollo de Software</a></li>
+                    <li><a href="#">Aplicaciones Móviles</a></li>
+                    <li><a href="#">Sistemas de Gestión</a></li>
+                    <li><a href="#">Consultoría IT</a></li>
+                    <li><a href="#">Soporte Técnico</a></li>
+                    <li><a href="#">Ciberseguridad</a></li>
+                </ul>
+            </div>
+            
+            
+        
+        <div class="copyright">
+            <p>&copy; 2025 Tecnologías Onix. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+    
+        <script>
+        // Menú móvil
+        const menuToggle = document.querySelector('.menu-toggle');
+        const nav = document.querySelector('nav');
+        
+        menuToggle.addEventListener('click', () => {
+            nav.classList.toggle('active');
+        });
+
+        // Cerrar menú al hacer click en un enlace
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', () => {
+                nav.classList.remove('active');
+            });
+        });
+
+        // Cerrar menú al hacer click fuera
+        document.addEventListener('click', (e) => {
+            if (!nav.contains(e.target) && !menuToggle.contains(e.target)) {
+                nav.classList.remove('active');
+            }
+        });
+
+        // Evitar cierre inesperado en pantallas grandes
+        window.addEventListener('resize', () => {
+            if (window.innerWidth > 768) {
+                nav.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
