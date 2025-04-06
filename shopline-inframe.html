@@ -46,43 +46,7 @@
       line-height: 1.6;
     }
     /* Cabecera con imagen de fondo y overlay */
-    header {
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-      background-color: var(--primary-color);
-    }
-    header::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: url('https://via.placeholder.com/1920x300?text=Header+Background') center/cover no-repeat;
-      z-index: -2;
-    }
-    header::after {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: -1;
-    }
-    .header-container {
-      display: flex;
-      justify-content: flex-end;
-      align-items: center;
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: 1rem;
-      position: relative;
-    }
+    
     .cart-icon {
       position: absolute;
       top: 40px;       /* distancia desde arriba */
@@ -512,13 +476,7 @@
     </div>
   </header>
 
-  <section id="inicio" class="hero">
-    <h1>Reseñas de Google<br>
-con<br>
-TecnologiasOnix<br></h1>
-    <p>Mejora tu Negocio con Tecnología NFC integrada, posiciona tu negocio en Google de manera fácil.</p>
-    <a href="#tienda" class="btn">Ver Tarjetas</a>
-  </section>
+  
 
   <!-- Sección de Tienda con tarjetas modernizadas y galerías de 2 imágenes -->
   <section id="tienda" class="section">
@@ -629,42 +587,7 @@ TecnologiasOnix<br></h1>
     </div>
   </div>
 
-  <section id="contacto" class="contact">
-    <h2 class="section-title">Contáctanos</h2>
-    <div class="contact-grid">
-      <div class="contact-info">
-        <h3>Información de contacto</h3>
-        <div class="contact-detail">
-          <div class="contact-icon">📍</div>
-          <div>
-            <h4>Dirección</h4>
-            <p>C/ Río de Janeiro, Barcelona, España.</p>
-          </div>
-        </div>
-        <div class="contact-detail">
-          <div class="contact-icon">📞</div>
-          <div>
-            <h4>Teléfono</h4>
-            <p>+34 643229507</p>
-          </div>
-        </div>
-        <div class="contact-detail">
-          <div class="contact-icon">✉️</div>
-          <div>
-            <h4>Email</h4>
-            <p>info@tecnologiasonix.com</p>
-          </div>
-        </div>
-        <div class="contact-detail">
-          <div class="contact-icon">🕒</div>
-          <div>
-            <h4>Horario</h4>
-            <p>Lunes a Viernes: 9:00 - 18:00</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+
 
   <!-- JavaScript para menú, carrito, galerías, notificaciones, subtotales y checkout -->
   <script>
