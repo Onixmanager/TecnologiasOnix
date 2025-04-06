@@ -161,26 +161,18 @@
         font-size: 1.1rem;
       }
     }
-    /* Contenedor para video de YouTube centrado usando aspect-ratio */
-    #videoContainer {
-      width: 100%;
-      max-width: 640px;
-      aspect-ratio: 16 / 9;
-      background: #000;
-    }
-    #videoContainer iframe {
-      width: 100%;
-      height: 100%;
-    }
-    /* Contenedor del video y botón "Volver" centrado */
-    #videoWrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      margin: 2rem auto;
-      max-width: 640px;
-    }
+   #videoWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: fixed;  /* Se mantiene fijo en la pantalla */
+  top: 0;
+  left: 0;
+  width: 100vw;     /* 100% del ancho de la ventana */
+  height: 100vh;    /* 100% del alto de la ventana */
+  background: #000; /* Opcional: fondo para diferenciar el contenedor */
+}
     #videoWrapper button {
       margin-top: 1rem;
       padding: 0.5rem 1rem;
