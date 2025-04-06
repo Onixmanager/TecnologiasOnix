@@ -1,0 +1,970 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tecnologías Onix - Venta de Tarjetas de Reseñas</title>
+  <link rel="icon" href="https://i.imgur.com/689pZif.png" type="image/x-icon">
+  <link rel="shortcut icon" href="https://i.imgur.com/689pZif.png" type="image/x-icon">
+  <!-- Meta Tags para redes sociales -->
+  <meta property="og:title" content="Tecnologías Onix - Venta de Tarjetas de Reseñas">
+  <meta property="og:description" content="Compra tarjetas de reseñas de Google para potenciar la imagen online de tu negocio.">
+  <meta property="og:image" content="https://i.imgur.com/689pZif.png">
+  <meta property="og:url" content="tecnologiasonix.com">
+  <meta property="og:type" content="website">
+  <!-- Twitter -->
+  <meta name="twitter:title" content="Tecnologías Onix - Venta de Tarjetas de Reseñas">
+  <meta name="twitter:description" content="Compra tarjetas de reseñas de Google para potenciar la imagen online de tu negocio.">
+  <meta name="twitter:image" content="https://i.imgur.com/689pZif.png">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- Apple y Android Icons -->
+  <link rel="apple-touch-icon" href="https://i.imgur.com/689pZif.png">
+  <link rel="icon" sizes="192x192" href="https://i.imgur.com/689pZif.png">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Stripe.js -->
+  <script src="https://js.stripe.com/v3/"></script>
+  <style>
+    :root {
+      --primary-color: #1a2a3a;
+      --secondary-color: #e67e22;
+      --accent-color: #3498db;
+      --light-color: #ecf0f1;
+      --dark-color: #0e161f;
+      --text-color: #333;
+      --text-light: #f8f9fa;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background-color: #f5f5f5;
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+    /* Cabecera con imagen de fondo y overlay */
+    header {
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      background-color: var(--primary-color);
+    }
+    header::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://via.placeholder.com/1920x300?text=Header+Background') center/cover no-repeat;
+      z-index: -2;
+    }
+    header::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: -1;
+    }
+    .header-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+      position: relative;
+    }
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: white;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+    }
+    .logo span {
+      color: var(--secondary-color);
+    }
+    /* Ícono del carrito */
+    .cart-icon {
+      position: relative;
+      color: white;
+      font-size: 1.8rem;
+      text-decoration: none;
+      margin-left: 1rem;
+      cursor: pointer;
+    }
+    .cart-badge {
+      position: absolute;
+      top: -5px;
+      right: -10px;
+      background-color: var(--secondary-color);
+      color: white;
+      border-radius: 50%;
+      padding: 2px 6px;
+      font-size: 0.8rem;
+    }
+    /* Navegación */
+    nav {
+      transition: max-height 0.3s ease-out;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+    nav ul li {
+      margin-left: 1.5rem;
+    }
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    nav ul li a:hover {
+      color: var(--secondary-color);
+    }
+    .menu-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
+      }
+      nav {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: var(--dark-color);
+        display: none;
+        flex-direction: column;
+        text-align: center;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        border-top: 2px solid var(--secondary-color);
+      }
+      nav.active {
+        display: flex;
+        animation: slideDown 0.3s ease-in-out;
+      }
+      nav ul {
+        flex-direction: column;
+        padding: 1rem 0;
+        width: 100%;
+      }
+      nav ul li {
+        margin: 0;
+        padding: 0.8rem;
+        width: 100%;
+        border-bottom: 1px solid rgba(255,255,255,0.3);
+      }
+      nav ul li:last-child {
+        border-bottom: none;
+      }
+      nav ul li a {
+        display: block;
+        width: 100%;
+        padding: 0.8rem 0;
+      }
+    }
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .hero {
+      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://s.alicdn.com/@sc04/kf/H9604be8381b9445db1ac14a1324900f0o.jpg_720x720q50.jpg') center/cover no-repeat;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: white;
+      padding: 0 1rem;
+      margin-top: 60px;
+    }
+    .hero h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      animation: fadeIn 1s ease-in;
+    }
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 800px;
+      margin-bottom: 2rem;
+      animation: fadeIn 1s ease-in 0.5s forwards;
+      opacity: 0;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .btn {
+      display: inline-block;
+      background-color: var(--secondary-color);
+      color: white;
+      padding: 0.8rem 2rem;
+      text-decoration: none;
+      font-weight: bold;
+      border-radius: 50px;
+      transition: all 0.3s ease;
+      animation: fadeIn 1s ease-in 1s forwards;
+      opacity: 0;
+    }
+    .btn:hover {
+      background-color: #d35400;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .section {
+      padding: 5rem 1rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .section-title {
+      text-align: center;
+      font-size: 2.2rem;
+      margin-bottom: 3rem;
+      color: var(--primary-color);
+      position: relative;
+    }
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 100px;
+      height: 4px;
+      background-color: var(--secondary-color);
+      margin: 0.5rem auto;
+    }
+    .features, .product-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .feature-card {
+  background-color: white;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  width: 100%;
+  max-width: 350px;
+  color: black; /* Cambié de 'white' a 'black' */
+}
+    
+    .product-card {
+      background-color: var(--primary-color);
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      transition: all 0.3s ease;
+      width: 100%;
+      height: 580px; 
+      max-width: 330px;
+      color: white;
+    }
+    
+    
+    .feature-card:hover, .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+    }
+    /* Galería de productos */
+    .product-img {
+      position: relative;
+      height: 200px;
+      background-color: #ddd;
+      overflow: hidden;
+    }
+    .gallery {
+      height: 100%;
+    }
+    .gallery img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    .gallery img.active {
+      display: block;
+    }
+    .gallery-controls {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      z-index: 2;
+    }
+    .gallery-controls button {
+      background: rgba(0,0,0,0.5);
+      color: white;
+      border: none;
+      padding: 0.3rem 0.5rem;
+      margin-left: 0.3rem;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .feature-content, .product-content {
+      padding: 1.5rem;
+    }
+    .product-content h3 {
+      font-size: 1.3rem;
+      margin-bottom: 1rem;
+      color: #e67e22;
+    }
+    /* Estilos para selectores modernos y subtotal */
+    .modern-select, .modern-input {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      margin-bottom: 0.5rem;
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: 5px;
+      background-color: rgba(255,255,255,0.1);
+      font-size: 1rem;
+      transition: border-color 0.3s ease;
+      color: white;
+    }
+    .modern-select:focus, .modern-input:focus {
+      outline: none;
+      border-color: var(--secondary-color);
+    }
+    .subtotal {
+      margin-top: 0.5rem;
+      font-weight: bold;
+      color: var(--accent-color);
+    }
+  /* Modal del carrito */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 2000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.modal-content {
+  background-color: var(--primary-color); /* Fondo del color primario */
+  color: #ccc;                           /* Letras blancas */
+  margin: 10% auto;
+  padding: 2rem;
+  border: 1px solid #888;
+  width: 90%;
+  max-width: 500px;
+  border-radius: 10px;
+  position: relative;
+}
+    .close-modal {
+      color: #ccc;
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .cart-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #ddd;
+      padding: 0.5rem 0;
+    }
+    .cart-item:last-child {
+      border-bottom: none;
+    }
+    .cart-item span {
+      flex: 1;
+    }
+    .remove-btn {
+      background: none;
+      border: none;
+      color: red;
+      cursor: pointer;
+      font-size: 1.2rem;
+      margin-left: 0.5rem;
+    }
+    .cart-total {
+      text-align: right;
+      margin-top: 1rem;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+    /* Modal de notificación (sustituyendo alertas) */
+    .notification-modal {
+      display: none;
+      position: fixed;
+      z-index: 3000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      
+      background-color: rgba(0,0,0,0.6);
+      align-items: center;
+      justify-content: center;
+    }
+    .notification-modal .modal-content {
+      max-width: 400px;
+      text-align: center;
+    }
+    /* Secciones de testimonios y contacto */
+    .testimonials {
+      background-color: var(--primary-color);
+      color: white;
+      padding: 5rem 1rem;
+    }
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .testimonial-card {
+      background-color: rgba(255,255,255,0.1);
+      padding: 2rem;
+      border-radius: 10px;
+      position: relative;
+    }
+    .testimonial-card::before {
+      content: '"';
+      font-size: 5rem;
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      color: rgba(255,255,255,0.1);
+    }
+    .client-info {
+      display: flex;
+      align-items: center;
+      margin-top: 1.5rem;
+    }
+    .client-img {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      margin-right: 1rem;
+      background-color: #aaa;
+    }
+    .contact {
+            background-color: var(--light-color);
+            padding: 5rem 1rem;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .contact-info, .contact-form {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-info h3, .contact-form h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+        }
+        
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background-color: var(--light-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 1rem;
+            color: var(--secondary-color);
+            font-size: 1.5rem;
+        }
+        
+    footer {
+      background-color: var(--dark-color);
+      color: white;
+      padding: 3rem 1rem;
+      text-align: center;
+    }
+    .footer-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+    .footer-column {
+      flex: 1;
+      min-width: 250px;
+      margin-bottom: 2rem;
+    }
+    .footer-column h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: var(--secondary-color);
+    }
+    .footer-column ul {
+      list-style: none;
+    }
+    .footer-column ul li {
+      margin-bottom: 0.8rem;
+    }
+    .footer-column ul li a {
+      color: white;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .footer-column ul li a:hover {
+      color: var(--secondary-color);
+    }
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .social-icon {
+      width: 40px;
+      height: 40px;
+      background-color: var(--secondary-color);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      color: white;
+      transition: all 0.3s ease;
+    }
+    .social-icon:hover {
+      background-color: var(--primary-color);
+      transform: translateY(-3px);
+    }
+    .copyright {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding-top: 2rem;
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      opacity: 0.7;
+    }
+    /* Botón de WhatsApp */
+    #whatsapp-btn {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      z-index: 1000;
+    }
+    #whatsapp-btn img {
+      width: 50px;
+      height: 50px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Botón de WhatsApp flotante -->
+  <a href="https://wa.me/643229507" target="_blank" id="whatsapp-btn">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp" />
+  </a>
+
+  <!-- Modal de notificación -->
+  <div id="notificationModal" class="notification-modal" onclick="closeNotificationModal()">
+    <div class="modal-content">
+      <span id="notificationMessage"></span>
+      <br><br>
+      <button class="btn" onclick="closeNotificationModal()">Cerrar</button>
+    </div>
+  </div>
+
+  <header>
+    <div class="header-container">
+      <a href="#" class="logo">Tecnologías <span>Onix</span></a>
+      <button class="menu-toggle" aria-label="Abrir menú">☰</button>
+      <nav>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#servicios">Servicios</a></li>
+          <li><a href="#tienda">Tienda</a></li>
+          <li><a href="#contacto">Contacto</a></li>
+        </ul>
+      </nav>
+      <!-- Ícono del carrito -->
+      <a class="cart-icon" onclick="toggleCartModal()">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-badge" id="cartCount">0</span>
+      </a>
+    </div>
+  </header>
+
+  <section id="inicio" class="hero">
+    <h1>Reseñas de Google<br>
+con<br>
+TecnologiasOnix<br></h1>
+</h1>
+    <p>Mejora tu Negocio con Tecnología NFC integrada, posiciona tu negocio en Google de manera fácil.</p>
+    <a href="#tienda" class="btn">Ver Tarjetas</a>
+  </section>
+
+  <section id="servicios" class="section">
+    <h2 class="section-title">¿Por qué Tarjetas de Reseñas?</h2>
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-img">
+          <img src="https://wwwhatsnew.com/wp-content/uploads/2024/03/cinco-estrellas-en-google-maps.jpg" alt="Impacto Online" width="350" height="200">
+        </div>
+        <div class="feature-content">
+          <h3>Mejora tu reputación</h3>
+          <p>Nuestras tarjetas destacan las mejores reseñas para que tus potenciales clientes confíen en tu negocio.</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-img">
+          <img src="https://cdn.taggbox.com/v7/taggbox.com/blog/wp-content/uploads/2022/12/Google-reviews-examples.png" alt="Confianza" width="350" height="200">
+        </div>
+        <div class="feature-content">
+          <h3>Aumenta la Credibilidad</h3>
+          <p>Muestra reseñas positivas de clientes satisfechos y genera una mayor conexión con tu audiencia.</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <div class="feature-img">
+          <img src="https://cdn.statcdn.com/Infographic/images/normal/31427.jpeg" alt="Resultados" width="350" height="200">
+        </div>
+        <div class="feature-content">
+          <h3>Resultados Comprobados</h3>
+          <p>Incrementa la conversión y la visibilidad de tu negocio gracias a una imagen online reforzada.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sección de Tienda con tarjetas modernizadas y galerías de 2 imágenes -->
+  <section id="tienda" class="section">
+    <center><strong><h2 class="section-title">Compra tus Tarjetas de Reseñas</h2>
+    <p>Elige entre nuestros 3 exclusivos modelos de tarjetas de reseñas de Google. Cada modelo cuenta con 2 opciones de color. Selecciona el modelo, el color y la cantidad y observa el subtotal en tiempo real.</p></strong></center> <br>
+    <div class="product-grid">
+      <!-- Producto Modelo 1 -->
+      <div class="product-card" data-unitprice="50">
+        <div class="product-img">
+          <div class="gallery" id="gallery1">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFsY35KP2tZx8AeLg7izm40bIIJqKmLT3WKQ&s" alt="Tarjeta Modelo 1 - Imagen 1" class="active">
+            <img src="https://tus5estrellas.es/wp-content/uploads/2023/12/Captura-de-pantalla-2023-12-14-140321.jpg">
+          </div>
+          <div class="gallery-controls">
+            <button onclick="prevImage('gallery1')">&lt;</button>
+            <button onclick="nextImage('gallery1')">&gt;</button>
+          </div>
+        </div>
+        <div class="product-content">
+          <h3>Tarjeta de Reseña - Modelo 1</h3>
+          <p>Precio: <span class="unit-price">50</span>€</p>
+          <div class="product-options">
+            <label for="color1">Color:</label>
+            <select id="color1" class="modern-select">
+              <option value="negro">Negro</option>
+              <option value="blanco">Blanco</option>
+            </select>
+            <label for="qty1">Cantidad:</label>
+            <input type="number" id="qty1" class="modern-input" value="1" min="1">
+            <div class="subtotal">
+              Subtotal: <span id="subtotal1">50</span>€
+            </div>
+          </div>
+          <button class="btn" onclick="addToCart(1, 'Tarjeta Modelo 1', document.getElementById('color1').value, document.getElementById('qty1').value)">Añadir al carrito</button>
+        </div>
+      </div>
+      <!-- Producto Modelo 2 -->
+      <div class="product-card" data-unitprice="60">
+        <div class="product-img">
+          <div class="gallery" id="gallery2">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFsY35KP2tZx8AeLg7izm40bIIJqKmLT3WKQ&s1" alt="Tarjeta Modelo 2 - Imagen 1" class="active">
+            <img src="https://tus5estrellas.es/wp-content/uploads/2023/12/Captura-de-pantalla-2023-12-14-140321.jpg" alt="Tarjeta Modelo 2 - Imagen 2">
+          </div>
+          <div class="gallery-controls">
+            <button onclick="prevImage('gallery2')">&lt;</button>
+            <button onclick="nextImage('gallery2')">&gt;</button>
+          </div>
+        </div>
+        <div class="product-content">
+          <h3>Tarjeta de Reseña - Modelo 2</h3>
+          <p>Precio: <span class="unit-price">60</span>€</p>
+          <div class="product-options">
+            <label for="color2">Color:</label>
+            <select id="color2" class="modern-select">
+              <option value="negro">Negro</option>
+              <option value="blanco">Blanco</option>
+            </select>
+            <label for="qty2">Cantidad:</label>
+            <input type="number" id="qty2" class="modern-input" value="1" min="1">
+            <div class="subtotal">
+              Subtotal: <span id="subtotal2">60</span>€
+            </div>
+          </div>
+          <button class="btn" onclick="addToCart(2, 'Tarjeta Modelo 2', document.getElementById('color2').value, document.getElementById('qty2').value)">Añadir al carrito</button>
+        </div>
+      </div>
+      <!-- Producto Modelo 3 -->
+      <div class="product-card" data-unitprice="70">
+        <div class="product-img">
+          <div class="gallery" id="gallery3">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFsY35KP2tZx8AeLg7izm40bIIJqKmLT3WKQ&s" alt="Tarjeta Modelo 3 - Imagen 1" class="active">
+            <img src="https://tus5estrellas.es/wp-content/uploads/2023/12/Captura-de-pantalla-2023-12-14-140321.jpg" alt="Tarjeta Modelo 3 - Imagen 2">
+          </div>
+          <div class="gallery-controls">
+            <button onclick="prevImage('gallery3')">&lt;</button>
+            <button onclick="nextImage('gallery3')">&gt;</button>
+          </div>
+        </div>
+        <div class="product-content">
+          <h3>Tarjeta de Reseña - Modelo 3</h3>
+          <p>Precio: <span class="unit-price">70</span>€</p>
+          <div class="product-options">
+            <label for="color3">Color:</label>
+            <select id="color3" class="modern-select">
+              <option value="negro">Negro</option>
+              <option value="blanco">Blanco</option>
+            </select>
+            <label for="qty3">Cantidad:</label>
+            <input type="number" id="qty3" class="modern-input" value="1" min="1">
+            <div class="subtotal">
+              Subtotal: <span id="subtotal3">70</span>€
+            </div>
+          </div>
+          <button class="btn" onclick="addToCart(3, 'Tarjeta Modelo 3', document.getElementById('color3').value, document.getElementById('qty3').value)">Añadir al carrito</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal Carrito -->
+  <div id="cartModal" class="modal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="toggleCartModal()">&times;</span>
+      <h2>Tu Carrito</h2>
+      <div id="cartItems"></div>
+      <div class="cart-total" id="cartTotal">Total: 0€</div>
+      <button class="btn" onclick="checkout()">Checkout con Stripe</button>
+    </div>
+  </div>
+
+  <section id="contacto" class="contact">
+    <h2 class="section-title">Contáctanos</h2>
+    <div class="contact-grid">
+      <div class="contact-info">
+        <h3>Información de contacto</h3>
+        <div class="contact-detail">
+          <div class="contact-icon">📍</div>
+          <div>
+            <h4>Dirección</h4>
+            <p>C/ Río de Janeiro, Barcelona, España.</p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">📞</div>
+          <div>
+            <h4>Teléfono</h4>
+            <p>+34 643229507</p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">✉️</div>
+          <div>
+            <h4>Email</h4>
+            <p>info@tecnologiasonix.com</p>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">🕒</div>
+          <div>
+            <h4>Horario</h4>
+            <p>Lunes a Viernes: 9:00 - 18:00</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>Tecnologías Onix</h3>
+        <p>Potenciamos tu reputación online con tarjetas de reseñas que resaltan lo mejor de tu negocio.</p>
+        <div class="social-icons">
+          <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+      
+      <div class="footer-column">
+        <h3>Servicios</h3>
+                <ul>
+                    <li><a href="#">Desarrollo de Software</a></li>
+                    <li><a href="#">Aplicaciones Móviles</a></li>
+                    <li><a href="#">Sistemas de Gestión</a></li>
+                    <li><a href="#">Consultoría IT</a></li>
+                    <li><a href="#">Soporte Técnico</a></li>
+                    <li><a href="#">Ciberseguridad</a></li>
+                </ul>
+      </div>
+    </div>
+    <div class="copyright">
+      <p>&copy; 2025 Tecnologías Onix Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript para menú, carrito, galerías, notificaciones, subtotales y checkout -->
+  <script>
+    // Menú móvil
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+    menuToggle.addEventListener('click', () => {
+      nav.classList.toggle('active');
+    });
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', () => { nav.classList.remove('active'); });
+    });
+    document.addEventListener('click', (e) => {
+      if (!nav.contains(e.target) && !menuToggle.contains(e.target)) {
+        nav.classList.remove('active');
+      }
+    });
+    window.addEventListener('resize', () => {
+      if (window.innerWidth > 768) { nav.classList.remove('active'); }
+    });
+
+    // Carrito
+    let cart = [];
+    const cartCountElem = document.getElementById('cartCount');
+    const cartItemsElem = document.getElementById('cartItems');
+    const cartTotalElem = document.getElementById('cartTotal');
+
+    function addToCart(id, name, color, quantity) {
+      quantity = parseInt(quantity);
+      let price = id === 1 ? 50 : id === 2 ? 60 : 70;
+      let existing = cart.find(item => item.id === id && item.color === color);
+      if (existing) {
+        existing.quantity += quantity;
+      } else {
+        cart.push({ id, name, color, quantity, price });
+      }
+      updateCartDisplay();
+      showNotification(name + " añadido al carrito.");
+    }
+
+    function removeFromCart(index) {
+      cart.splice(index, 1);
+      updateCartDisplay();
+    }
+
+    function updateCartDisplay() {
+      cartCountElem.innerText = cart.reduce((sum, item) => sum + item.quantity, 0);
+      cartItemsElem.innerHTML = '';
+      let total = 0;
+      cart.forEach((item, index) => {
+        total += item.price * item.quantity;
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+        div.innerHTML = `<span>${item.name} (${item.color}) x ${item.quantity} - ${item.price * item.quantity}€</span>
+                         <button class="remove-btn" onclick="removeFromCart(${index})" title="Borrar producto">&times;</button>`;
+        cartItemsElem.appendChild(div);
+      });
+      cartTotalElem.innerText = 'Total: ' + total + '€';
+    }
+
+    function toggleCartModal() {
+      const modal = document.getElementById('cartModal');
+      modal.style.display = modal.style.display === 'block' ? 'none' : 'block';
+    }
+
+    // Checkout con Stripe (ejemplo básico, se requiere backend para sesión real)
+    function checkout() {
+      if (cart.length === 0) {
+        showNotification("Tu carrito está vacío.");
+        return;
+      }
+      showNotification("Se redirigirá al checkout de Stripe (esto es un ejemplo).");
+      // Ejemplo real: stripe.redirectToCheckout({ sessionId: 'SESSION_ID' });
+    }
+
+    // Función para actualizar el subtotal de cada tarjeta
+    function updateSubtotal(qtyId, subtotalId, unitPrice) {
+      const qty = document.getElementById(qtyId).value;
+      const subtotalElem = document.getElementById(subtotalId);
+      subtotalElem.innerText = unitPrice * qty;
+    }
+    // Asignar event listeners para cada input de cantidad
+    document.getElementById('qty1').addEventListener('input', function() {
+      updateSubtotal('qty1', 'subtotal1', 50);
+    });
+    document.getElementById('qty2').addEventListener('input', function() {
+      updateSubtotal('qty2', 'subtotal2', 60);
+    });
+    document.getElementById('qty3').addEventListener('input', function() {
+      updateSubtotal('qty3', 'subtotal3', 70);
+    });
+
+    // Funciones para la galería de imágenes
+    function nextImage(galleryId) {
+      const gallery = document.getElementById(galleryId);
+      const images = gallery.getElementsByTagName('img');
+      for (let i = 0; i < images.length; i++) {
+        if (images[i].classList.contains('active')) {
+          images[i].classList.remove('active');
+          images[(i + 1) % images.length].classList.add('active');
+          break;
+        }
+      }
+    }
+    function prevImage(galleryId) {
+      const gallery = document.getElementById(galleryId);
+      const images = gallery.getElementsByTagName('img');
+      for (let i = 0; i < images.length; i++) {
+        if (images[i].classList.contains('active')) {
+          images[i].classList.remove('active');
+          images[(i - 1 + images.length) % images.length].classList.add('active');
+          break;
+        }
+      }
+    }
+
+    // Funciones para el modal de notificación (sustituyendo alertas)
+    function showNotification(message) {
+      const notificationModal = document.getElementById('notificationModal');
+      document.getElementById('notificationMessage').innerText = message;
+      notificationModal.style.display = "flex";
+    }
+    function closeNotificationModal() {
+      document.getElementById('notificationModal').style.display = "none";
+    }
+  </script>
+</body>
+</html>
