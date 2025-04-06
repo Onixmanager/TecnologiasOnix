@@ -48,14 +48,15 @@
     /* Cabecera con imagen de fondo y overlay */
     
     .cart-icon {
-      position: absolute;
-      top: 40px;       /* distancia desde arriba */
-      left: 320px;     /* distancia desde la izquierda */
-      color: var(--secondary-color);
-      font-size: 1.8rem;
-      text-decoration: none;
-      cursor: pointer;
-    }
+  position: fixed;         /* Para que flote en la pantalla */
+  top: 40px;               /* Distancia desde el borde superior */
+  right: 20px;             /* Distancia desde el borde derecho */
+  color: var(--secondary-color);
+  font-size: 1.8rem;
+  text-decoration: none;
+  cursor: pointer;
+  z-index: 1002;           /* Asegura que esté por encima de otros elementos */
+}
     .cart-badge {
       position: absolute;
       top: -5px;
@@ -68,31 +69,7 @@
     }
     /* Se elimina la navegación, el menú y el logo */
     /* Estilos de la sección Hero */
-    .hero {
-      background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://s.alicdn.com/@sc04/kf/H9604be8381b9445db1ac14a1324900f0o.jpg_720x720q50.jpg') center/cover no-repeat;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      color: white;
-      padding: 0 1rem;
-      /* Se elimina el margin-top para que la sección empiece desde arriba */
-      margin-top: 0;
-    }
-    .hero h1 {
-      font-size: 2.5rem;
-      margin-bottom: 1rem;
-      animation: fadeIn 1s ease-in;
-    }
-    .hero p {
-      font-size: 1.1rem;
-      max-width: 800px;
-      margin-bottom: 2rem;
-      animation: fadeIn 1s ease-in 0.5s forwards;
-      opacity: 0;
-    }
+   
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -121,8 +98,8 @@
     }
     .section-title {
       text-align: center;
-      font-size: 2.2rem;
-      margin-bottom: 3rem;
+      font-size: 1.7rem;
+      margin-bottom: 2rem;
       color: var(--primary-color);
       position: relative;
     }
@@ -157,8 +134,8 @@
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       transition: all 0.3s ease;
       width: 100%;
-      height: 580px; 
-      max-width: 330px;
+      height: 570px; 
+      max-width: 300px;
       color: white;
     }
     .feature-card:hover, .product-card:hover {
@@ -480,8 +457,8 @@
 
   <!-- Sección de Tienda con tarjetas modernizadas y galerías de 2 imágenes -->
   <section id="tienda" class="section">
-    <center><strong><h2 class="section-title">Compra tus Tarjetas de Reseñas</h2>
-    <p>Elige entre nuestros 3 exclusivos modelos de tarjetas de reseñas de Google. Cada modelo cuenta con 2 opciones de color. Selecciona el modelo, el color y la cantidad y observa el subtotal en tiempo real.</p></strong></center> <br>
+    <center><strong><h3 class="section-title">Compra tus Tarjetas de Reseñas</h3>
+    <p>Elige entre nuestros 3 exclusivos modelos de tarjetas de reseñas de Google. Cada modelo cuenta con un expositor de metraquilato incluido.</p></strong></center> <br>
     <div class="product-grid">
       <!-- Producto Modelo 1 -->
       <div class="product-card" data-unitprice="50">
