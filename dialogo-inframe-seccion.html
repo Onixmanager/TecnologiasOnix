@@ -50,18 +50,17 @@
       cursor: pointer;
     }
     #splash h1 {
-    font-size: 2rem;
-    text-transform: uppercase;
-    letter-spacing: 4px;
-    color: #2c3e50;
-    text-align: center;
-    animation: glow 1.5s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
-    from { text-shadow: 0 0 10px #2c3e50, 0 0 20px #2c3e50, 0 0 30px #2c3e50; }
-    to { text-shadow: 0 0 20px #34495e, 0 0 30px #34495e, 0 0 40px #34495e; }
-}
+      font-size: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: #2c3e50;
+      text-align: center;
+      animation: glow 1.5s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #2c3e50, 0 0 20px #2c3e50, 0 0 30px #2c3e50; }
+      to { text-shadow: 0 0 20px #34495e, 0 0 30px #34495e, 0 0 40px #34495e; }
+    }
     /* Transición tecnológica para redirección */
     #transitionOverlay {
       position: fixed;
@@ -216,14 +215,6 @@
   </div>
 
   <script>
-    // ... (todo el JavaScript original se mantiene igual)
-    // El código JavaScript permanece idéntico al original proporcionado
-    // Solo se modificaron los estilos CSS
-  </script>
-</body>
-</html>
-
-  <script>
     let splashTimer;
     // Variable global para almacenar el cuestionario actual
     let currentQuizData = [];
@@ -242,10 +233,7 @@
         question: "Sabemos lo importante que es tu negocio y cómo podemos ayudarte. <br><br>¿Qué producto o servicio se adapta a tus necesidades?",
         answers: [
           { text: "Camarero Digital", next: null, action: () => showCamareroQuestion(true) },
-          
-           { text: "Secretario Inteligente", next: null, action: () => showProfesionalesDialog() },
-          
-          
+          { text: "Secretario Inteligente", next: null, action: () => showProfesionalesDialog() },
           { text: "Comercio 24/7", next: null, action: () => showComercioPhysicalDialog() },
           { text: "Web/App/Software/Proyecto", next: null, action: () => showProyectoDialog() },
           { text: "Tarjetas Reseñas De Google", next: null, action: () => transitionRedirect("https://tecnologiasonix.com/shopline-inframe") }
@@ -299,12 +287,17 @@
       }, 800);
     }
     
-    // Transición y redirección
+    // Transición y redirección modificada:
     function transitionRedirect(url) {
       const overlay = document.getElementById("transitionOverlay");
       overlay.classList.add("active");
       setTimeout(() => {
-        window.location.href = url;
+        // Si es la URL de Tarjetas Reseñas De Google, redirige en la misma pestaña.
+        if(url === "https://tecnologiasonix.com/shopline-inframe"){
+          window.location.href = url;
+        } else {
+          window.open(url, '_blank');
+        }
       }, 1000);
     }
     
@@ -327,126 +320,112 @@
       document.getElementById("splash").addEventListener("click", hideSplash);
     });
     
-   // Diálogo para Camarero Digital (con opción de video)
-function showCamareroQuestion(includeVideo) {
-  modal.classList.add("hide");
-  setTimeout(() => {
-    const answers = [];
-    if (includeVideo) {
-      answers.push({ text: "Ver video de presentación", action: showCamareroVideo });
-    }
-    answers.push({ text: "Ver sitio web de Camarero Digital", action: () => transitionRedirect("https://tecnologiasonix.com/camarero-digital") });
-    answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
-    // Agregar el botón de "Volver atrás"
-    answers.push({ text: "Volver atrás", action: () => showMainQuizData() });
-
-    currentQuizData = [
-      {
-        question: "Camarero Digital está diseñado para bares, restaurantes, hoteles y servicios con pedidos o reservas. Facilita la gestión de tu negocio y mejora la experiencia con el cliente.<br><br> ¿Cómo prefieres recibir más información?:",
-        answers: answers
-      }
-    ];
-    renderQuestion(0);
-    modal.classList.remove("hide");
-  }, 300);
-}
-
-// Función para mostrar el diálogo de mainQuizData
-function showMainQuizData() {
-  modal.classList.add("hide");
-  setTimeout(() => {
-    // Aquí debes agregar la lógica para redirigir o mostrar el diálogo de mainQuizData
-    // Por ejemplo:
-    currentQuizData = mainQuizData; // Si tienes el objeto mainQuizData ya definido
-    renderQuestion(0);
-    modal.classList.remove("hide");
-  }, 300);
-}
+    // Diálogo para Camarero Digital (con opción de video)
+    function showCamareroQuestion(includeVideo) {
+      modal.classList.add("hide");
+      setTimeout(() => {
+        const answers = [];
+        if (includeVideo) {
+          answers.push({ text: "Ver video de presentación", action: showCamareroVideo });
+        }
+        answers.push({ text: "Ver sitio web de Camarero Digital", action: () => transitionRedirect("https://tecnologiasonix.com/camarero-digital") });
+        answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
+        // Agregar el botón de "Volver atrás"
+        answers.push({ text: "Volver atrás", action: () => showMainQuizData() });
     
-   // Diálogo para Comercio 24/7
-function showComercioDialog() {
-  modal.classList.add("hide");
-  setTimeout(() => {
-    const comercioQuizData = [
-      {
-        question: "Comercio 24/7 está diseñado para mantener tu negocio siempre abierto. Gracias a nuestro sistema NFC, tu tienda estará disponible para tus clientes en todo momento. ¿Cómo prefieres recibir más información?",
-        answers: [
-          { text: "Tienda de productos físicos", action: showComercioPhysicalDialog },
-          { text: "Servicios Profesionales", action: showProfesionalesDialog },
-          // Agregar el botón de "Volver atrás"
-          { text: "Volver atrás", action: () => showMainQuizData() }
-        ]
-      }
-    ];
-    currentQuizData = comercioQuizData;
-    renderQuestion(0);
-    modal.classList.remove("hide");
-  }, 300);
-}
-
-// Función para mostrar el diálogo de mainQuizData
-function showMainQuizData() {
-  modal.classList.add("hide");
-  setTimeout(() => {
-    // Aquí debes agregar la lógica para redirigir o mostrar el diálogo de mainQuizData
-    // Por ejemplo:
-    currentQuizData = mainQuizData; // Si tienes el objeto mainQuizData ya definido
-    renderQuestion(0);
-    modal.classList.remove("hide");
-  }, 300);
-}
+        currentQuizData = [
+          {
+            question: "Camarero Digital está diseñado para bares, restaurantes, hoteles y servicios con pedidos o reservas. Facilita la gestión de tu negocio y mejora la experiencia con el cliente.<br><br> ¿Cómo prefieres recibir más información?:",
+            answers: answers
+          }
+        ];
+        renderQuestion(0);
+        modal.classList.remove("hide");
+      }, 300);
+    }
+    
+    // Función para mostrar el diálogo de mainQuizData
+    function showMainQuizData() {
+      modal.classList.add("hide");
+      setTimeout(() => {
+        currentQuizData = mainQuizData;
+        renderQuestion(0);
+        modal.classList.remove("hide");
+      }, 300);
+    }
+    
+    // Diálogo para Comercio 24/7
+    function showComercioDialog() {
+      modal.classList.add("hide");
+      setTimeout(() => {
+        const comercioQuizData = [
+          {
+            question: "Comercio 24/7 está diseñado para mantener tu negocio siempre abierto. Gracias a nuestro sistema NFC, tu tienda estará disponible para tus clientes en todo momento. ¿Cómo prefieres recibir más información?",
+            answers: [
+              { text: "Tienda de productos físicos", action: showComercioPhysicalDialog },
+              { text: "Servicios Profesionales", action: showProfesionalesDialog },
+              // Agregar el botón de "Volver atrás"
+              { text: "Volver atrás", action: () => showMainQuizData() }
+            ]
+          }
+        ];
+        currentQuizData = comercioQuizData;
+        renderQuestion(0);
+        modal.classList.remove("hide");
+      }, 300);
+    }
     
     // Diálogo para Ventas de productos físicos (con opción de video, según estado)
-function showComercioPhysicalDialog() {
-  modal.classList.add("hide");
-  setTimeout(() => {
-    const answers = [];
-    if (!physicalVideoSeen) {
-      answers.push({ text: "Ver video de presentación", action: showComercioPhysicalVideo });
-    }
-    answers.push({ text: "Ver documentación web", action: () => transitionRedirect("https://tecnologiasonix.com/documentacion-comercio27") });
-    answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
+    function showComercioPhysicalDialog() {
+      modal.classList.add("hide");
+      setTimeout(() => {
+        const answers = [];
+        if (!physicalVideoSeen) {
+          answers.push({ text: "Ver video de presentación", action: showComercioPhysicalVideo });
+        }
+        answers.push({ text: "Ver documentación web", action: () => transitionRedirect("https://tecnologiasonix.com/documentacion-comercio27") });
+        answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
+        
+        // Agregar el botón de "Volver atrás"
+        answers.push({ text: "Volver atrás", action: () => showMainQuizData() });
     
-    // Agregar el botón de "Volver atrás"
-    answers.push({ text: "Volver atrás", action: () => showMainQuizData() });
-
-    const physicalQuizData = [
-      {
-        question: "Con Comercio 27/7, tu negocio permanece siempre abierto. Gracias a nuestro sistema NFC, tu tienda estará disponible para tus clientes en todo momento. <br><br>¿Cómo prefieres recibir más información? :",
-        answers: answers
-      }
-    ];
-    currentQuizData = physicalQuizData;
-    renderQuestion(0);
-    modal.classList.remove("hide");
-  }, 300);
-}
+        const physicalQuizData = [
+          {
+            question: "Con Comercio 27/7, tu negocio permanece siempre abierto. Gracias a nuestro sistema NFC, tu tienda estará disponible para tus clientes en todo momento. <br><br>¿Cómo prefieres recibir más información? :",
+            answers: answers
+          }
+        ];
+        currentQuizData = physicalQuizData;
+        renderQuestion(0);
+        modal.classList.remove("hide");
+      }, 300);
+    }
     
     // Diálogo para Profesionales que gestionan citas (diálogo independiente)
-function showProfesionalesDialog() {
-  modal.classList.add("hide");
-  setTimeout(() => {
-    const answers = [];
-    if (!professionalVideoSeen) {
-      answers.push({ text: "Ver video de presentación", action: showProfesionalesVideo });
-    }
-    answers.push({ text: "Ver documentación web", action: () => transitionRedirect("https://tecnologiasonix.com/secretario-inteligente") });
-    answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
+    function showProfesionalesDialog() {
+      modal.classList.add("hide");
+      setTimeout(() => {
+        const answers = [];
+        if (!professionalVideoSeen) {
+          answers.push({ text: "Ver video de presentación", action: showProfesionalesVideo });
+        }
+        answers.push({ text: "Ver documentación web", action: () => transitionRedirect("https://tecnologiasonix.com/secretario-inteligente") });
+        answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
+        
+        // Agregar el botón de "Volver atrás"
+        answers.push({ text: "Volver atrás", action: () => showMainQuizData() });
     
-    // Agregar el botón de "Volver atrás"
-    answers.push({ text: "Volver atrás", action: () => showMainQuizData() });
-
-    const professionalsQuizData = [
-      {
-        question: "Secretario Inteligente está diseñado para negocios que gestionan citas y mantiene todo bajo control. Pero va mucho más allá, gracias a su inteligencia artificial integrada. <br> <br>¿Cómo prefieres recibir más información ?:",
-        answers: answers
-      }
-    ];
-    currentQuizData = professionalsQuizData;
-    renderQuestion(0);
-    modal.classList.remove("hide");
-  }, 300);
-}
+        const professionalsQuizData = [
+          {
+            question: "Secretario Inteligente está diseñado para negocios que gestionan citas y mantiene todo bajo control. Pero va mucho más allá, gracias a su inteligencia artificial integrada. <br> <br>¿Cómo prefieres recibir más información?:",
+            answers: answers
+          }
+        ];
+        currentQuizData = professionalsQuizData;
+        renderQuestion(0);
+        modal.classList.remove("hide");
+      }, 300);
+    }
     
     // Función para mostrar el video de Comercio 27/7 para Ventas de productos físicos
     function showComercioPhysicalVideo() {
@@ -580,33 +559,32 @@ function showProfesionalesDialog() {
       }, 300);
     }
     
-  // Nueva función para el diálogo de Web/App, Software o Proyecto (emprendedor)
-function showProyectoDialog() {
-  modal.classList.add("hide");
-  setTimeout(() => {
-    const answers = [];
-    // Solo mostramos la opción de video si no se ha visto ya
-    if (!proyectoVideoSeen) { 
-      answers.push({ text: "Ver video de presentación", action: showProyectoVideo });
-    }
-    answers.push({ text: "Ver información en web", action: () => transitionRedirect("https://tecnologiasonix.com/proyecto") });
-    answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
-
-    // Agregar el botón de "Volver atrás"
-    answers.push({ text: "Volver atrás", action: () => showMainQuizData() });
-
-    const proyectoQuizData = [
-      {
-        question: "¿Necesitas crear una web, app, software o proyecto y no sabes por dónde empezar? No te preocupes, nosotros nos encargamos de todo. <br><br>Cómo prefieres recibir más información :",
-        answers: answers
-      }
-    ];
-    currentQuizData = proyectoQuizData;
-    renderQuestion(0);
-    modal.classList.remove("hide");
-  }, 300);
-}
+    // Nueva función para el diálogo de Web/App, Software o Proyecto (emprendedor)
+    function showProyectoDialog() {
+      modal.classList.add("hide");
+      setTimeout(() => {
+        const answers = [];
+        // Solo mostramos la opción de video si no se ha visto ya
+        if (!proyectoVideoSeen) { 
+          answers.push({ text: "Ver video de presentación", action: showProyectoVideo });
+        }
+        answers.push({ text: "Ver información en web", action: () => transitionRedirect("https://tecnologiasonix.com/proyecto") });
+        answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
     
+        // Agregar el botón de "Volver atrás"
+        answers.push({ text: "Volver atrás", action: () => showMainQuizData() });
+    
+        const proyectoQuizData = [
+          {
+            question: "¿Necesitas crear una web, app, software o proyecto y no sabes por dónde empezar? No te preocupes, nosotros nos encargamos de todo. <br><br>Cómo prefieres recibir más información :",
+            answers: answers
+          }
+        ];
+        currentQuizData = proyectoQuizData;
+        renderQuestion(0);
+        modal.classList.remove("hide");
+      }, 300);
+    }
     
     // Función para mostrar el video de Web/App, Software o Proyecto
     function showProyectoVideo() {
