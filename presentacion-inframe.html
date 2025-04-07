@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bienvenido a Tecnologías Onix</title>
+  <style>
+    /* Reset básico */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #ffffff;
+      color: #000000;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+    /* Fondo tecnológico animado */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, #ffffff, #000000);
+      animation: backgroundFlow 10s linear infinite;
+      z-index: -2;
+    }
+    @keyframes backgroundFlow {
+      from { transform: translate(0, 0) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    /* Splash Screen */
+    #splash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      cursor: pointer;
+    }
+    #splash h1 {
+      font-size: 2rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: #000000;
+      text-align: center;
+      animation: glow 1.5s ease-in-out infinite alternate;
+      margin-bottom: 1rem;
+      font-weight: 700; /* Font-weight más gordito */
+    }
+    #splash h2 {
+      font-size: 1.2rem;
+      color: #000000;
+      text-align: center;
+      max-width: 80%;
+      line-height: 1.5;
+      font-weight: 600; /* Font-weight más gordito */
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #000000, 0 0 20px #000000, 0 0 30px #000000; }
+      to { text-shadow: 0 0 20px #000000, 0 0 30px #000000, 0 0 40px #000000; }
+    }
+    /* Splash 2 */
+    #splash2 {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 2001;
+      opacity: 0;
+      transition: opacity 2s ease-in-out;
+    }
+    #splash2 h2 {
+      font-size: 1.8rem;
+      color: #000000;
+      text-align: center;
+      margin-bottom: 20px;
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Añadido el sombreado */
+      font-weight: 700; /* Font-weight más gordito */
+    }
+    #splash2 img {
+      width: 150px;
+      height: auto;
+    }
+    /* Contenido principal */
+    #main-content {
+      padding: 2rem;
+      text-align: center;
+    }
+    #main-content h1 {
+      font-size: 2.5rem;
+      color: #000000;
+      margin-bottom: 1rem;
+      font-weight: 700; /* Font-weight más gordito */
+    }
+    #main-content h2 {
+      font-size: 1.5rem;
+      color: #000000;
+      max-width: 600px;
+      margin: 0 auto;
+      line-height: 1.6;
+      font-weight: 600; /* Font-weight más gordito */
+    }
+    @media (min-width: 768px) {
+      #splash h1 {
+        font-size: 3rem;
+      }
+      #splash h2 {
+        font-size: 1.8rem;
+      }
+      #main-content h1 {
+        font-size: 3.5rem;
+      }
+      #main-content h2 {
+        font-size: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Primer Splash Screen -->
+  <div id="splash">
+    <h1>Bienvenido a <br>Tecnologías Onix</h1>
+    <h2>Donde lo único que importa es tu negocio.</h2>
+  </div>
+
+  <!-- Segundo Splash Screen -->
+  <div id="splash2">
+    <h2>Impulsamos Tu Negocio Con Soluciones Digitales</h2>
+    <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/BackgroundEraser_20250407_161537726.png" alt="Logo de Tecnologías Onix">
+  </div>
+  
+  
+
+  <!-- Contenido principal -->
+  <div id="main-content"></div>
+
+  <script>
+    let splashTimer;
+
+    function hideSplash() {
+      clearTimeout(splashTimer);
+      document.getElementById("splash").style.display = "none";
+      document.getElementById("splash2").style.opacity = 1;  // Aparece el segundo splash
+      setTimeout(() => {
+        document.getElementById("splash2").style.display = "none";
+        const mainContent = document.getElementById("main-content");
+        mainContent.innerHTML = `
+          <h1>Tecnologías Onix</h1>
+          <h2>Transformando ideas en soluciones digitales</h2>
+        `;
+      }, 9999000); // El segundo splash desaparece después de 2 segundos
+    }
+
+    window.addEventListener("load", () => {
+      splashTimer = setTimeout(hideSplash, 2500);
+      document.getElementById("splash").addEventListener("click", hideSplash);
+    });
+  </script>
+</body>
+</html>
