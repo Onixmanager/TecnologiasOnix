@@ -230,7 +230,7 @@
     // Cuestionario principal
     const mainQuizData = [
       {
-        question: " Cuentanos,¿Qué producto o servicio se adapta a las necesidades de tu negocio?",
+        question: " Conoce nuestros productos para que sepas como podemos ayudarte,cuéntanos,¿Qué producto o servicio crees que se adapta a las necesidades de tu negocio?",
         answers: [
           { text: "Camarero Digital", next: null, action: () => showCamareroQuestion(true) },
           { text: "Secretario Inteligente", next: null, action: () => showProfesionalesDialog() },
@@ -328,7 +328,7 @@
         if (includeVideo) {
           answers.push({ text: "Ver video de presentación", action: showCamareroVideo });
         }
-        answers.push({ text: "Ver sitio web de Camarero Digital", action: () => transitionRedirect("https://tecnologiasonix.com/camarero-digital") });
+        
         answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
         // Agregar el botón de "Volver atrás"
         answers.push({ text: "Volver atrás", action: () => showMainQuizData() });
@@ -383,7 +383,7 @@
         if (!physicalVideoSeen) {
           answers.push({ text: "Ver video de presentación", action: showComercioPhysicalVideo });
         }
-        answers.push({ text: "Ver documentación web", action: () => transitionRedirect("https://tecnologiasonix.com/documentacion-comercio27") });
+        
         answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
         
         // Agregar el botón de "Volver atrás"
@@ -409,7 +409,7 @@
         if (!professionalVideoSeen) {
           answers.push({ text: "Ver video de presentación", action: showProfesionalesVideo });
         }
-        answers.push({ text: "Ver documentación web", action: () => transitionRedirect("https://tecnologiasonix.com/secretario-inteligente") });
+        
         answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
         
         // Agregar el botón de "Volver atrás"
@@ -514,8 +514,8 @@
             min-height: 85vh;
           ">
             <h2 style="
-              font-size: 36px;
-              background: linear-gradient(to bottom, #ffffff, #00ffea);
+              font-size: 28px;
+              background: linear-gradient(to bottom, #ffffff, #2c3e50);
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
               margin-bottom: 30px;
@@ -568,7 +568,7 @@
         if (!proyectoVideoSeen) { 
           answers.push({ text: "Ver video de presentación", action: showProyectoVideo });
         }
-        answers.push({ text: "Ver información en web", action: () => transitionRedirect("https://tecnologiasonix.com/proyecto") });
+        
         answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
     
         // Agregar el botón de "Volver atrás"
@@ -607,8 +607,8 @@
             min-height: 85vh;
           ">
             <h2 style="
-              font-size: 36px;
-              background: linear-gradient(to bottom, #ffffff, #00b5e2);
+              font-size: 28px;
+              background: linear-gradient(to bottom, #ffffff, #2c3e50);
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
               margin-bottom: 30px;
@@ -707,7 +707,7 @@
           ">
             <h2 style="
               font-size: 36px;
-              background: linear-gradient(to bottom, #ffffff, #00b5e2);
+              background: linear-gradient(to bottom, #ffffff, #2c3e50);
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
               margin-bottom: 30px;
