@@ -32,6 +32,8 @@
       width: 100%;
       height: 100%;
       object-fit: cover; /* Asegura que el video cubra toda la pantalla */
+      opacity: 0; /* Inicia con el video invisible */
+      transition: opacity 2s ease-in-out; /* Transición de aparición */
     }
 
     /* Estilo responsive para móviles */
@@ -50,6 +52,14 @@
       Tu navegador no soporta el elemento de video.
     </video>
   </div>
+
+  <script>
+    // Al cargar la página, iniciamos la transición para hacer que el video aparezca
+    window.addEventListener('load', () => {
+      const video = document.querySelector('#video-container video');
+      video.style.opacity = 1; // Cambiamos la opacidad a 1 para que el video aparezca
+    });
+  </script>
 
 </body>
 </html>
