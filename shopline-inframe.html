@@ -45,18 +45,17 @@
       color: var(--text-color);
       line-height: 1.6;
     }
-    /* Cabecera con imagen de fondo y overlay */
-    
+    /* Ícono del carrito */
     .cart-icon {
-  position: fixed;         /* Para que flote en la pantalla */
-  top: 30px;               /* Distancia desde el borde superior */
-  right: 20px;             /* Distancia desde el borde derecho */
-  color: var(--secondary-color);
-  font-size: 1.8rem;
-  text-decoration: none;
-  cursor: pointer;
-  z-index: 1002;           /* Asegura que esté por encima de otros elementos */
-}
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      color: var(--secondary-color);
+      font-size: 1.8rem;
+      text-decoration: none;
+      cursor: pointer;
+      z-index: 1002;
+    }
     .cart-badge {
       position: absolute;
       top: -5px;
@@ -67,9 +66,7 @@
       padding: 2px 6px;
       font-size: 0.8rem;
     }
-    /* Se elimina la navegación, el menú y el logo */
-    /* Estilos de la sección Hero */
-   
+    /* Animación de FadeIn para botones */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
@@ -111,40 +108,35 @@
       background-color: var(--secondary-color);
       margin: 0.5rem auto;
     }
-    .features, .product-grid {
+    /* Product grid con scroll horizontal */
+    .product-grid {
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
       gap: 2rem;
+      padding-bottom: 1rem;
     }
-    .feature-card {
-      background-color: white;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      transition: all 0.3s ease;
-      width: 100%;
-      max-width: 350px;
-      color: black;
-    }
+    /* Tarjetas de producto reducidas en tamaño */
     .product-card {
       background-color: var(--primary-color);
+      height: 490px; 
+      max-width: 250px;
+      color: white;
       border-radius: 10px;
       overflow: hidden;
       box-shadow: 0 5px 15px rgba(0,0,0,0.1);
       transition: all 0.3s ease;
-      width: 100%;
-      height: 570px; 
-      max-width: 300px;
-      color: white;
+      flex: 0 0 auto;
+      scroll-snap-align: start;
     }
-    .feature-card:hover, .product-card:hover {
+    .product-card:hover {
       transform: translateY(-10px);
       box-shadow: 0 15px 30px rgba(0,0,0,0.2);
     }
     .product-img {
       position: relative;
-      height: 200px;
+      height: 150px;
       background-color: #ddd;
       overflow: hidden;
     }
@@ -175,31 +167,27 @@
       cursor: pointer;
       border-radius: 3px;
     }
-    .feature-content, .product-content {
-      padding: 1.5rem;
+    .product-content {
+      padding: 1rem 1.5rem 1.5rem;
+      font-size: 0.9rem;
     }
     .product-content h3 {
-      font-size: 1.3rem;
-      margin-bottom: 1rem;
+      font-size: 1.1rem;
+      margin-bottom: 0.8rem;
       color: #e67e22;
     }
-    
-    .product-grid {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 2rem;
+    .product-content p {
+      margin-bottom: 0.8rem;
     }
-  
-  
+    /* Estilos para select e inputs modernos */
     .modern-select, .modern-input {
       width: 100%;
-      padding: 0.6rem 0.8rem;
+      padding: 0.5rem 0.7rem;
       margin-bottom: 0.5rem;
       border: 1px solid rgba(255,255,255,0.3);
       border-radius: 5px;
       background-color: rgba(255,255,255,0.1);
-      font-size: 1rem;
+      font-size: 0.9rem;
       transition: border-color 0.3s ease;
       color: white;
     }
@@ -211,7 +199,9 @@
       margin-top: 0.5rem;
       font-weight: bold;
       color: var(--accent-color);
+      font-size: 0.9rem;
     }
+    /* Modal de carrito y notificación */
     .modal {
       display: none;
       position: fixed;
@@ -286,6 +276,7 @@
       max-width: 400px;
       text-align: center;
     }
+    /* Sección de Testimonios (sin cambios) */
     .testimonials {
       background-color: var(--primary-color);
       color: white;
@@ -324,6 +315,7 @@
       margin-right: 1rem;
       background-color: #aaa;
     }
+    /* Sección de Contacto */
     .contact {
       background-color: var(--light-color);
       padding: 5rem 1rem;
@@ -440,20 +432,18 @@
       height: 40px;
     }
     
-    
     @media (min-width: 992px) {
-  .product-grid {
-    justify-content: space-between;
-  }
-  .product-card {
-    flex: 0 0 calc(33.33% - 2rem); /* Ancho de un tercio menos el espacio del gap */
-    max-width: calc(33.33% - 2rem);
-  }
-}
+      .product-grid {
+        justify-content: space-between;
+      }
+      .product-card {
+        flex: 0 0 calc(33.33% - 2rem);
+        max-width: calc(33.33% - 2rem);
+      }
+    }
   </style>
 </head>
 <body>
- 
   <!-- Modal de notificación -->
   <div id="notificationModal" class="notification-modal" onclick="closeNotificationModal()">
     <div class="modal-content">
@@ -473,19 +463,22 @@
     </div>
   </header>
 
-  
-
   <!-- Sección de Tienda con tarjetas modernizadas y galerías de 2 imágenes -->
   <section id="tienda" class="section">
-    <center><strong><h3 class="section-title">Compra tus Tarjetas de Reseñas</h3>
-    <p>Elige entre nuestros 3 exclusivos modelos de tarjetas de reseñas de Google. Cada modelo cuenta con un expositor de metraquilato incluido.</p></strong></center> <br>
+    <center>
+      <strong>
+        <h3 class="section-title">Compra tus Tarjetas de Reseñas</h3>
+        <p>Elige entre nuestros 3 exclusivos modelos de tarjetas de reseñas de Google. Cada modelo cuenta con un expositor de metraquilato incluido.</p>
+      </strong>
+    </center>
+    <br>
     <div class="product-grid">
       <!-- Producto Modelo 1 -->
       <div class="product-card" data-unitprice="50">
         <div class="product-img">
           <div class="gallery" id="gallery1">
             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSFsY35KP2tZx8AeLg7izm40bIIJqKmLT3WKQ&s" alt="Tarjeta Modelo 1 - Imagen 1" class="active">
-            <img src="https://tus5estrellas.es/wp-content/uploads/2023/12/Captura-de-pantalla-2023-12-14-140321.jpg">
+            <img src="https://tus5estrellas.es/wp-content/uploads/2023/12/Captura-de-pantalla-2023-12-14-140321.jpg" alt="Tarjeta Modelo 1 - Imagen 2">
           </div>
           <div class="gallery-controls">
             <button onclick="prevImage('gallery1')">&lt;</button>
@@ -584,9 +577,7 @@
     </div>
   </div>
 
-
-
-  <!-- JavaScript para menú, carrito, galerías, notificaciones, subtotales y checkout -->
+  <!-- JavaScript para carrito, galerías, notificaciones, subtotales y checkout -->
   <script>
     // Carrito
     let cart = [];
