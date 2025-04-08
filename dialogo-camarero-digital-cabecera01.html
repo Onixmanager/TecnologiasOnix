@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Tecnologiasonix - Bienvenido</title>
+  <title>Camarero Digital - Tecnologiasonix</title>
   <style>
     /* Reset básico */
     * {
@@ -19,7 +19,7 @@
       position: relative;
       min-height: 100vh;
     }
-    /* Fondo tecnológico animado */
+    /* Fondo animado similar al ejemplo */
     body::before {
       content: "";
       position: fixed;
@@ -47,10 +47,10 @@
       align-items: center;
       justify-content: center;
       z-index: 2000;
-      cursor: pointer;
+      cursor: default; /* Cambiado a cursor normal */
     }
     #splash h1 {
-      font-size: 1.5rem;
+      font-size: 1.7rem;
       text-transform: uppercase;
       letter-spacing: 4px;
       color: #2c3e50;
@@ -61,7 +61,7 @@
       from { text-shadow: 0 0 10px #2c3e50, 0 0 20px #2c3e50, 0 0 30px #2c3e50; }
       to { text-shadow: 0 0 20px #34495e, 0 0 30px #34495e, 0 0 40px #34495e; }
     }
-    /* Transición tecnológica para redirección */
+    /* Overlay de transición para redirección */
     #transitionOverlay {
       position: fixed;
       top: 0;
@@ -78,38 +78,16 @@
       opacity: 1;
       pointer-events: all;
     }
-    /* Animación para diálogos: entrada suave y ralentizada */
-    @keyframes fadeInSlow {
-      0% {
-        opacity: 0;
-        transform: translateY(20px);
-      }
-      100% {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-    /* Modal del cuestionario */
-    .modal {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(255, 255, 255, 0.95);
+    /* Contenedor de tarjetas */
+    #cardContainer {
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      z-index: 1000;
-      opacity: 1;
-      transition: opacity 0.8s ease;
+      min-height: 100vh;
+      padding: 20px;
     }
-    /* Usamos la clase "hide" para activar el fade out */
-    .modal.hide {
-      opacity: 0;
-      pointer-events: none;
-    }
-    .modal-content {
+    .card {
       background: #ffffff;
       border: 2px solid #2c3e50;
       border-radius: 10px;
@@ -117,25 +95,28 @@
       width: 90%;
       max-width: 500px;
       text-align: center;
-      position: relative;
-      animation: fadeInSlow 1s ease-in-out;
-      color: #000000;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
+      /* Animación de entrada */
+      animation: fadeIn 0.5s ease forwards;
     }
-    .question {
-      font-size: 1.3rem;
+    .card h2 {
+    font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: #2c3e50;
+    }
+    .card p {
+    font-size: 1.1rem;
       margin-bottom: 1.5rem;
       color: #000000;
     }
-    .answers {
-      list-style: none;
+    /* Alineación izquierda solo para beneficios */
+    .card[data-title="Beneficios"] p {
+      text-align: left;
+      margin-left: 15px;
     }
-    .answers li {
-      margin: 0.5rem 0;
-    }
-    /* Botones con diseño más profesional */
-    .answers button {
-      width: 100%;
-      padding: 0.8rem;
+    .card button {
+      padding: 0.8rem 1.2rem;
       font-size: 1rem;
       border: none;
       border-radius: 5px;
@@ -144,52 +125,17 @@
       cursor: pointer;
       transition: transform 0.3s ease, background 0.3s ease;
     }
-    .answers button:hover {
+    .card button:hover {
       transform: scale(1.05);
       background: linear-gradient(45deg, #FF6B35, #FFA500);
     }
-    /* Responsive para móviles y escritorio */
-    @media (min-width: 768px) {
-      #splash h1 {
-        font-size: 3rem;
-      }
-      .modal-content {
-        padding: 3rem;
-      }
-      .question {
-        font-size: 1.5rem;
-      }
-      .answers button {
-        font-size: 1.1rem;
-      }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
     }
-    #videoWrapper {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: #ffffff;
-      color: #000000;
-    }
-    #videoWrapper button {
-      margin-top: 1rem;
-      padding: 0.5rem 1rem;
-      font-size: 1rem;
-      background: linear-gradient(45deg, #FF6B35, #FFA500);
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: transform 0.3s ease, background 0.3s ease;
-      color: #ffffff;
-    }
-    #videoWrapper button:hover {
-      transform: scale(1.05);
-      background: linear-gradient(45deg, #FF4500, #FF6B35);
+    @keyframes fadeOut {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(-20px); }
     }
   </style>
 </head>
@@ -197,579 +143,88 @@
   <!-- Overlay de transición para redirección -->
   <div id="transitionOverlay"></div>
 
-  <!-- Splash Screen -->
+  <!-- Splash Screen (se oculta tras 2.5 segundos) -->
   <div id="splash">
-    <h1>Sabemos lo importante que es tu negocio y cómo podemos ayudarte.</h1>
+    <h1>Camarero Digital</h1>
   </div>
 
-  <!-- Contenido principal -->
-  <div id="main-content"></div>
-
-  <!-- Modal del cuestionario (inicialmente oculto con la clase "hide") -->
-  <div class="modal hide" id="quizModal">
-    <div class="modal-content">
-      <div id="quizContainer">
-        <!-- Se inyecta la pregunta actual -->
-      </div>
-    </div>
-  </div>
+  <!-- Contenedor principal para tarjetas -->
+  <div id="cardContainer"></div>
 
   <script>
-    let splashTimer;
-    // Variable global para almacenar el cuestionario actual
-    let currentQuizData = [];
-    
-    // Variable global para el video actual (se usará en onYouTubeIframeAPIReady)
-    let currentVideoId = 'Bacr6S1UMxc'; // valor por defecto
-    
-    // Variables de estado para cada diálogo (in-memory solamente)
-    let physicalVideoSeen = false;
-    let professionalVideoSeen = false;
-    let proyectoVideoSeen = false; // Estado para el video de emprendedor/proyecto
-    
-    // Cuestionario principal
-    const mainQuizData = [
-      {
-        question: " Conoce nuestros productos para que sepas como podemos ayudarte,cuéntanos,¿Qué producto o servicio crees que se adapta a las necesidades de tu negocio?",
-        answers: [
-          { text: "Camarero Digital", next: null, action: () => showCamareroQuestion(true) },
-          { text: "Secretario Inteligente", next: null, action: () => showProfesionalesDialog() },
-          { text: "Comercio 24/7", next: null, action: () => showComercioPhysicalDialog() },
-          { text: "Web/App/Software/Proyecto", next: null, action: () => showProyectoDialog() },
-          { text: "Tarjetas Reseñas De Google", next: null, action: () => transitionRedirect("https://tecnologiasonix.com/shopline-inframe") }
-        ]
+    const cards = [
+      { 
+        title: "¿Que es Camarero Digital?",
+        content: "Es tu aliado tecnológico para optimizar la gestión en hostelería. Digitaliza pedidos y reservas, elimina colas y errores, y ofrece a tus clientes una experiencia ágil y moderna desde su mesa. ¡Servicio impecable, sin complicaciones! 🚀"
+      },
+      { 
+        title: "¿Como Funciona?",
+        content: "Tus clientes escanean un expositor con un chip NFC y código QR (o usan dispositivos en mesa), eligen su pedido, y este llega al instante a cocina/barra. Sin esperas, sin malentendidos. ¡Todo fluye mientras tú enfocas tu equipo en lo importante! 💡"
+      },
+      { 
+        title: "Beneficios",
+        content: "✅ <strong>Ahorra tiempo:</strong> Pedidos directos, sin intermediarios.<br>✅ <strong>Clientes felices:</strong> Autogestión rápida y sin errores.<br>✅ <strong>Impulsa ventas:</strong> Recomendaciones y promos integradas.<br>✅ <strong>Analítica en tiempo real:</strong> Toma decisiones con datos.<br><br>¿Te gustaría verlo en acción? 😉"
+      },
+      { 
+        title: "¡Conócenos Más!",
+        content: "Gracias por tu interés en Camarero Digital. Serás redirigido a nuestro sitio web para descubrir en detalle todas las funcionalidades y beneficios que ofrecemos.",
+        redirect: "https://tecnologiasonix.com/#contacto"
       }
+      
     ];
     
-    const quizContainer = document.getElementById("quizContainer");
-    const modal = document.getElementById("quizModal");
+    let currentCardIndex = 0;
+    const cardContainer = document.getElementById("cardContainer");
+    const splash = document.getElementById("splash");
+    const transitionOverlay = document.getElementById("transitionOverlay");
     
-    // Renderiza la pregunta actual
-    function renderQuestion(index) {
-      const data = currentQuizData[index];
-      let html = `<div class="question">${data.question}</div><ul class="answers">`;
-      data.answers.forEach((ans, i) => {
-        html += `<li><button onclick="handleAnswer(${index}, ${i})">${ans.text}</button></li>`;
-      });
-      html += '</ul>';
-      quizContainer.innerHTML = html;
+    function renderCard(index) {
+      cardContainer.innerHTML = "";
+      const cardData = cards[index];
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.setAttribute('data-title', cardData.title); // Nuevo atributo para CSS
+      
+      card.innerHTML = `
+        <h2>${cardData.title}</h2>
+        <p>${cardData.content}</p>
+      `;
+      
+      const btn = document.createElement("button");
+      btn.textContent = "Siguiente";
+      btn.onclick = () => nextCard();
+      card.appendChild(btn);
+      
+      cardContainer.appendChild(card);
     }
     
-    // Maneja la respuesta
-    function handleAnswer(qIndex, aIndex) {
-      const answer = currentQuizData[qIndex].answers[aIndex];
-      if (answer.action) {
-        answer.action();
-      } else if (answer.next !== null) {
-        renderQuestion(answer.next);
-      } else {
-        modal.classList.add("hide");
+    function nextCard() {
+      const cardElem = document.querySelector('.card');
+      if (cardElem) {
+        cardElem.style.animation = 'fadeOut 0.5s ease forwards';
+        setTimeout(() => {
+          currentCardIndex++;
+          if (currentCardIndex < cards.length) {
+            renderCard(currentCardIndex);
+          } else {
+            transitionOverlay.classList.add("active");
+            setTimeout(() => {
+              window.location.href = cards[cards.length - 1].redirect;
+            }, 1000);
+          }
+        }, 500);
       }
     }
     
-    // Muestra contenido estático según producto seleccionado
-    function showContent(product) {
-      modal.classList.add("hide");
-      const mainContent = document.getElementById("main-content");
-      setTimeout(() => {
-        switch(product) {
-          case "comercio":
-            mainContent.innerHTML = `<h1 style="text-align:center; margin-top:2rem;">Comercio 24/7</h1>
-              <p style="text-align:center;">Gestiona tu comercio en cualquier momento y lugar.</p>`;
-            break;
-          case "emprendedor":
-            mainContent.innerHTML = `<h1 style="text-align:center; margin-top:2rem;">Soy Emprendedor</h1>
-              <p style="text-align:center;">Herramientas y recursos para potenciar tu emprendimiento.</p>`;
-            break;
-          default:
-            mainContent.innerHTML = `<h1 style="text-align:center; margin-top:2rem;">Bienvenido</h1>`;
-        }
-      }, 800);
-    }
-    
-    // Transición y redirección modificada:
-    function transitionRedirect(url) {
-      const overlay = document.getElementById("transitionOverlay");
-      overlay.classList.add("active");
-      setTimeout(() => {
-        // Si es la URL de Tarjetas Reseñas De Google, redirige en la misma pestaña.
-        if(url === "https://tecnologiasonix.com/shopline-inframe"){
-          window.location.href = url;
-        } else {
-          window.open(url, '_blank');
-        }
-      }, 1000);
-    }
-    
-    // Inicia el cuestionario principal
-    function startQuiz() {
-      currentQuizData = mainQuizData;
-      renderQuestion(0);
-      modal.classList.remove("hide");
-    }
-    
-    // Oculta el splash y arranca el cuestionario
     function hideSplash() {
-      clearTimeout(splashTimer);
-      document.getElementById("splash").style.display = "none";
-      startQuiz();
+      splash.style.display = "none";
+      renderCard(currentCardIndex);
     }
     
     window.addEventListener("load", () => {
-      splashTimer = setTimeout(hideSplash, 2500);
-      document.getElementById("splash").addEventListener("click", hideSplash);
+      setTimeout(hideSplash, 2500);
+      // Eliminado el event listener de click en el splash
     });
-    
-    // Diálogo para Camarero Digital (con opción de video)
-    function showCamareroQuestion(includeVideo) {
-      modal.classList.add("hide");
-      setTimeout(() => {
-        const answers = [];
-        if (includeVideo) {
-          answers.push({ text: "Ver video de presentación", action: showCamareroVideo });
-        }
-        
-        answers.push({ text: "Leer tarjetas de presentación", action: () => transitionRedirect("https://tecnologiasonix.com/dialogo-camarero-digital-cabecera") });
-        
-        answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
-        // Agregar el botón de "Volver atrás"
-        answers.push({ text: "Volver atrás", action: () => showMainQuizData() });
-    
-        currentQuizData = [
-          {
-            question: "Camarero Digital está diseñado para bares, restaurantes, hoteles y servicios con pedidos o reservas. Facilita la gestión de tu negocio y mejora la experiencia con el cliente.<br><br> ¿Cómo prefieres recibir más información?:",
-            answers: answers
-          }
-        ];
-        renderQuestion(0);
-        modal.classList.remove("hide");
-      }, 300);
-    }
-    
-    // Función para mostrar el diálogo de mainQuizData
-    function showMainQuizData() {
-      modal.classList.add("hide");
-      setTimeout(() => {
-        currentQuizData = mainQuizData;
-        renderQuestion(0);
-        modal.classList.remove("hide");
-      }, 300);
-    }
-    
-    // Diálogo para Comercio 24/7
-    function showComercioDialog() {
-      modal.classList.add("hide");
-      setTimeout(() => {
-        const comercioQuizData = [
-          {
-            question: "Comercio 24/7 está diseñado para mantener tu negocio siempre abierto. Gracias a nuestro sistema NFC, tu tienda estará disponible para tus clientes en todo momento. ¿Cómo prefieres recibir más información?",
-            answers: [
-              { text: "Tienda de productos físicos", action: showComercioPhysicalDialog },
-              { text: "Servicios Profesionales", action: showProfesionalesDialog },
-              // Agregar el botón de "Volver atrás"
-              { text: "Volver atrás", action: () => showMainQuizData() }
-            ]
-          }
-        ];
-        currentQuizData = comercioQuizData;
-        renderQuestion(0);
-        modal.classList.remove("hide");
-      }, 300);
-    }
-    
-    // Diálogo para Ventas de productos físicos (con opción de video, según estado)
-    function showComercioPhysicalDialog() {
-      modal.classList.add("hide");
-      setTimeout(() => {
-        const answers = [];
-        if (!physicalVideoSeen) {
-          answers.push({ text: "Ver video de presentación", action: showComercioPhysicalVideo });
-        }
-        
-        answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
-        
-        // Agregar el botón de "Volver atrás"
-        answers.push({ text: "Volver atrás", action: () => showMainQuizData() });
-    
-        const physicalQuizData = [
-          {
-            question: "Con Comercio 27/7, tu negocio permanece siempre abierto. Gracias a nuestro sistema NFC, tu tienda estará disponible para tus clientes en todo momento. <br><br>¿Cómo prefieres recibir más información? :",
-            answers: answers
-          }
-        ];
-        currentQuizData = physicalQuizData;
-        renderQuestion(0);
-        modal.classList.remove("hide");
-      }, 300);
-    }
-    
-    // Diálogo para Profesionales que gestionan citas (diálogo independiente)
-    function showProfesionalesDialog() {
-      modal.classList.add("hide");
-      setTimeout(() => {
-        const answers = [];
-        if (!professionalVideoSeen) {
-          answers.push({ text: "Ver video de presentación", action: showProfesionalesVideo });
-        }
-        
-        answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
-        
-        // Agregar el botón de "Volver atrás"
-        answers.push({ text: "Volver atrás", action: () => showMainQuizData() });
-    
-        const professionalsQuizData = [
-          {
-            question: "Secretario Inteligente está diseñado para negocios que gestionan citas y mantiene todo bajo control. Pero va mucho más allá, gracias a su inteligencia artificial integrada. <br> <br>¿Cómo prefieres recibir más información?:",
-            answers: answers
-          }
-        ];
-        currentQuizData = professionalsQuizData;
-        renderQuestion(0);
-        modal.classList.remove("hide");
-      }, 300);
-    }
-    
-    // Función para mostrar el video de Comercio 27/7 para Ventas de productos físicos
-    function showComercioPhysicalVideo() {
-      physicalVideoSeen = true;
-      modal.classList.add("hide");
-      // Actualizamos el video ID para productos físicos
-      currentVideoId = "y0U1-DZDkM0";
-      const mainContent = document.getElementById("main-content");
-      setTimeout(() => {
-        mainContent.innerHTML = `
-          <div id="videoWrapper" style="
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0d1117;
-            color: white;
-            min-height: 85vh;
-          ">
-            <h2 style="
-              font-size: 36px;
-              background: linear-gradient(to bottom, #ffffff, #00b5e2);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-              margin-bottom: 30px;
-            ">
-              Comercio 24/7
-            </h2>
-            <div id="videoContainer" style="
-              width: 100%;
-              max-width: 100%;
-              aspect-ratio: 16 / 9;
-              margin-bottom: 30px;
-              position: relative;
-            ">
-              <!-- Aquí irá el iframe del video para Ventas de productos físicos -->
-            </div>
-            <button onclick="backToPhysicalDialog()" style="
-              background-color: transparent;
-              border: 2px solid white;
-              color: white;
-              padding: 12px 24px;
-              font-size: 16px;
-              border-radius: 8px;
-              cursor: pointer;
-              transition: all 0.3s ease;
-              box-shadow: 0 4px 10px rgba(255,255,255,0.1);
-            " onmouseover="this.style.backgroundColor='#ffffff'; this.style.color='#000000';" 
-               onmouseout="this.style.backgroundColor='transparent'; this.style.color='white';">
-              Volver
-            </button>
-          </div>
-        `;
-    
-        if (!document.getElementById("yt-api")) {
-          const tag = document.createElement('script');
-          tag.src = "https://www.youtube.com/iframe_api";
-          tag.id = "yt-api";
-          document.body.appendChild(tag);
-        } else {
-          setTimeout(onYouTubeIframeAPIReady, 500);
-        }
-      }, 300);
-    }
-    
-    // Función para mostrar el video de Comercio 24/7 para Profesionales (diálogo independiente)
-    function showProfesionalesVideo() {
-      professionalVideoSeen = true;
-      modal.classList.add("hide");
-      // Para profesionales dejamos el video vacío por el momento
-      currentVideoId = "7DtWRwU9fiM";
-      const mainContent = document.getElementById("main-content");
-      setTimeout(() => {
-        mainContent.innerHTML = `
-          <div id="videoWrapper" style="
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0d1117;
-            color: white;
-            min-height: 85vh;
-          ">
-            <h2 style="
-              font-size: 28px;
-              background: linear-gradient(to bottom, #ffffff, #2c3e50);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-              margin-bottom: 30px;
-            ">
-              Secretario Inteligente
-            </h2>
-            <div id="videoContainer" style="
-              width: 100%;
-              max-width: 100%;
-              aspect-ratio: 16 / 9;
-              margin-bottom: 30px;
-              position: relative;
-            ">
-              <!-- Aquí irá el iframe del video para Profesionales -->
-            </div>
-            <button onclick="backToProfessionalDialog()" style="
-              background-color: transparent;
-              border: 2px solid white;
-              color: white;
-              padding: 12px 24px;
-              font-size: 16px;
-              border-radius: 8px;
-              cursor: pointer;
-              transition: all 0.3s ease;
-              box-shadow: 0 4px 10px rgba(255,255,255,0.1);
-            " onmouseover="this.style.backgroundColor='#ffffff'; this.style.color='#000000';" 
-               onmouseout="this.style.backgroundColor='transparent'; this.style.color='white';">
-              Volver
-            </button>
-          </div>
-        `;
-    
-        if (!document.getElementById("yt-api")) {
-          const tag = document.createElement('script');
-          tag.src = "https://www.youtube.com/iframe_api";
-          tag.id = "yt-api";
-          document.body.appendChild(tag);
-        } else {
-          setTimeout(onYouTubeIframeAPIReady, 500);
-        }
-      }, 300);
-    }
-    
-    // Nueva función para el diálogo de Web/App, Software o Proyecto (emprendedor)
-    function showProyectoDialog() {
-      modal.classList.add("hide");
-      setTimeout(() => {
-        const answers = [];
-        // Solo mostramos la opción de video si no se ha visto ya
-        if (!proyectoVideoSeen) { 
-          answers.push({ text: "Ver video de presentación", action: showProyectoVideo });
-        }
-        
-        answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
-    
-        // Agregar el botón de "Volver atrás"
-        answers.push({ text: "Volver atrás", action: () => showMainQuizData() });
-    
-        const proyectoQuizData = [
-          {
-            question: "¿Necesitas crear una web, app, software o proyecto y no sabes por dónde empezar? No te preocupes, nosotros nos encargamos de todo. <br><br>Cómo prefieres recibir más información :",
-            answers: answers
-          }
-        ];
-        currentQuizData = proyectoQuizData;
-        renderQuestion(0);
-        modal.classList.remove("hide");
-      }, 300);
-    }
-    
-    // Función para mostrar el video de Web/App, Software o Proyecto
-    function showProyectoVideo() {
-      modal.classList.add("hide");
-      proyectoVideoSeen = true;
-      // Actualizamos el video ID para proyecto
-      currentVideoId = "zvXag-YOk9s";
-      const mainContent = document.getElementById("main-content");
-      setTimeout(() => {
-        mainContent.innerHTML = `
-          <div id="videoWrapper" style="
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0d1117;
-            color: white;
-            min-height: 85vh;
-          ">
-            <h2 style="
-              font-size: 28px;
-              background: linear-gradient(to bottom, #ffffff, #2c3e50);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-              margin-bottom: 30px;
-            ">
-              Web/App, Software o Proyecto
-            </h2>
-            <div id="videoContainer" style="
-              width: 100%;
-              max-width: 100%;
-              aspect-ratio: 16 / 9;
-              margin-bottom: 30px;
-              position: relative;
-            ">
-              <!-- Aquí irá el iframe del video para Proyecto -->
-            </div>
-            <button onclick="backToProyectoDialog()" style="
-              background-color: transparent;
-              border: 2px solid white;
-              color: white;
-              padding: 12px 24px;
-              font-size: 16px;
-              border-radius: 8px;
-              cursor: pointer;
-              transition: all 0.3s ease;
-              box-shadow: 0 4px 10px rgba(255,255,255,0.1);
-            " onmouseover="this.style.backgroundColor='#ffffff'; this.style.color='#000000';" 
-               onmouseout="this.style.backgroundColor='transparent'; this.style.color='white';">
-              Volver
-            </button>
-          </div>
-        `;
-    
-        if (!document.getElementById("yt-api")) {
-          const tag = document.createElement('script');
-          tag.src = "https://www.youtube.com/iframe_api";
-          tag.id = "yt-api";
-          document.body.appendChild(tag);
-        } else {
-          setTimeout(onYouTubeIframeAPIReady, 500);
-        }
-      }, 300);
-    }
-    
-    // Función para volver al diálogo de Ventas de productos físicos
-    function backToPhysicalDialog() {
-      if (player && player.destroy) {
-        player.destroy();
-      }
-      document.getElementById("main-content").innerHTML = "";
-      showComercioPhysicalDialog();
-    }
-    
-    // Función para volver al diálogo de Profesionales
-    function backToProfessionalDialog() {
-      if (player && player.destroy) {
-        player.destroy();
-      }
-      document.getElementById("main-content").innerHTML = "";
-      showProfesionalesDialog();
-    }
-    
-    // Función para volver al diálogo de Proyecto
-    function backToProyectoDialog() {
-      if (player && player.destroy) {
-        player.destroy();
-      }
-      document.getElementById("main-content").innerHTML = "";
-      showProyectoDialog();
-    }
-    
-    // Función para mostrar el video de YouTube (usada por Camarero Digital y demás diálogos)
-    let player;
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player('videoContainer', {
-        videoId: currentVideoId,
-        playerVars: { 'autoplay': 1, 'controls': 1 },
-        events: { 'onStateChange': onPlayerStateChange }
-      });
-    }
-    
-    function showCamareroVideo() {
-      modal.classList.add("hide");
-      const mainContent = document.getElementById("main-content");
-      setTimeout(() => {
-        mainContent.innerHTML = `
-          <div id="videoWrapper" style="
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #0d1117;
-            color: white;
-            min-height: 85vh;
-          ">
-            <h2 style="
-              font-size: 36px;
-              background: linear-gradient(to bottom, #ffffff, #2c3e50);
-              -webkit-background-clip: text;
-              -webkit-text-fill-color: transparent;
-              margin-bottom: 30px;
-            ">
-              Camarero Digital
-            </h2>
-            <div id="videoContainer" style="
-              width: 100%;
-              max-width: 100%;
-              aspect-ratio: 16 / 9;
-              margin-bottom: 30px;
-              position: relative;
-            ">
-              <!-- Aquí irá el iframe del video de Camarero Digital -->
-            </div>
-            <button onclick="backToQuiz()" style="
-              background-color: transparent;
-              border: 2px solid white;
-              color: white;
-              padding: 12px 24px;
-              font-size: 16px;
-              border-radius: 8px;
-              cursor: pointer;
-              transition: all 0.3s ease;
-              box-shadow: 0 4px 10px rgba(255,255,255,0.1);
-            " onmouseover="this.style.backgroundColor='#ffffff'; this.style.color='#000000';" 
-               onmouseout="this.style.backgroundColor='transparent'; this.style.color='white';">
-              Volver
-            </button>
-          </div>
-        `;
-    
-        if (!document.getElementById("yt-api")) {
-          const tag = document.createElement('script');
-          tag.src = "https://www.youtube.com/iframe_api";
-          tag.id = "yt-api";
-          document.body.appendChild(tag);
-        } else {
-          setTimeout(onYouTubeIframeAPIReady, 500);
-        }
-      }, 300);
-    }
-    
-    function backToQuiz() {
-      if (player && player.destroy) {
-        player.destroy();
-      }
-      document.getElementById("main-content").innerHTML = "";
-      showCamareroQuestion(false);
-    }
-    
-    function onPlayerStateChange(event) {
-      if (event.data === YT.PlayerState.ENDED) {
-        document.getElementById("main-content").innerHTML = "";
-        showCamareroQuestion(false);
-        if (player && player.destroy) {
-          player.destroy();
-        }
-      }
-    }
   </script>
 </body>
 </html>
