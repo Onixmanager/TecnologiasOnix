@@ -230,7 +230,7 @@
     // Cuestionario principal
     const mainQuizData = [
       {
-        question: "Conoce nuestros productos para que sepas cómo podemos ayudarte. Cuéntanos, ¿qué producto o servicio crees que se adapta a las necesidades de tu negocio?",
+        question: " Conoce nuestros productos para que sepas como podemos ayudarte,cuéntanos,¿Qué producto o servicio crees que se adapta a las necesidades de tu negocio?",
         answers: [
           { text: "Camarero Digital", next: null, action: () => showCamareroQuestion(true) },
           { text: "Secretario Inteligente", next: null, action: () => showProfesionalesDialog() },
@@ -328,6 +328,8 @@
         if (includeVideo) {
           answers.push({ text: "Ver video de presentación", action: showCamareroVideo });
         }
+        
+        answers.push({ text: "Leer tarjetas de presentación", action: () => transitionRedirect("https://tecnologiasonix.com/dialogo-camarero-digital-cabecera") });
         
         answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
         // Agregar el botón de "Volver atrás"
