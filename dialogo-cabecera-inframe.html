@@ -243,7 +243,7 @@
   <div id="screensaver">
     <video id="screensaverVideo" autoplay muted loop>
       <!-- Coloca aquí el link de tu video -->
-      <source src="videocabecera.mp4" type="video/mp4">
+      <source src="salvapantallas.mp4" type="video/mp4">
       Tu navegador no soporta el elemento de video.
     </video>
   </div>
@@ -394,26 +394,7 @@
       }, 300);
     }
     
-    // Diálogo para Comercio 24/7
-    function showComercioDialog() {
-      modal.classList.add("hide");
-      setTimeout(() => {
-        const comercioQuizData = [
-          {
-            question: "Comercio 24/7 está diseñado para mantener tu negocio siempre abierto. Gracias a nuestro sistema NFC, tu tienda estará disponible para tus clientes en todo momento. ¿Cómo prefieres recibir más información?",
-            answers: [
-              { text: "Tienda de productos físicos", action: showComercioPhysicalDialog },
-              { text: "Servicios Profesionales", action: showProfesionalesDialog },
-              // Agregar el botón de "Volver atrás"
-              { text: "Volver atrás", action: () => showMainQuizData() }
-            ]
-          }
-        ];
-        currentQuizData = comercioQuizData;
-        renderQuestion(0);
-        modal.classList.remove("hide");
-      }, 300);
-    }
+    
     
     // Diálogo para Ventas de productos físicos (con opción de video, según estado)
     function showComercioPhysicalDialog() {
@@ -423,6 +404,8 @@
         if (!physicalVideoSeen) {
           answers.push({ text: "Ver video de presentación", action: showComercioPhysicalVideo });
         }
+        
+        answers.push({ text: "Leer tarjetas de presentación", action: () => transitionRedirect("dialogo-comercio247cab") });
         
         answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
         
@@ -449,6 +432,8 @@
         if (!professionalVideoSeen) {
           answers.push({ text: "Ver video de presentación", action: showProfesionalesVideo });
         }
+        
+        answers.push({ text: "Leer tarjetas de presentación", action: () => transitionRedirect("dialogo-secretariocab") });
         
         answers.push({ text: "Hablar con un comercial", action: () => transitionRedirect("https://wa.me/+34643229507") });
         
@@ -491,7 +476,7 @@
           ">
             <h2 style="
               font-size: 36px;
-              background: linear-gradient(to bottom, #ffffff, #00b5e2);
+              background: linear-gradient(to bottom, #ffffff, #2c3e50);
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
               margin-bottom: 30px;
