@@ -129,6 +129,7 @@
       to { opacity: 0; transform: translateY(-20px); }
     }
   </style>
+
 </head>
 <body>
   <div id="transitionOverlay"></div>
@@ -160,51 +161,28 @@
         content: "Gracias por tu interés en Comercio 24/7. Serás redirigido a nuestro sitio web para conocer todos los detalles y comenzar a vender sin límites de horario.",
         redirect: "https://wa.me/+34643229507"
       }
-    ];let currentCardIndex = 0;
-const cardContainer = document.getElementById("cardContainer");
-const splash = document.getElementById("splash");
-const transitionOverlay = document.getElementById("transitionOverlay");
+    ];
+    
+    let currentCardIndex = 0;
+    const cardContainer = document.getElementById("cardContainer");
+    const splash = document.getElementById("splash");
+    const transitionOverlay = document.getElementById("transitionOverlay");
 
-function renderCard(index) {
-  cardContainer.innerHTML = "";
-  const cardData = cards[index];
-  const card = document.createElement("div");
-  card.classList.add("card");
-  card.setAttribute('data-title', cardData.title);
-  card.innerHTML = `<h2>${cardData.title}</h2><p>${cardData.content}</p>`;
-  const btn = document.createElement("button");
-  btn.textContent = "Siguiente";
-  btn.onclick = () => nextCard();
-  card.appendChild(btn);
-  cardContainer.appendChild(card);
-}
-
-function nextCard() {
-  const cardElem = document.querySelector('.card');
-  if (cardElem) {
-    cardElem.style.animation = 'fadeOut 0.5s ease forwards';
-    setTimeout(() => {
-      currentCardIndex++;
-      if (currentCardIndex < cards.length) {
-        renderCard(currentCardIndex);
-      } else {
-        transitionOverlay.classList.add("active");
-        setTimeout(() => {
-          window.location.href = cards[cards.length - 1].redirect;
-        }, 1000);
-      }
-    }, 500);
-  }
-}
-
-    // Si la tarjeta tiene propiedad "redirect" (última tarjeta) se abre la URL en una nueva pestaña
+    function renderCard(index) {
+      cardContainer.innerHTML = "";
+      const cardData = cards[index];
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.setAttribute('data-title', cardData.title);
+      card.innerHTML = `<h2>${cardData.title}</h2><p>${cardData.content}</p>`;
+      
+      const btn = document.createElement("button");
+      btn.textContent = "Siguiente";
+      
+      // Si la tarjeta actual tiene la propiedad "redirect", asignamos la acción para abrir en una nueva pestaña.
       if (cardData.redirect) {
-        btn.textContent = "Siguiente";
-        btn.onclick = () => {
-          window.open(cardData.redirect, '_blank');
-        }
+        btn.onclick = () => window.open(cardData.redirect, '_blank');
       } else {
-        btn.textContent = "Siguiente";
         btn.onclick = () => nextCard();
       }
       
@@ -212,15 +190,33 @@ function nextCard() {
       cardContainer.appendChild(card);
     }
 
-function hideSplash() {
-  splash.style.display = "none";
-  renderCard(currentCardIndex);
-}
+    function nextCard() {
+      const cardElem = document.querySelector('.card');
+      if (cardElem) {
+        cardElem.style.animation = 'fadeOut 0.5s ease forwards';
+        setTimeout(() => {
+          currentCardIndex++;
+          if (currentCardIndex < cards.length) {
+            renderCard(currentCardIndex);
+          } else {
+            transitionOverlay.classList.add("active");
+            setTimeout(() => {
+              // Redirección en nueva pestaña para la última tarjeta
+              window.open(cards[cards.length - 1].redirect, '_blank');
+            }, 1000);
+          }
+        }, 500);
+      }
+    }
 
-window.addEventListener("load", () => {
-  setTimeout(hideSplash, 2500);
-});
+    function hideSplash() {
+      splash.style.display = "none";
+      renderCard(currentCardIndex);
+    }
 
+    window.addEventListener("load", () => {
+      setTimeout(hideSplash, 2500);
+    });
   </script>
 </body>
 </html>
