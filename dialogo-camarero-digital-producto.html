@@ -47,7 +47,7 @@
       align-items: center;
       justify-content: center;
       z-index: 2000;
-      cursor: default; /* Cambiado a cursor normal */
+      cursor: default;
     }
     #splash h1 {
       font-size: 1.7rem;
@@ -101,12 +101,12 @@
       animation: fadeIn 0.5s ease forwards;
     }
     .card h2 {
-    font-size: 1.6rem;
+      font-size: 1.6rem;
       margin-bottom: 1rem;
       color: #2c3e50;
     }
     .card p {
-    font-size: 1.1rem;
+      font-size: 1.1rem;
       margin-bottom: 1.5rem;
       color: #000000;
     }
@@ -170,7 +170,6 @@
         content: "Gracias por tu interés en Camarero Digital. Si deseas saber más puedes contactar con uno de nuestros comerciales ahora mismo para conocer todas las funcionalidades y beneficios que ofrecemos.",
         redirect: "https://wa.me/+34643229507"
       }
-      
     ];
     
     let currentCardIndex = 0;
@@ -183,7 +182,7 @@
       const cardData = cards[index];
       const card = document.createElement("div");
       card.classList.add("card");
-      card.setAttribute('data-title', cardData.title); // Nuevo atributo para CSS
+      card.setAttribute('data-title', cardData.title);
       
       card.innerHTML = `
         <h2>${cardData.title}</h2>
@@ -191,10 +190,19 @@
       `;
       
       const btn = document.createElement("button");
-      btn.textContent = "Siguiente";
-      btn.onclick = () => nextCard();
-      card.appendChild(btn);
       
+      // Si la tarjeta tiene propiedad "redirect" (última tarjeta) se abre la URL en una nueva pestaña
+      if (cardData.redirect) {
+        btn.textContent = "Siguiente";
+        btn.onclick = () => {
+          window.open(cardData.redirect, '_blank');
+        }
+      } else {
+        btn.textContent = "Siguiente";
+        btn.onclick = () => nextCard();
+      }
+      
+      card.appendChild(btn);
       cardContainer.appendChild(card);
     }
     
@@ -208,9 +216,6 @@
             renderCard(currentCardIndex);
           } else {
             transitionOverlay.classList.add("active");
-            setTimeout(() => {
-              window.location.href = cards[cards.length - 1].redirect;
-            }, 1000);
           }
         }, 500);
       }
@@ -223,7 +228,6 @@
     
     window.addEventListener("load", () => {
       setTimeout(hideSplash, 2500);
-      // Eliminado el event listener de click en el splash
     });
   </script>
 </body>
