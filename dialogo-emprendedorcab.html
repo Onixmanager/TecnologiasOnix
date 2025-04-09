@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Emprende360 - Soluciones Digitales para Emprendedores</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #ffffff;
+      color: #000000;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at center, #34495e, #2c3e50, #ffffff);
+      animation: backgroundFlow 20s linear infinite;
+      z-index: -2;
+    }
+    @keyframes backgroundFlow {
+      from { transform: translate(0, 0) rotate(0deg); }
+      to { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+    #splash {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(255, 255, 255, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+    #splash h1 {
+      font-size: 1.7rem;
+      text-transform: uppercase;
+      letter-spacing: 4px;
+      color: #2c3e50;
+      text-align: center;
+      animation: glow 1.5s ease-in-out infinite alternate;
+    }
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #2c3e50, 0 0 20px #2c3e50, 0 0 30px #2c3e50; }
+      to { text-shadow: 0 0 20px #34495e, 0 0 30px #34495e, 0 0 40px #34495e; }
+    }
+    #transitionOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      z-index: 3000;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 1s ease;
+    }
+    #transitionOverlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+    #cardContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .card {
+      background: #ffffff;
+      border: 2px solid #2c3e50;
+      border-radius: 10px;
+      padding: 2rem;
+      width: 90%;
+      max-width: 500px;
+      text-align: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      margin-bottom: 1rem;
+      animation: fadeIn 0.5s ease forwards;
+    }
+    .card h2 {
+      font-size: 1.6rem;
+      margin-bottom: 1rem;
+      color: #2c3e50;
+    }
+    .card p {
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      color: #000000;
+    }
+    .card[data-title="Beneficios"] p {
+      text-align: left;
+      margin-left: 15px;
+    }
+    .card button {
+      padding: 0.8rem 1.2rem;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      background: #2c3e50;
+      color: #fff;
+      cursor: pointer;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+    .card button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(45deg, #FF6B35, #FFA500);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeOut {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(-20px); }
+    }
+  </style>
+</head>
+<body>
+  <div id="transitionOverlay"></div>
+  <div id="splash">
+    <h1>Emprende360</h1>
+  </div>
+  <div id="cardContainer"></div>
+  <script>
+    const cards = [
+      {
+        title: "¿Qué es Emprende360?",
+        content: "Es la solución integral para emprendedores que desean lanzar su proyecto digital: crea tu web, app (con o sin IA), software o cualquier idea innovadora en minutos."
+      },
+      {
+        title: "¿Cómo Funciona?",
+        content: "Nuestros expertos te acompañan en todo el proceso: desde el diseño hasta el desarrollo, integrando las tecnologías que requieras, para que tu proyecto cobre vida sin complicaciones."
+      },
+      {
+        title: "Beneficios",
+        content: `✅ <strong>Toda la gama de soluciones:</strong> web, app, software y más.<br>
+                  ✅ <strong>Personalización total:</strong> adapta el producto a tu idea.<br>
+                  ✅ <strong>Integración de IA:</strong> opcional y a medida.<br>
+                  ✅ <strong>Soporte continuo:</strong> asesoría profesional durante todo el proceso.<br>
+                  ✅ <strong>Fácil y rápido:</strong> lanza tu proyecto sin demoras.`
+      },
+      {
+        title: "¡Descubre Más!",
+        content: "Gracias por tu interés en Emprende360. Serás redirigido a nuestro sitio para conocer todos los detalles y comenzar a transformar tu idea en realidad.",
+        redirect: "https://tecnologiasonix.com#emprendedor"
+      }
+    ];
+
+    let currentCardIndex = 0;
+    const cardContainer = document.getElementById("cardContainer");
+    const splash = document.getElementById("splash");
+    const transitionOverlay = document.getElementById("transitionOverlay");
+
+    function renderCard(index) {
+      cardContainer.innerHTML = "";
+      const cardData = cards[index];
+      const card = document.createElement("div");
+      card.classList.add("card");
+      card.setAttribute('data-title', cardData.title);
+      card.innerHTML = `<h2>${cardData.title}</h2><p>${cardData.content}</p>`;
+      const btn = document.createElement("button");
+      btn.textContent = "Siguiente";
+      btn.onclick = () => nextCard();
+      card.appendChild(btn);
+      cardContainer.appendChild(card);
+    }
+
+    function nextCard() {
+      const cardElem = document.querySelector('.card');
+      if (cardElem) {
+        cardElem.style.animation = 'fadeOut 0.5s ease forwards';
+        setTimeout(() => {
+          currentCardIndex++;
+          if (currentCardIndex < cards.length) {
+            renderCard(currentCardIndex);
+          } else {
+            transitionOverlay.classList.add("active");
+            setTimeout(() => {
+              window.location.href = cards[cards.length - 1].redirect;
+            }, 1000);
+          }
+        }, 500);
+      }
+    }
+
+    function hideSplash() {
+      splash.style.display = "none";
+      renderCard(currentCardIndex);
+    }
+
+    window.addEventListener("load", () => {
+      setTimeout(hideSplash, 2500);
+    });
+  </script>
+</body>
+</html>
