@@ -197,6 +197,21 @@ function nextCard() {
   }
 }
 
+    // Si la tarjeta tiene propiedad "redirect" (última tarjeta) se abre la URL en una nueva pestaña
+      if (cardData.redirect) {
+        btn.textContent = "Siguiente";
+        btn.onclick = () => {
+          window.open(cardData.redirect, '_blank');
+        }
+      } else {
+        btn.textContent = "Siguiente";
+        btn.onclick = () => nextCard();
+      }
+      
+      card.appendChild(btn);
+      cardContainer.appendChild(card);
+    }
+
 function hideSplash() {
   splash.style.display = "none";
   renderCard(currentCardIndex);
