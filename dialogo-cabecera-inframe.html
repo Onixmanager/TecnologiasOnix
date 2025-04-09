@@ -239,11 +239,11 @@
     </div>
   </div>
 
-  <!-- Nuevo: Salvapantallas con video a pantalla completa -->
+  <!-- Salvapantallas: video a pantalla completa -->
   <div id="screensaver">
     <video id="screensaverVideo" autoplay muted loop>
-      <!-- Reemplaza "salvapantallas.mp4" por la URL del video que quieras usar -->
-      <source src="https://github.com/Onixmanager/TecnologiasOnix/raw/refs/heads/main/videocabecera.mp4" type="video/mp4">
+      <!-- Coloca aquí el link de tu video -->
+      <source src="salvapantallas.mp4" type="video/mp4">
       Tu navegador no soporta el elemento de video.
     </video>
   </div>
@@ -255,6 +255,10 @@
     
     // Variable global para el video actual (se usará en onYouTubeIframeAPIReady)
     let currentVideoId = 'Bacr6S1UMxc'; // valor por defecto
+    
+    // Variables globales para controlar el estado de video
+    let videoPlaying = false;
+    let videoDialogActive = false;
     
     // Variables de estado para cada diálogo (in-memory solamente)
     let physicalVideoSeen = false;
@@ -469,6 +473,8 @@
       modal.classList.add("hide");
       // Actualizamos el video ID para productos físicos
       currentVideoId = "y0U1-DZDkM0";
+      // Indicamos que se muestra un diálogo de video
+      videoDialogActive = true;
       const mainContent = document.getElementById("main-content");
       setTimeout(() => {
         mainContent.innerHTML = `
@@ -535,6 +541,7 @@
       modal.classList.add("hide");
       // Para profesionales dejamos el video vacío por el momento
       currentVideoId = "7DtWRwU9fiM";
+      videoDialogActive = true;
       const mainContent = document.getElementById("main-content");
       setTimeout(() => {
         mainContent.innerHTML = `
@@ -626,6 +633,7 @@
     function showProyectoVideo() {
       modal.classList.add("hide");
       proyectoVideoSeen = true;
+      videoDialogActive = true;
       // Actualizamos el video ID para proyecto
       currentVideoId = "zvXag-YOk9s";
       const mainContent = document.getElementById("main-content");
@@ -694,6 +702,7 @@
         player.destroy();
       }
       document.getElementById("main-content").innerHTML = "";
+      videoDialogActive = false;
       showComercioPhysicalDialog();
     }
     
@@ -703,6 +712,7 @@
         player.destroy();
       }
       document.getElementById("main-content").innerHTML = "";
+      videoDialogActive = false;
       showProfesionalesDialog();
     }
     
@@ -712,6 +722,7 @@
         player.destroy();
       }
       document.getElementById("main-content").innerHTML = "";
+      videoDialogActive = false;
       showProyectoDialog();
     }
     
@@ -727,6 +738,7 @@
     
     function showCamareroVideo() {
       modal.classList.add("hide");
+      videoDialogActive = true;
       const mainContent = document.getElementById("main-content");
       setTimeout(() => {
         mainContent.innerHTML = `
@@ -792,10 +804,16 @@
         player.destroy();
       }
       document.getElementById("main-content").innerHTML = "";
+      videoDialogActive = false;
       showCamareroQuestion(false);
     }
     
     function onPlayerStateChange(event) {
+      if (event.data === YT.PlayerState.PLAYING) {
+        videoPlaying = true;
+      } else {
+        videoPlaying = false;
+      }
       if (event.data === YT.PlayerState.ENDED) {
         document.getElementById("main-content").innerHTML = "";
         showCamareroQuestion(false);
@@ -805,24 +823,27 @@
       }
     }
     
-    /* NUEVA FUNCIÓN: Inactividad - Salvapantallas */
+    /* NUEVA FUNCIÓN: Inactividad - Salvapantallas (con control de video en reproducción) */
     (function() {
       let timer;
       const screensaver = document.getElementById("screensaver");
       const screensaverVideo = document.getElementById("screensaverVideo");
       
       function resetTimer() {
-        // Si el salvapantallas está activo, reiniciamos la web al hacer click o detectar actividad
-        if (screensaver.style.display === "block") {
-          window.location.reload();
-        }
         clearTimeout(timer);
-        timer = setTimeout(showScreensaver, 15000);
+        // Si se está mostrando un diálogo de video o se reproduce un video, no se programa el salvapantallas
+        if (!videoPlaying && !videoDialogActive) {
+          timer = setTimeout(showScreensaver, 15000);
+        }
       }
       
       function showScreensaver() {
+        // Comprobamos nuevamente que no se esté reproduciendo un video ni se muestre un diálogo video
+        if (videoPlaying || videoDialogActive) {
+          resetTimer(); // posponer salvapantallas
+          return;
+        }
         screensaver.style.display = "block";
-        // El video se auto-reproduce; en caso de requerirlo, podemos forzar play:
         screensaverVideo.play();
       }
       
@@ -833,7 +854,7 @@
       window.addEventListener("touchstart", resetTimer);
       window.addEventListener("click", resetTimer);
       
-      // Adicionalmente, si se hace click directamente sobre el salvapantallas, se reinicia la web
+      // Si se hace click sobre el salvapantallas, se reinicia la web
       screensaver.addEventListener("click", () => {
         window.location.reload();
       });
