@@ -19,7 +19,15 @@
       position: relative;
       min-height: 100vh;
     }
-    /* Fondo tecnológico animado */
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #ffffff;
+      color: #000000;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+    /* Fondo animado similar al ejemplo */
     body::before {
       content: "";
       position: fixed;
@@ -27,7 +35,7 @@
       left: 0;
       width: 200%;
       height: 200%;
-      background: radial-gradient(circle at center, #2c3e50, #2c3e50, #ffffff);
+      background: radial-gradient(circle at center, #ffffff, #2c3e50, #2c3e50);
       animation: backgroundFlow 20s linear infinite;
       z-index: -2;
     }
@@ -35,6 +43,7 @@
       from { transform: translate(0, 0) rotate(0deg); }
       to { transform: translate(-50%, -50%) rotate(360deg); }
     }
+  
     /* Splash Screen */
     #splash {
       position: fixed;
@@ -191,6 +200,22 @@
       transform: scale(1.05);
       background: linear-gradient(45deg, #FF4500, #FF6B35);
     }
+    /* Nuevos estilos para el salvapantallas */
+    #screensaver {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: #000;
+      display: none;
+      z-index: 5000;
+    }
+    #screensaver video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   </style>
 </head>
 <body>
@@ -212,6 +237,15 @@
         <!-- Se inyecta la pregunta actual -->
       </div>
     </div>
+  </div>
+
+  <!-- Nuevo: Salvapantallas con video a pantalla completa -->
+  <div id="screensaver">
+    <video id="screensaverVideo" autoplay muted loop>
+      <!-- Reemplaza "salvapantallas.mp4" por la URL del video que quieras usar -->
+      <source src="salvapantallas.mp4" type="video/mp4">
+      Tu navegador no soporta el elemento de video.
+    </video>
   </div>
 
   <script>
@@ -770,6 +804,43 @@
         }
       }
     }
+    
+    /* NUEVA FUNCIÓN: Inactividad - Salvapantallas */
+    (function() {
+      let timer;
+      const screensaver = document.getElementById("screensaver");
+      const screensaverVideo = document.getElementById("screensaverVideo");
+      
+      function resetTimer() {
+        // Si el salvapantallas está activo, reiniciamos la web al hacer click o detectar actividad
+        if (screensaver.style.display === "block") {
+          window.location.reload();
+        }
+        clearTimeout(timer);
+        timer = setTimeout(showScreensaver, 15000);
+      }
+      
+      function showScreensaver() {
+        screensaver.style.display = "block";
+        // El video se auto-reproduce; en caso de requerirlo, podemos forzar play:
+        screensaverVideo.play();
+      }
+      
+      // Registramos eventos de actividad
+      window.addEventListener("mousemove", resetTimer);
+      window.addEventListener("mousedown", resetTimer);
+      window.addEventListener("keydown", resetTimer);
+      window.addEventListener("touchstart", resetTimer);
+      window.addEventListener("click", resetTimer);
+      
+      // Adicionalmente, si se hace click directamente sobre el salvapantallas, se reinicia la web
+      screensaver.addEventListener("click", () => {
+        window.location.reload();
+      });
+      
+      // Iniciamos el contador al cargar la página
+      resetTimer();
+    })();
   </script>
 </body>
 </html>
