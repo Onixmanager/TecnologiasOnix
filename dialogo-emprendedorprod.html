@@ -174,9 +174,17 @@
       card.classList.add("card");
       card.setAttribute('data-title', cardData.title);
       card.innerHTML = `<h2>${cardData.title}</h2><p>${cardData.content}</p>`;
+      
       const btn = document.createElement("button");
       btn.textContent = "Siguiente";
-      btn.onclick = () => nextCard();
+      
+      // Si la tarjeta tiene propiedad "redirect", el botón abrirá el enlace en una pestaña nueva.
+      if (cardData.redirect) {
+        btn.onclick = () => window.open(cardData.redirect, '_blank');
+      } else {
+        btn.onclick = () => nextCard();
+      }
+      
       card.appendChild(btn);
       cardContainer.appendChild(card);
     }
@@ -192,7 +200,8 @@
           } else {
             transitionOverlay.classList.add("active");
             setTimeout(() => {
-              window.location.href = cards[cards.length - 1].redirect;
+              // Para la tarjeta final, abrir el enlace en una nueva pestaña.
+              window.open(cards[cards.length - 1].redirect, '_blank');
             }, 1000);
           }
         }, 500);
