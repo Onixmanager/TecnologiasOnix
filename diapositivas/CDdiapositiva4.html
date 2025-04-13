@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Camarero Digital - Tecnologiasonix</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #0062cc 0%, #0097ff 100%);
+    }
+    .accent {
+      color: #ff6b00;
+    }
+    .accent-bg {
+      background-color: #ff6b00;
+    }
+    .pattern {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .btn-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(255, 107, 0, 0.3);
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-screen-lg bg-white rounded-xl overflow-hidden pattern shadow-xl">
+    <div class="gradient-bg h-2 w-full"></div>
+    <div class="relative">
+      <div class="absolute top-4 right-4 accent-bg text-white text-xs font-bold px-4 py-1 rounded-full">4/4</div>
+    </div>
+
+    <div class="flex flex-col justify-between space-y-8 p-6 sm:p-12">
+      <!-- Header -->
+      <div class="flex flex-col sm:flex-row justify-between items-center">
+        <h1 class="text-3xl font-bold text-gray-800">
+          <span class="accent">Camarero</span> Digital
+        </h1>
+        <p class="text-sm text-gray-500 mt-2 sm:mt-0">Tecnologías<span class="accent">Onix</span></p>
+      </div>
+
+      <!-- Main Content -->
+      <div>
+        <h2 class="text-3xl sm:text-4xl font-bold text-center text-gray-800 mb-8">
+          Resultados <span class="accent">Medibles</span> para tu Negocio
+        </h2>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-blue-50 p-6 rounded-xl mb-8">
+          <div class="text-center">
+            <div class="text-3xl font-bold text-blue-600">+30%</div>
+            <p class="text-gray-700">Aumento en ventas</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-blue-600">-40%</div>
+            <p class="text-gray-700">Reducción de tiempos</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-blue-600">90%</div>
+            <p class="text-gray-700">Clientes satisfechos</p>
+          </div>
+          <div class="text-center">
+            <div class="text-3xl font-bold text-blue-600">6</div>
+            <p class="text-gray-700">Meses para ROI</p>
+          </div>
+        </div>
+
+        <!-- Testimonials -->
+        <div class="grid sm:grid-cols-2 gap-6 mb-8">
+          <!-- Testimonio 1 -->
+          <div class="bg-white p-6 rounded-xl shadow border border-gray-100">
+            <div class="flex items-start">
+              <div class="text-4xl text-blue-200 mr-4">❝</div>
+              <div>
+                <p class="italic text-gray-700 mb-4">
+                  "La solución del Camarero Digital revolucionó la forma en la que gestionamos pedidos."
+                </p>
+                <div class="flex items-center">
+                  <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Leonardo_Kino_XL_Crea_una_imagen_realista_del_perfil_de_linked_3%20(2).jpg" class="w-12 h-12 rounded-full object-cover mr-3" />
+                  <div>
+                    <p class="font-bold text-gray-800">María González</p>
+                    <p class="text-sm text-gray-600">Empresaria gastronómica</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Testimonio 2 -->
+          <div class="bg-white p-6 rounded-xl shadow border border-gray-100">
+            <div class="flex items-start">
+              <div class="text-4xl text-blue-200 mr-4">❝</div>
+              <div>
+                <p class="italic text-gray-700 mb-4">
+                  "Implementamos el Camarero Digital en nuestro restaurante hace 6 meses..."
+                </p>
+                <div class="flex items-center">
+                  <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Leonardo_Kino_XL_Crea_una_imagen_realista_del_perfil_de_linked_1.jpg" class="w-12 h-12 rounded-full object-cover mr-3" />
+                  <div>
+                    <p class="font-bold text-gray-800">Carlos Martínez</p>
+                    <p class="text-sm text-gray-600">Propietario de restaurante</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Call to Action -->
+        <div class="text-center">
+          <h3 class="text-2xl font-bold text-gray-800 mb-4">¿Listo para transformar tu servicio?</h3>
+          <a href="https://wa.me/+34643229507" class="btn-cta inline-block bg-gradient-to-r from-orange-500 to-orange-600 text-black font-bold py-3 px-8 rounded-full shadow-lg">
+            <i class="fab fa-whatsapp mr-2"></i> Solicitar demostración gratuita
+          </a>
+          <p class="mt-3 text-gray-600">Sin compromiso • Soporte técnico incluido • Implementación en 48h</p>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="flex flex-col sm:flex-row justify-between items-center text-sm text-gray-500 mt-8">
+        <div class="flex items-center mb-2 sm:mb-0">
+          <div class="w-2 h-6 accent-bg rounded-full mr-2"></div>
+          <span>Camarero Digital</span>
+        </div>
+        <span>www.tecnologiasonix.com</span>
+      </div>
+
+   <!-- Botón para avanzar -->
+    <a href="siguiente.html" class="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full shadow-lg w-14 h-14 flex items-center justify-center hover:bg-blue-700 transition">
+      <i class="fas fa-arrow-right text-xl"></i>
+    </a>
+    </div>
+  </div>
+  
+  
+</body>
+</html>
