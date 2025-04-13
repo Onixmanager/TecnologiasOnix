@@ -1,0 +1,1022 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tecnologías Onix - Soluciones Digitales</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --accent: #7c3aed;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .hero-gradient {
+            background: black;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .service-card {
+            overflow: hidden;
+        }
+        .service-card img {
+            transition: transform 0.5s ease;
+        }
+        .service-card:hover img {
+            transform: scale(1.05);
+        }
+        .testimonial-card {
+            transition: all 0.3s ease;
+        }
+        .testimonial-card:hover {
+            transform: scale(1.02);
+        }
+       .step-item {
+    position: relative;
+}
+
+
+/* Para pantallas a partir de 768px (grid), se oculta el pseudo-elemento */
+@media (min-width: 768px) {
+  .step-item::before {
+      display: none;
+  }
+}
+ .step-item:last-child::before {
+      content: '';
+      position: absolute;
+      width: 2px;
+      height: 100%;
+      background-color: var(--primary);
+      left: 25px;
+      top: 40px;
+      z-index: -1;
+  }
+        .btn-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        .product-card {
+            perspective: 1000px;
+        }
+        .product-card-inner {
+            transition: transform 0.8s;
+            transform-style: preserve-3d;
+        }
+        .product-card:hover .product-card-inner {
+            transform: rotateY(180deg);
+        }
+        .product-card-front, .product-card-back {
+            backface-visibility: hidden;
+        }
+        .product-card-back {
+            transform: rotateY(180deg);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .animated-background {
+    background: linear-gradient(-45deg, #000000, #001f3d, #ffffff);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+}
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md fixed w-full z-50">
+        <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+            <span class="ml-2 text-lg font-medium text-gray-600">TECNOLOGIAS</span>
+                <span class="text-3xl font-bold text-blue-600">ONIX</span>
+                
+            </div>
+            <div class="hidden md:flex space-x-8">
+                <a href="#inicio" class="nav-link text-gray-700 hover:text-blue-600 transition duration-300">Inicio</a>
+                <a href="#servicios" class="nav-link text-gray-700 hover:text-blue-600 transition duration-300">Servicios</a>
+                <a href="#productos" class="nav-link text-gray-700 hover:text-blue-600 transition duration-300">Productos</a>
+                <a href="#proceso" class="nav-link text-gray-700 hover:text-blue-600 transition duration-300">Proceso</a>
+                <a href="#clientes" class="nav-link text-gray-700 hover:text-blue-600 transition duration-300">Clientes</a>
+                <a href="#contacto" class="nav-link text-gray-700 hover:text-blue-600 transition duration-300">Contacto</a>
+            </div>
+            <div class="md:hidden">
+                <button id="menu-toggle" class="text-gray-700 focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white w-full">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                <a href="#inicio" class="text-gray-700 hover:text-blue-600 transition duration-300">Inicio</a>
+                <a href="#servicios" class="text-gray-700 hover:text-blue-600 transition duration-300">Servicios</a>
+                <a href="#productos" class="text-gray-700 hover:text-blue-600 transition duration-300">Productos</a>
+                <a href="#proceso" class="text-gray-700 hover:text-blue-600 transition duration-300">Proceso</a>
+                <a href="#clientes" class="text-gray-700 hover:text-blue-600 transition duration-300">Clientes</a>
+                <a href="#contacto" class="text-gray-700 hover:text-blue-600 transition duration-300">Contacto</a>
+            </div>
+        </div>
+    </nav>
+
+  <!-- Hero Section -->
+<section id="inicio" class="relative hero-gradient pt-28 pb-20 md:pt-40 md:pb-32">
+    <!-- Video Background -->
+    <div class="absolute top-0 left-0 w-full h-full z-0">
+        <video autoplay muted loop class="w-full h-full object-cover">
+            <source src="https://github.com/Onixmanager/TecnologiasOnix/raw/refs/heads/main/videocabecera.mp4" type="video/mp4">
+            Tu navegador no soporta la etiqueta de video.
+        </video>
+    </div>
+
+    <!-- Overlay Dark Layer -->
+    <div class="absolute top-0 left-0 w-full h-full bg-black opacity-90 z-10"></div> <!-- Aumenta la opacidad aquí -->
+
+    <!-- Content -->
+    <div class="container mx-auto px-6 relative z-20">
+        <div class="flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 text-center md:text-left" data-aos="fade-right">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+                    Impulsamos tu negocio con tecnología inteligente
+                </h1>
+                <p class="mt-6 text-lg md:text-xl text-blue-100">
+                    Soluciones digitales que transforman ideas en resultados tangibles para tu empresa.
+                </p>
+                <div class="mt-10 flex flex-col sm:flex-row justify-center md:justify-start space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#productos" class="btn-float px-8 py-3 bg-white text-blue-600 font-medium rounded-lg shadow-lg hover:bg-gray-100 transition duration-300 text-center">
+                        Explorar Productos
+                    </a>
+                    <a href="#servicios" class="px-8 py-3 border-2 border-white text-white font-medium rounded-lg hover:bg-white hover:text-blue-600 transition duration-300 text-center">
+                        Explorar servicios
+                    </a>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</section>
+
+    <!-- About Us Section -->
+    <section id="sobre-nosotros" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-bold text-gray-800">Sobre Nosotros</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mt-4 rounded-full"></div>
+                <p class="mt-6 text-lg text-gray-600 max-w-3xl mx-auto">
+                    En Tecnologías Onix creamos soluciones tecnológicas que potencian el crecimiento de tu negocio. Nuestra misión es transformar la manera en que las empresas operan a través de la innovación digital.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <div class="bg-gray-50 rounded-xl p-8 shadow-lg hover:shadow-xl transition duration-300" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-code text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Experiencia Tecnológica</h3>
+                    <p class="text-gray-600">
+                        Contamos con profesionales especializados en las últimas tecnologías y metodologías de desarrollo.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-8 shadow-lg hover:shadow-xl transition duration-300" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-lightbulb text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Innovación Constante</h3>
+                    <p class="text-gray-600">
+                        Nos mantenemos a la vanguardia de la tecnología para ofrecer soluciones innovadoras y eficientes.
+                    </p>
+                </div>
+                
+                <div class="bg-gray-50 rounded-xl p-8 shadow-lg hover:shadow-xl transition duration-300" data-aos="fade-up" data-aos-delay="300">
+                    <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-users text-2xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4">Enfoque al Cliente</h3>
+                    <p class="text-gray-600">
+                        Nuestras soluciones se adaptan a las necesidades específicas de cada cliente, garantizando resultados óptimos.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicios" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-bold text-gray-800">Nuestros Servicios</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mt-4 rounded-full"></div>
+                <p class="mt-6 text-lg text-gray-600 max-w-3xl mx-auto">
+                    Ofrecemos una gama completa de servicios tecnológicos diseñados para impulsar la eficiencia y rentabilidad de tu negocio.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Service 1 -->
+                <div class="service-card bg-white rounded-xl overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/software.jpg" alt="Desarrollo de Software" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Desarrollo de Software</h3>
+                        <p class="text-gray-600 mb-6">
+                            Creamos soluciones de software personalizadas que se adaptan perfectamente a las necesidades específicas de tu negocio, optimizando procesos y aumentando la eficiencia.
+                        </p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span class="text-sm text-gray-600">Aplicaciones web personalizadas</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span class="text-sm text-gray-600">Sistemas de automatización</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span class="text-sm text-gray-600">Integración de sistemas</span>
+                            </li>
+                        </ul>
+                        <a href="#contacto" class="inline-block px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition duration-300">Más información</a>
+                    </div>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card bg-white rounded-xl overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="200">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/app.jpg" alt="Aplicaciones con IA" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Aplicaciones con IA</h3>
+                        <p class="text-gray-600 mb-6">
+                            Desarrollamos aplicaciones intuitivas y funcionales con o sin IA integrada que conectan tu negocio con tus clientes en cualquier momento y lugar.
+                        </p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span class="text-sm text-gray-600">Asistentes virtuales inteligentes</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span class="text-sm text-gray-600">Aplicaciones móviles</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span class="text-sm text-gray-600">Análisis predictivo</span>
+                            </li>
+                        </ul>
+                        <a href="#contacto" class="inline-block px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition duration-300">Más información</a>
+                    </div>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="service-card bg-white rounded-xl overflow-hidden shadow-lg" data-aos="fade-up" data-aos-delay="300">
+                    <div class="h-56 overflow-hidden">
+                        <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/gestion.jpg" alt="Sistemas de Gestión" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold text-gray-800 mb-4">Sistemas de Gestión</h3>
+                        <p class="text-gray-600 mb-6">
+                            Implementamos sistemas completos de gestión empresarial que automatizan tareas, centralizan la información y facilitan la toma de decisiones estratégicas.
+                        </p>
+                        <ul class="space-y-2 mb-6">
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span class="text-sm text-gray-600">Gestión de inventario</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span class="text-sm text-gray-600">CRM personalizado</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span class="text-sm text-gray-600">Gestión de recursos humanos</span>
+                            </li>
+                        </ul>
+                        <a href="#contacto" class="inline-block px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition duration-300">Más información</a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Maintenance Service Banner -->
+            <div class="mt-16 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl p-8 shadow-lg" data-aos="fade-up">
+                <div class="flex flex-col md:flex-row items-center justify-between">
+                    <div class="md:w-2/3 text-white mb-6 md:mb-0">
+                        <h3 class="text-2xl font-bold mb-4">Mantenimiento Integral - 1 Año</h3>
+                        <p class="text-blue-100">
+                            Ofrecemos un servicio completo de mantenimiento por 1 año sin coste alguno y garantizando el óptimo rendimiento, actualizaciones constantes y soporte técnico especializado para tus sistemas con cualquiera de nuestros productos.
+                        </p>
+                    </div>
+                    <div>
+                        <a href="#contacto" class="inline-block px-8 py-3 bg-white text-blue-600 font-medium rounded-lg shadow-lg hover:bg-gray-100 transition duration-300">Solicitar información</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section id="productos" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-bold text-gray-800">Nuestros Productos</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mt-4 rounded-full"></div>
+                <p class="mt-6 text-lg text-gray-600 max-w-3xl mx-auto">
+                    Soluciones innovadoras diseñadas para resolver problemas específicos y optimizar la operación de tu negocio.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Product 1 -->
+                <div class="product-card h-96" data-aos="fade-up" data-aos-delay="100">
+                    <div class="product-card-inner h-full w-full">
+                        <div class="product-card-front bg-white rounded-xl shadow-lg p-6 h-full flex flex-col justify-between">
+                            <div>
+                                <div class="h-40 mb-4 overflow-hidden rounded-lg">
+                                    <img src="https://img.freepik.com/fotos-premium/joven-sonriente-pie-restaurante-sosteniendo-tableta_132358-62281.jpg" alt="Camarero Digital" class="w-full h-full object-cover">
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-800 mb-2">Camarero Digital</h3>
+                                <p class="text-gray-600">Optimiza el servicio en tu negocio con soluciones que permiten gestionar pedidos y reservas de forma automatizada.</p>
+                            </div>
+                            <div class="text-center text-sm text-blue-600 mt-4">
+                                <p>Ver más información</p>
+                            </div>
+                        </div>
+                        <div class="product-card-back bg-blue-600 text-white rounded-xl shadow-lg p-6 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4">Camarero Digital</h3>
+                                <ul class="space-y-2 mb-6">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Toma de pedidos automatizada</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Gestión de mesas y reservas</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Integración con sistema de cocina</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Control de stock en tiempo real</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <a href="https://tecnologiasonix.com/diapositivas/CDdiapositiva1.html" class="inline-block px-4 py-2 bg-white text-blue-600 font-medium rounded-lg hover:bg-gray-100 transition duration-300">Saber Más</a>
+                                <a href="https://wa.me/+34643229507" class="inline-block px-4 py-2 border border-white text-white font-medium rounded-lg hover:bg-white hover:text-blue-600 transition duration-300">Contratar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="product-card h-96" data-aos="fade-up" data-aos-delay="200">
+                    <div class="product-card-inner h-full w-full">
+                        <div class="product-card-front bg-white rounded-xl shadow-lg p-6 h-full flex flex-col justify-between">
+                            <div>
+                                <div class="h-40 mb-4 overflow-hidden rounded-lg">
+                                    <img src="https://static.vecteezy.com/system/resources/previews/014/226/997/non_2x/young-secretary-and-her-boss-photo.jpg" alt="Secretario Inteligente" class="w-full h-full object-cover">
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-800 mb-2">Secretario Inteligente</h3>
+                                <p class="text-gray-600">Asistente con Inteligencia Artificial integrada que optimiza la gestión administrativa y la comunicación interna.</p>
+                            </div>
+                            <div class="text-center text-sm text-blue-600 mt-4">
+                                <p>Ver más información</p>
+                            </div>
+                        </div>
+                        <div class="product-card-back bg-blue-600 text-white rounded-xl shadow-lg p-6 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4">Secretario Inteligente</h3>
+                                <ul class="space-y-2 mb-6">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Gestión automatizada de agendas</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Automatización de respuestas</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Análisis de datos y reportes</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Asistente virtual con IA</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <a href="https://tecnologiasonix.com/diapositivas/SIdiapositiva1.html" class="inline-block px-4 py-2 bg-white text-blue-600 font-medium rounded-lg hover:bg-gray-100 transition duration-300">Saber Más</a>
+                                <a href="https://wa.me/+34643229507" class="inline-block px-4 py-2 border border-white text-white font-medium rounded-lg hover:bg-white hover:text-blue-600 transition duration-300">Contratar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="product-card h-96" data-aos="fade-up" data-aos-delay="300">
+                    <div class="product-card-inner h-full w-full">
+                        <div class="product-card-front bg-white rounded-xl shadow-lg p-6 h-full flex flex-col justify-between">
+                            <div>
+                                <div class="h-40 mb-4 overflow-hidden rounded-lg">
+                                    <img src="https://smartstore.com/media/6788/file/3d-jpg/3d-247-walk-in-store-1024p-chatgpt-original2_960_960.jpg" alt="Comercio 24/7" class="w-full h-full object-cover">
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-800 mb-2">Comercio 24/7</h3>
+                                <p class="text-gray-600">Da a tu negocio la posibilidad de estar abierto siempre, gestionando ventas e inventario de manera automática.</p>
+                            </div>
+                            <div class="text-center text-sm text-blue-600 mt-4">
+                                <p>Ver más información</p>
+                            </div>
+                        </div>
+                        <div class="product-card-back bg-blue-600 text-white rounded-xl shadow-lg p-6 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4">Comercio 24/7</h3>
+                                <ul class="space-y-2 mb-6">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Tienda online automatizada</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Control de inventario en tiempo real</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Sistema de pagos integrado</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Análisis de comportamiento de clientes</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <a href="https://tecnologiasonix.com/diapositivas/247diapositiva1.html" class="inline-block px-4 py-2 bg-white text-blue-600 font-medium rounded-lg hover:bg-gray-100 transition duration-300">Saber Más</a>
+                                <a href="https://wa.me/+34643229507" class="inline-block px-4 py-2 border border-white text-white font-medium rounded-lg hover:bg-white hover:text-blue-600 transition duration-300">Contratar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="product-card h-96" data-aos="fade-up" data-aos-delay="400">
+                    <div class="product-card-inner h-full w-full">
+                        <div class="product-card-front bg-white rounded-xl shadow-lg p-6 h-full flex flex-col justify-between">
+                            <div>
+                                <div class="h-40 mb-4 overflow-hidden rounded-lg">
+                                    <img src="https://mundostartups.com/wp-content/uploads/2024/01/tipos-de-emprendedores.jpg" alt="Emprendedores" class="w-full h-full object-cover">
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-800 mb-2">Emprendedores</h3>
+                                <p class="text-gray-600">Desarrollamos webs, apps y proyectos a medida para quienes inician o impulsan sus ideas de negocio.</p>
+                            </div>
+                            <div class="text-center text-sm text-blue-600 mt-4">
+                                <p>Ver más información</p>
+                            </div>
+                        </div>
+                        <div class="product-card-back bg-blue-600 text-white rounded-xl shadow-lg p-6 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4">Emprendedores</h3>
+                                <ul class="space-y-2 mb-6">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Desarrollo de sitios web</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Apps móviles personalizadas</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Identidad digital y branding</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Estrategia digital integral</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <a href="https://tecnologiasonix.com/diapositivas/EMdiapositiva1.html" class="inline-block px-4 py-2 bg-white text-blue-600 font-medium rounded-lg hover:bg-gray-100 transition duration-300">Saber Más</a>
+                                <a href="https://wa.me/+34643229507" class="inline-block px-4 py-2 border border-white text-white font-medium rounded-lg hover:bg-white hover:text-blue-600 transition duration-300">Contratar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 5 -->
+                <div class="product-card h-96" data-aos="fade-up" data-aos-delay="500">
+                    <div class="product-card-inner h-full w-full">
+                        <div class="product-card-front bg-white rounded-xl shadow-lg p-6 h-full flex flex-col justify-between">
+                            <div>
+                                <div class="h-40 mb-4 overflow-hidden rounded-lg">
+                                    <img src="https://tus5estrellas.es/wp-content/uploads/2023/12/Captura-de-pantalla-2023-12-14-140321.jpg" alt="Reseñas para Google" class="w-full h-full object-cover">
+                                </div>
+                                <h3 class="text-xl font-semibold text-gray-800 mb-2">Reseñas para Google</h3>
+                                <p class="text-gray-600">Producto físico estratégico para marketing digital y mejora de la presencia online de tu negocio.</p>
+                            </div>
+                            <div class="text-center text-sm text-blue-600 mt-4">
+                                <p>Ver más información</p>
+                            </div>
+                        </div>
+                        <div class="product-card-back bg-blue-600 text-white rounded-xl shadow-lg p-6 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-xl font-semibold mb-4">Reseñas para Google</h3>
+                                <ul class="space-y-2 mb-6">
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Mejora la reputación online</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Incrementa la visibilidad en búsquedas</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Sistema de gestión de reseñas</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <i class="fas fa-check-circle mt-1 mr-2"></i>
+                                        <span>Soporte y asesoramiento incluido</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <a href="https://tecnologiasonix.com/diapositivas/SHdiapositiva1.html" class="inline-block px-4 py-2 bg-white text-blue-600 font-medium rounded-lg hover:bg-gray-100 transition duration-300">Saber Más</a>
+                                <a href="#tienda" class="inline-block px-4 py-2 border border-white text-white font-medium rounded-lg hover:bg-white hover:text-blue-600 transition duration-300">Tienda</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Add New Product Card -->
+                <div class="bg-gray-50 rounded-xl shadow-lg p-6 flex flex-col justify-center items-center h-96 border-2 border-dashed border-gray-300" data-aos="fade-up" data-aos-delay="600">
+                    <div class="w-20 h-20 bg-blue-100 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-plus text-3xl text-blue-600"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-4 text-center">¿Necesitas una solución personalizada?</h3>
+                    <p class="text-gray-600 text-center mb-6">
+                        Podemos desarrollar productos a medida adaptados a las necesidades específicas de tu negocio.
+                    </p>
+                    <a href="#contacto" class="inline-block px-6 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition duration-300">Contactar ahora</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section id="proceso" class="proceso-container" style="display: flex; flex-wrap: wrap; justify-content: space-around; padding: 40px; background-color: #f7fafc;">
+  <!-- Título de la sección -->
+  <div class="text-center mb-16" data-aos="fade-up">
+    <h2 class="text-3xl font-bold text-gray-800">Nuestro Proceso</h2>
+    <div class="w-24 h-1 bg-blue-600 mx-auto mt-4 rounded-full"></div>
+    <p class="mt-6 text-lg text-gray-600 max-w-3xl mx-auto">
+      Conoce los pasos que seguimos para llevar tu proyecto al éxito, desde el análisis inicial hasta la implementación final.
+    </p>
+  </div>
+
+  <!-- Paso 1 -->
+  <div class="step" style="background-color: #fff; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 40px; width: 280px; text-align: center; margin-bottom: 30px; display: flex; flex-direction: column; align-items: center;">
+    <div class="step-number" style="background-color: #3182ce; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 25px;">1</div>
+    <div class="step-title" style="font-size: 20px; font-weight: bold; color: #2d3748; margin-bottom: 20px;">Análisis</div>
+    <p class="step-description" style="font-size: 16px; color: #4a5568; margin-bottom: 25px;">Estudiamos a fondo tu negocio para entender necesidades y objetivos, sentando las bases para una solución eficaz.</p>
+    <ul class="step-list" style="list-style-type: none; padding-left: 0; font-size: 16px; color: #2d3748;">
+      <li style="display: flex; align-items: center; margin-bottom: 15px;">✔ Identificación de necesidades</li>
+      <li style="display: flex; align-items: center; margin-bottom: 15px;">✔ Estudio de viabilidad</li>
+      <li style="display: flex; align-items: center; margin-bottom: 15px;">✔ Definición de objetivos</li>
+    </ul>
+  </div>
+
+  <!-- Paso 2 -->
+  <div class="step" style="background-color: #fff; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 40px; width: 280px; text-align: center; margin-bottom: 30px; display: flex; flex-direction: column; align-items: center;">
+    <div class="step-number" style="background-color: #3182ce; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 25px;">2</div>
+    <div class="step-title" style="font-size: 20px; font-weight: bold; color: #2d3748; margin-bottom: 20px;">Diseño</div>
+    <p class="step-description" style="font-size: 16px; color: #4a5568; margin-bottom: 25px;">Definimos la arquitectura y la experiencia de usuario ideal para cada producto, creando un blueprint personalizado.</p>
+    <ul class="step-list" style="list-style-type: none; padding-left: 0; font-size: 16px; color: #2d3748;">
+      <li style="display: flex; align-items: center; margin-bottom: 15px;">✔ Arquitectura del sistema</li>
+      <li style="display: flex; align-items: center; margin-bottom: 15px;">✔ Diseño de interfaz</li>
+      <li style="display: flex; align-items: center; margin-bottom: 15px;">✔ Experiencia de usuario</li>
+    </ul>
+  </div>
+
+  <!-- Paso 3 -->
+  <div class="step" style="background-color: #fff; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 40px; width: 280px; text-align: center; margin-bottom: 30px; display: flex; flex-direction: column; align-items: center;">
+    <div class="step-number" style="background-color: #3182ce; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 25px;">3</div>
+    <div class="step-title" style="font-size: 20px; font-weight: bold; color: #2d3748; margin-bottom: 20px;">Desarrollo</div>
+    <p class="step-description" style="font-size: 16px; color: #4a5568; margin-bottom: 25px;">Implementamos cada solución utilizando tecnologías avanzadas y metodologías ágiles, garantizando calidad e innovación.</p>
+    <ul class="step-list" style="list-style-type: none; padding-left: 0; font-size: 16px; color: #2d3748;">
+      <li style="display: flex; align-items: center; margin-bottom: 15px;">✔ Codificación</li>
+      <li style="display: flex; align-items: center; margin-bottom: 15px;">✔ Pruebas de calidad</li>
+      <li style="display: flex; align-items: center; margin-bottom: 15px;">✔ Optimización</li>
+    </ul>
+  </div>
+
+  <!-- Paso 4 -->
+  <div class="step" style="background-color: #fff; border-radius: 15px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); padding: 40px; width: 280px; text-align: center; margin-bottom: 30px; display: flex; flex-direction: column; align-items: center;">
+    <div class="step-number" style="background-color: #3182ce; color: #fff; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; margin-bottom: 25px;">4</div>
+    <div class="step-title" style="font-size: 20px; font-weight: bold; color: #2d3748; margin-bottom: 20px;">Implementación</div>
+    <p class="step-description" style="font-size: 16px; color: #4a5568; margin-bottom: 25px;">Desplegamos las soluciones en tu entorno, acompañándote en la transición y ofreciendo soporte continuo.</p>
+    <ul class="step-list" style="list-style-type: none; padding-left: 0; font-size: 16px; color: #2d3748;">
+      <li style="display: flex; align-items: center; margin-bottom: 15px;">✔ Despliegue del sistema</li>
+      <li style="display: flex; align-items: center; margin-bottom: 15px;">✔ Capacitación</li>
+      <li style="display: flex; align-items: center; margin-bottom: 15px;">✔ Soporte continuo</li>
+    </ul>
+  </div>
+</section>
+
+    <!-- Testimonials Section -->
+    <section id="clientes" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-bold text-gray-800">Nuestros Clientes</h2>
+                <div class="w-24 h-1 bg-blue-600 mx-auto mt-4 rounded-full"></div>
+                <p class="mt-6 text-lg text-gray-600 max-w-3xl mx-auto">
+                    Descubre lo que nuestros clientes dicen sobre su experiencia trabajando con Tecnologías Onix.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card bg-gray-50 rounded-xl p-6 shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
+                            <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Leonardo_Kino_XL_Crea_una_imagen_realista_del_perfil_de_linked_3%20(2).jpg" alt="María González" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-800">María González</h4>
+                            <p class="text-sm text-gray-600">Empresaria gastronómica</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">
+                        "La solución del Camarero Digital revolucionó la forma en la que gestionamos pedidos. El servicio es ágil y eficiente. La implementación fue sencilla y el equipo de soporte siempre está disponible."
+                    </p>
+                    <div class="mt-4 flex">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card bg-gray-50 rounded-xl p-6 shadow-lg" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
+                            <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Leonardo_Kino_XL_Crea_una_imagen_realista_del_perfil_de_linked_1%20(1).jpg" alt="Carlos Rodríguez" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-800">Carlos Rodríguez</h4>
+                            <p class="text-sm text-gray-600">Director de operaciones</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">
+                        "El Secretario Inteligente nos ha permitido automatizar tareas administrativas que consumían gran parte de nuestro tiempo. La productividad del equipo ha aumentado significativamente desde su implementación."
+                    </p>
+                    <div class="mt-4 flex">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card bg-gray-50 rounded-xl p-6 shadow-lg" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center mb-6">
+                        <div class="w-16 h-16 rounded-full overflow-hidden mr-4">
+                            <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Leonardo_Kino_XL_Crea_una_imagen_realista_del_perfil_de_linked_1.jpg" alt="Antonia Sánchez" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-gray-800">Antonia Sánchez</h4>
+                            <p class="text-sm text-gray-600">Propietaria de boutique</p>
+                        </div>
+                    </div>
+                    <p class="text-gray-600 italic">
+                        "Con Comercio 24/7, nuestras ventas se han disparado, permitiéndonos operar sin límites de horario. La integración con nuestro inventario fue impecable y ahora podemos gestionar todo desde cualquier lugar."
+                    </p>
+                    <div class="mt-4 flex">
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star text-yellow-400"></i>
+                        <i class="fas fa-star-half-alt text-yellow-400"></i>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Call to Action -->
+            <div class="mt-16 text-center" data-aos="fade-up">
+                <h3 class="text-2xl font-semibold text-gray-800 mb-6">¿Listo para transformar tu negocio?</h3>
+                <a href="#contacto" class="inline-block px-8 py-3 bg-blue-600 text-white font-medium rounded-lg shadow-lg hover:bg-blue-700 transition duration-300">Solicita una consulta gratuita</a>
+            </div>
+        </div>
+    </section>
+
+   <!-- Contact Section -->
+<section id="contacto" class="py-20 animated-background">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-16" data-aos="fade-up">
+      <h2 class="text-3xl font-bold text-white">Contáctanos</h2>
+      <div class="w-24 h-1 bg-white mx-auto mt-4 rounded-full"></div>
+      <p class="mt-6 text-lg text-white max-w-3xl mx-auto">
+        Estamos listos para ayudarte a transformar tu negocio con soluciones tecnológicas avanzadas.
+      </p>
+    </div>
+    
+    <div class="bg-white rounded-xl shadow-2xl overflow-hidden" data-aos="fade-up">
+      <div class="flex flex-col md:flex-row">
+        <div class="md:w-1/2 p-8 md:p-12">
+          <h3 class="text-2xl font-semibold text-gray-800 mb-6">Envíanos un mensaje</h3>
+          <form id="contactForm">
+            <div class="mb-6">
+              <label for="name" class="block text-gray-700 mb-2">Nombre completo</label>
+              <input type="text" name="name" id="name" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600" required>
+            </div>
+            <div class="mb-6">
+              <label for="email" class="block text-gray-700 mb-2">Correo electrónico</label>
+              <input type="email" name="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600" required>
+            </div>
+            <div class="mb-6">
+              <label for="phone" class="block text-gray-700 mb-2">Teléfono</label>
+              <input type="tel" name="phone" id="phone" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600">
+            </div>
+            <div class="mb-6">
+              <label for="message" class="block text-gray-700 mb-2">Mensaje</label>
+              <textarea name="message" id="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-600" required></textarea>
+            </div>
+            <button type="submit" class="w-full px-6 py-3 bg-blue-600 text-white font-medium rounded-lg shadow-lg hover:bg-blue-700 transition duration-300">
+              Enviar mensaje
+            </button>
+          </form>
+        </div>
+        <div class="md:w-1/2 bg-blue-600 p-8 md:p-12 text-white flex flex-col justify-between">
+          <div>
+            <h3 class="text-2xl font-semibold mb-6">Información de contacto</h3>
+            <div class="space-y-4">
+              <div class="flex items-start">
+                <i class="fas fa-phone-alt mt-1 mr-4"></i>
+                <div>
+                  <p class="font-medium">Teléfono</p>
+                  <p>+34 643 229 507</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <i class="fas fa-envelope mt-1 mr-4"></i>
+                <div>
+                  <p class="font-medium">Email</p>
+                  <p>info@tecnologiasonix.com</p>
+                </div>
+              </div>
+              <div class="flex items-start">
+                <i class="fas fa-map-marker-alt mt-1 mr-4"></i>
+                <div>
+                  <p class="font-medium">Ubicación</p>
+                  <p>Madrid, España</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="mt-12">
+            <h4 class="text-xl font-medium mb-4">Síguenos en redes sociales</h4>
+            <div class="flex space-x-4">
+              <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition duration-300">
+                <i class="fab fa-facebook-f"></i>
+              </a>
+              <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition duration-300">
+                <i class="fab fa-instagram"></i>
+              </a>
+              <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition duration-300">
+                <i class="fab fa-twitter"></i>
+              </a>
+              <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition duration-300">
+                <i class="fab fa-linkedin-in"></i>
+              </a>
+            </div>
+          </div>
+          
+          <div class="mt-12">
+            <a href="https://wa.me/+34643229507" class="flex items-center justify-center py-3 bg-green-500 rounded-lg hover:bg-green-600 transition duration-300">
+              <i class="fab fa-whatsapp text-xl mr-2"></i>
+              <span>Contactar por WhatsApp</span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Script para procesar el envío del formulario vía mailto -->
+<script>
+  document.getElementById("contactForm").addEventListener("submit", function(e) {
+    e.preventDefault(); // Evita el envío tradicional
+
+    // Obtener los valores del formulario
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+    const message = document.getElementById("message").value;
+
+    // Construir el asunto y el cuerpo del correo
+    const subject = `Nuevo mensaje de contacto de ${name}`;
+    let body = `Nombre: ${name}%0D%0A`;
+    body += `Email: ${email}%0D%0A`;
+    if (phone) {
+      body += `Teléfono: ${phone}%0D%0A`;
+    }
+    body += `%0D%0AMensaje:%0D%0A${message}`;
+
+    // Redirigir al cliente de correo utilizando mailto:
+    window.location.href = `mailto:info@tecnologiasonix.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  });
+</script>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between mb-12">
+                <div class="mb-8 md:mb-0">
+                    <div class="flex items-center mb-6">
+                       <span class="ml-2 text-lg font-medium text-gray-300">Tecnologías</span>
+                         <span class="text-3xl font-bold text-blue-400">ONIX</span>
+                        
+                    </div>
+                    <p class="text-gray-400 max-w-xs">
+                        Soluciones tecnológicas innovadoras para impulsar tu negocio hacia el futuro digital.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Enlaces rápidos</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#inicio" class="text-gray-400 hover:text-white transition duration-300">Inicio</a></li>
+                            <li><a href="#servicios" class="text-gray-400 hover:text-white transition duration-300">Servicios</a></li>
+                            <li><a href="#productos" class="text-gray-400 hover:text-white transition duration-300">Productos</a></li>
+                            <li><a href="#proceso" class="text-gray-400 hover:text-white transition duration-300">Proceso</a></li>
+                            <li><a href="#clientes" class="text-gray-400 hover:text-white transition duration-300">Clientes</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Productos</h4>
+                        <ul class="space-y-2">
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Camarero Digital</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Secretario Inteligente</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Comercio 24/7</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Emprendedores</a></li>
+                            <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Reseñas para Google</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Contacto</h4>
+                        <ul class="space-y-2">
+                            <li class="flex items-center">
+                                <i class="fas fa-phone-alt text-blue-400 mr-2"></i>
+                                <span>643 229 507</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-envelope text-blue-400 mr-2"></i>
+                                <span>info@tecnologiasonix.com</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="fas fa-map-marker-alt text-blue-400 mr-2"></i>
+                                <span>Barcelona, España</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                    &copy; 2024 Tecnologías Onix. Todos los derechos reservados.
+                </p>
+                <div class="flex space-x-4">
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/+34643229507" class="fixed bottom-6 right-6 w-16 h-16 bg-green-500 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-green-600 transition duration-300 z-50">
+        <i class="fab fa-whatsapp text-3xl"></i>
+    </a>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 left-6 w-12 h-12 bg-blue-600 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-blue-700 transition duration-300 z-50 hidden">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animation
+        AOS.init({
+            duration: 800,
+            once: true
+        });
+
+        // Mobile menu toggle
+        document.getElementById('menu-toggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                document.querySelector(targetId).scrollIntoView({
+                    behavior: 'smooth'
+                });
+                
+                // Close mobile menu if open
+                const mobileMenu = document.getElementById('mobile-menu');
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // Back to top button functionality
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('hidden');
+            } else {
+                backToTopButton.classList.add('hidden');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+    </script>
+</body>
+</html>
