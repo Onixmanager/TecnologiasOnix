@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Emprendedores - Tecnologiasonix</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #0062cc 0%, #0097ff 100%);
+    }
+    .accent {
+      color: #ff6b00;
+    }
+    .accent-bg {
+      background-color: #ff6b00;
+    }
+    .slide-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .btn-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(255, 107, 0, 0.3);
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen px-4">
+  <div class="bg-white rounded-xl overflow-hidden pattern w-full max-w-6xl shadow-lg">
+    <div class="gradient-bg h-2"></div>
+    <div class="absolute top-4 right-4 px-4 py-1 bg-orange-600 text-white rounded-full text-sm font-bold">4/4</div>
+
+    <div class="flex flex-col justify-between py-10 space-y-8">
+      <!-- Header -->
+      <div class="flex justify-between items-center px-6 md:px-16 pt-4">
+        <div class="text-2xl md:text-3xl font-bold text-gray-800">
+          <span class="accent">Emprendedores</span>
+        </div>
+        <div class="text-sm text-gray-500">
+          Tecnologías <span class="accent">Onix</span>
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div class="px-6 md:px-16 -mt-4">
+        <h2 class="text-2xl md:text-4xl font-bold mb-8 text-center text-gray-800">
+          De la <span class="accent">Idea</span> al <span class="accent">Éxito</span>
+        </h2>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 bg-blue-50 p-4 rounded-xl mb-8 text-center">
+          <div>
+            <div class="text-3xl font-bold text-blue-600">93%</div>
+            <p class="text-gray-700 text-sm">Startups satisfechas</p>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-blue-600">-40%</div>
+            <p class="text-gray-700 text-sm">Tiempo de lanzamiento</p>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-blue-600">+58%</div>
+            <p class="text-gray-700 text-sm">Tasa de conversión</p>
+          </div>
+          <div>
+            <div class="text-3xl font-bold text-blue-600">100+</div>
+            <p class="text-gray-700 text-sm">Proyectos exitosos</p>
+          </div>
+        </div>
+
+        <!-- Testimonials -->
+        <div class="space-y-6 md:grid md:grid-cols-2 md:gap-6 mb-8">
+          <div class="testimonial bg-white p-6 rounded-xl shadow-md border border-gray-100">
+            <div class="flex items-start">
+              <div class="text-5xl text-blue-200 mr-4">❝</div>
+              <div>
+                <p class="italic text-gray-700 mb-4">
+                  "Gracias a Tecnologiasonix, pudimos transformar nuestra idea en una aplicación funcional en tiempo récord. Su enfoque en las necesidades de los emprendedores y su presupuesto ajustado fue clave para nuestro éxito inicial."
+                </p>
+                <div class="flex items-center">
+                  <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Leonardo_Kino_XL_Crea_una_imagen_realista_del_perfil_de_linked_1%20(1).jpg" alt="Cliente" class="w-12 h-12 rounded-full mr-3 object-cover"/>
+                  <div>
+                    <p class="font-bold text-gray-800">David Martínez</p>
+                    <p class="text-sm text-gray-600">Fundador de startup tecnológica</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="testimonial bg-white p-6 rounded-xl shadow-md border border-gray-100">
+            <div class="flex items-start">
+              <div class="text-5xl text-blue-200 mr-4">❝</div>
+              <div>
+                <p class="italic text-gray-700 mb-4">
+                  "Como emprendedora, valoré enormemente la capacidad de Tecnologiasonix para entender mi visión y crear una solución que podía crecer con mi negocio. Su enfoque escalable nos ha permitido expandirnos sin problemas técnicos."
+                </p>
+                <div class="flex items-center">
+                  <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Leonardo_Kino_XL_Crea_una_imagen_realista_del_perfil_de_linked_3%20(2).jpg" alt="Cliente" class="w-12 h-12 rounded-full mr-3 object-cover"/>
+                  <div>
+                    <p class="font-bold text-gray-800">Elena Gómez</p>
+                    <p class="text-sm text-gray-600">CEO de e-commerce emergente</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="text-center">
+          <h3 class="text-xl md:text-2xl font-bold text-gray-800 mb-4">¿Listo para hacer realidad tu idea de negocio?</h3>
+          <a href="https://wa.me/+34643229507" class="btn-cta inline-block bg-gradient-to-r from-orange-500 to-orange-600 text-black font-bold py-3 px-6 md:px-8 rounded-full shadow-lg">
+            <i class="fab fa-whatsapp mr-2"></i> Agenda una consulta gratuita
+          </a>
+          <p class="mt-3 text-gray-600 text-sm">Sin compromisos • Presupuesto personalizado • Lanzamiento rápido</p>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="px-6 md:px-16 flex flex-col md:flex-row justify-between items-center mt-6 space-y-4 md:space-y-0">
+        <div class="flex items-center">
+          <div class="w-2 h-8 accent-bg rounded-full mr-3"></div>
+          <p class="text-sm text-gray-500">Soluciones para Emprendedores</p>
+        </div>
+        <div class="text-gray-500 text-sm">www.tecnologiasonix.com</div>
+      </div>
+    </div>
+    <!-- Botón para avanzar -->
+    <a href="https://tecnologiasonix.com" class="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full shadow-lg w-14 h-14 flex items-center justify-center hover:bg-blue-700 transition">
+      <i class="fas fa-arrow-right text-xl"></i>
+    </a>
+  </div>
+</body>
+</html>
