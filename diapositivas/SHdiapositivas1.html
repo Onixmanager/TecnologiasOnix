@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reseñas para Google - Tecnologiasonix</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #0062cc 0%, #0097ff 100%);
+    }
+    .accent {
+      color: #ff6b00;
+    }
+    .accent-bg {
+      background-color: #ff6b00;
+    }
+    .slide-badge {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 5px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: bold;
+    }
+    .star-rating {
+      color: #FFD700;
+      font-size: 1.25rem;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(255, 215, 0, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 215, 0, 0); }
+    }
+    .pulse {
+      animation: pulse 2s infinite;
+    }
+  </style>
+</head>
+<body class="flex items-center justify-center min-h-screen px-4">
+  <div class="bg-white rounded-xl overflow-hidden pattern w-full max-w-6xl shadow-lg">
+    <div class="gradient-bg h-2"></div>
+    <div class="absolute top-4 right-4 px-4 py-1 bg-orange-600 text-white rounded-full text-sm font-bold">1/4</div>
+
+    <div class="flex flex-col justify-between py-10 space-y-8">
+      <!-- Header -->
+      <div class="flex justify-between items-center px-6 md:px-16 pt-4">
+        <div class="text-2xl md:text-3xl font-bold text-gray-800">
+          <span class="accent">Reseñas</span> para Google
+        </div>
+        <div class="text-sm text-gray-500">
+          Tecnologías <span class="accent">Onix</span>
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div class="flex flex-col md:flex-row px-6 md:px-16 -mt-4 gap-8 items-center">
+        <!-- Left content -->
+        <div class="w-full md:w-1/2">
+          <h2 class="text-2xl md:text-4xl font-bold mb-6 text-gray-800">
+            Potencia tu <span class="accent">Reputación Online</span>
+          </h2>
+          <p class="text-base md:text-lg text-gray-600 mb-6">
+            Nuestro producto físico estratégico para marketing digital está diseñado para ayudarte a obtener más reseñas positivas en Google, mejorando tu visibilidad online y atrayendo nuevos clientes.
+          </p>
+
+          <div class="bg-blue-50 p-5 rounded-xl border-l-4 border-blue-500 shadow-md">
+            <div class="flex items-center mb-4">
+              <div class="star-rating mr-3">★★★★★</div>
+              <p class="text-blue-800 font-semibold">Multiplica tus reseñas</p>
+            </div>
+            <p class="text-gray-700 mb-4 text-sm">
+              Las reseñas positivas en Google son un factor clave para que nuevos clientes confíen en tu negocio y decidan visitarte.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-3">
+              <div class="flex items-center bg-white px-3 py-1 rounded-full shadow-sm w-fit">
+                <i class="fas fa-chart-line text-green-500 mr-2"></i>
+                <span class="text-sm font-medium">Mejor posicionamiento</span>
+              </div>
+              <div class="flex items-center bg-white px-3 py-1 rounded-full shadow-sm w-fit">
+                <i class="fas fa-user-plus text-green-500 mr-2"></i>
+                <span class="text-sm font-medium">Más clientes nuevos</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right image -->
+        <div class="w-full md:w-1/2 relative">
+          <div class="bg-blue-100 p-4 rounded-xl shadow-lg relative">
+            <div class="absolute top-4 right-4 bg-white rounded-full w-12 h-12 flex items-center justify-center shadow pulse">
+              <i class="fab fa-google text-blue-600 text-2xl"></i>
+            </div>
+            <img src="https://tus5estrellas.es/wp-content/uploads/2023/12/Captura-de-pantalla-2023-12-14-140321.jpg" alt="Reseñas para Google" class="w-full h-auto rounded-lg shadow">
+          </div>
+          <div class="absolute -bottom-5 left-4 bg-white px-4 py-2 rounded-full shadow-lg flex items-center">
+            <div class="star-rating mr-2">★★★★★</div>
+            <span class="text-sm font-semibold text-gray-700">+200% Reseñas positivas</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="px-6 md:px-16 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+        <div class="flex items-center">
+          <div class="w-2 h-8 accent-bg rounded-full mr-3"></div>
+          <p class="text-sm text-gray-500">Reseñas para Google</p>
+        </div>
+        <div class="text-right">
+          <a href="#tienda" class="inline-flex items-center text-blue-600 font-semibold">
+            <i class="fas fa-shopping-cart mr-2 text-blue-500"></i>
+            Ver en tienda
+          </a>
+        </div>
+      </div>
+    </div>
+      <!-- Botón para avanzar -->
+    <a href="https://tecnologiasonix.com/diapositivas/SHdiapositiva2.html" class="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full shadow-lg w-14 h-14 flex items-center justify-center hover:bg-blue-700 transition">
+      <i class="fas fa-arrow-right text-xl"></i>
+    </a>
+  </div>
+</body>
+</html>
