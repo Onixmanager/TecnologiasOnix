@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tecnologías Onix - Tienda NFC</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+  <style>
+    :root {
+      --primary: #2563eb;
+      --secondary: #10b981;
+      --dark: #1e293b;
+      --light: #f8fafc;
+      --accent: #7c3aed;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--light);
+    }
+    .hero-gradient { background: black; }
+    .product-card {
+      transition: all 0.3s ease;
+      background: white;
+    }
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+    }
+    .color-selector input:checked + span {
+      border: 2px solid var(--primary);
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+    }
+    .quantity-btn { transition: all 0.2s ease; }
+    .quantity-btn:hover { background-color: #e2e8f0; }
+    .cart-item {
+      border-left: 3px solid transparent;
+      transition: all 0.3s ease;
+    }
+    .cart-item:hover { border-left: 3px solid var(--primary); }
+    #cartPanel { transition: right 0.3s ease; }
+    .nav-link::after {
+      content: '';
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      transition: width 0.3s;
+    }
+    .nav-link:hover::after { width: 100%; }
+  </style>
+</head>
+<body class="bg-gray-50">
+  <!-- Navbar -->
+  <nav class="bg-white shadow-md fixed w-full z-50">
+    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+      <div class="flex items-center">
+        <span class="ml-2 text-lg font-medium text-gray-600">TECNOLOGÍAS</span>
+        <span class="text-3xl font-bold text-blue-600">ONIX</span>
+      </div>
+      <div class="hidden md:flex space-x-8">
+        <a href="#inicio" class="nav-link relative text-gray-700 hover:text-blue-600 px-2 py-1">Inicio</a>
+        <a href="#productos" class="nav-link relative text-gray-700 hover:text-blue-600 px-2 py-1">Productos</a>
+        <a href="#contacto" class="nav-link relative text-gray-700 hover:text-blue-600 px-2 py-1">Contacto</a>
+      </div>
+      <div class="relative">
+        <button id="cartButton" class="p-2 text-gray-600 hover:text-blue-600 relative">
+          <i class="fas fa-shopping-cart text-xl"></i>
+          <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="relative hero-gradient text-white pt-28 pb-20">
+    <!-- Video Background -->
+    <div class="absolute top-0 left-0 w-full h-full z-0">
+      <video autoplay muted loop class="w-full h-full object-cover">
+        <source src="https://github.com/Onixmanager/TecnologiasOnix/raw/refs/heads/main/videocabecera.mp4" type="video/mp4">
+        Tu navegador no soporta la etiqueta de video.
+      </video>
+    </div>
+    <!-- Overlay -->
+    <div class="absolute top-0 left-0 w-full h-full bg-black opacity-90 z-10"></div>
+    <!-- Content -->
+    <div class="container mx-auto px-6 text-center relative z-20" data-aos="fade-up">
+      <h1 class="text-4xl md:text-5xl font-bold mb-6">Productos NFC Premium</h1>
+      <p class="text-xl mb-8">Tecnología avanzada con personalización total</p>
+      <a href="#productos" class="inline-block px-8 py-3 bg-white text-blue-600 rounded-lg shadow-lg hover:bg-gray-100 transition duration-300">
+        Ver Colección
+      </a>
+    </div>
+  </section>
+
+  <!-- Products Section -->
+  <section id="productos" class="py-20 bg-white">
+    <div class="container mx-auto px-6">
+      <div class="text-center mb-16" data-aos="fade-up">
+        <h2 class="text-3xl font-bold text-gray-800">Nuestros Modelos NFC</h2>
+        <div class="w-24 h-1 bg-blue-600 mx-auto mt-4 rounded-full"></div>
+      </div>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+        <!-- Producto 1 -->
+        <div class="product-card rounded-xl shadow-lg overflow-hidden"
+             data-imgNegro="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/main/Tecnologias_20250307_124742_0000.png"
+             data-imgBlanco="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/main/white-version-nfc-logo.png"
+             data-aos="fade-up" data-aos-delay="100">
+          <!-- Galería adaptada para imágenes rectangulares -->
+          <div class="bg-gray-100 p-4" style="aspect-ratio: 4/3;">
+            <div class="flex snap-x snap-mandatory overflow-x-auto h-full">
+              <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Rese%C3%B1a-NFC-LOGO-Black.png" alt="Imagen del producto" class="product-image h-full object-contain flex-shrink-0 snap-center min-w-full">
+              <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/main/white-version-nfc-logo.png" alt="Imagen del producto" class="product-image h-full object-contain flex-shrink-0 snap-center min-w-full">
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Modelo NFC Logo</h3>
+            <p class="text-gray-600 mb-4">Personaliza con tu logo corporativo</p>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Color:</label>
+              <div class="flex space-x-2">
+                <label class="color-selector cursor-pointer">
+                  <input type="radio" name="color-nfc-logo" value="negro" class="sr-only" checked>
+                  <span class="w-8 h-8 bg-black rounded-full block border-2 border-gray-200"></span>
+                </label>
+                <label class="color-selector cursor-pointer">
+                  <input type="radio" name="color-nfc-logo" value="blanco" class="sr-only">
+                  <span class="w-8 h-8 bg-white rounded-full block border-2 border-gray-200"></span>
+                </label>
+              </div>
+            </div>
+            <div class="mb-6">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Cantidad:</label>
+              <div class="flex items-center">
+                <button class="quantity-btn decrement px-3 py-1 border rounded-l-lg">-</button>
+                <input type="number" value="1" min="1" class="w-16 text-center border-y px-2 py-1 quantity-input">
+                <button class="quantity-btn increment px-3 py-1 border rounded-r-lg">+</button>
+              </div>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-xl font-bold text-blue-600">19.99€</span>
+              <button class="add-to-cart px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
+                      data-id="nfc-logo"
+                      data-name="Modelo NFC Logo"
+                      data-price="19.99">
+                Añadir al Carrito
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Producto 2 -->
+        <div class="product-card rounded-xl shadow-lg overflow-hidden"
+             data-imgNegro="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/main/Tecnologias_20250307_124742_0000.png"
+             data-imgBlanco="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/main/white-version-clean.png"
+             data-aos="fade-up" data-aos-delay="200">
+          <div class="bg-gray-100 p-4" style="aspect-ratio: 4/3;">
+            <div class="flex snap-x snap-mandatory overflow-x-auto h-full">
+              <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/main/Tecnologias_20250307_124742_0000.png" alt="Imagen del producto" class="product-image h-full object-contain flex-shrink-0 snap-center min-w-full">
+              <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/main/white-version-clean.png" alt="Imagen del producto" class="product-image h-full object-contain flex-shrink-0 snap-center min-w-full">
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Modelo Clean</h3>
+            <p class="text-gray-600 mb-4">Diseño minimalista profesional</p>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Color:</label>
+              <div class="flex space-x-2">
+                <label class="color-selector cursor-pointer">
+                  <input type="radio" name="color-clean" value="negro" class="sr-only" checked>
+                  <span class="w-8 h-8 bg-black rounded-full block border-2 border-gray-200"></span>
+                </label>
+                <label class="color-selector cursor-pointer">
+                  <input type="radio" name="color-clean" value="blanco" class="sr-only">
+                  <span class="w-8 h-8 bg-white rounded-full block border-2 border-gray-200"></span>
+                </label>
+              </div>
+            </div>
+            <div class="mb-6">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Cantidad:</label>
+              <div class="flex items-center">
+                <button class="quantity-btn decrement px-3 py-1 border rounded-l-lg">-</button>
+                <input type="number" value="1" min="1" class="w-16 text-center border-y px-2 py-1 quantity-input">
+                <button class="quantity-btn increment px-3 py-1 border rounded-r-lg">+</button>
+              </div>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-xl font-bold text-blue-600">19.99€</span>
+              <button class="add-to-cart px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
+                      data-id="clean"
+                      data-name="Modelo Clean"
+                      data-price="19.99">
+                Añadir al Carrito
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- Producto 3 -->
+        <div class="product-card rounded-xl shadow-lg overflow-hidden"
+             data-imgNegro="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/main/Tecnologias_20250307_124742_0000.png"
+             data-imgBlanco="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/main/white-version-nfc-qr.png"
+             data-aos="fade-up" data-aos-delay="300">
+          <div class="bg-gray-100 p-4" style="aspect-ratio: 4/3;">
+            <div class="flex snap-x snap-mandatory overflow-x-auto h-full">
+              <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/main/Tecnologias_20250307_124742_0000.png" alt="Imagen del producto" class="product-image h-full object-contain flex-shrink-0 snap-center min-w-full">
+              <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/main/white-version-nfc-qr.png" alt="Imagen del producto" class="product-image h-full object-contain flex-shrink-0 snap-center min-w-full">
+            </div>
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-semibold text-gray-800 mb-4">Modelo NFC + QR</h3>
+            <p class="text-gray-600 mb-4">Compatibilidad máxima con dispositivos</p>
+            <div class="mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Color:</label>
+              <div class="flex space-x-2">
+                <label class="color-selector cursor-pointer">
+                  <input type="radio" name="color-nfc-qr" value="negro" class="sr-only" checked>
+                  <span class="w-8 h-8 bg-black rounded-full block border-2 border-gray-200"></span>
+                </label>
+                <label class="color-selector cursor-pointer">
+                  <input type="radio" name="color-nfc-qr" value="blanco" class="sr-only">
+                  <span class="w-8 h-8 bg-white rounded-full block border-2 border-gray-200"></span>
+                </label>
+              </div>
+            </div>
+            <div class="mb-6">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Cantidad:</label>
+              <div class="flex items-center">
+                <button class="quantity-btn decrement px-3 py-1 border rounded-l-lg">-</button>
+                <input type="number" value="1" min="1" class="w-16 text-center border-y px-2 py-1 quantity-input">
+                <button class="quantity-btn increment px-3 py-1 border rounded-r-lg">+</button>
+              </div>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-xl font-bold text-blue-600">19.99€</span>
+              <button class="add-to-cart px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
+                      data-id="nfc-qr"
+                      data-name="Modelo NFC + QR"
+                      data-price="19.99">
+                Añadir al Carrito
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contacto" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-6">
+      <div class="bg-white rounded-xl shadow-2xl overflow-hidden" data-aos="fade-up">
+        <div class="flex flex-col md:flex-row">
+          <div class="md:w-1/2 p-8 md:p-12">
+            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Contáctanos</h3>
+            <form id="contactForm2" class="space-y-6">
+              <div>
+                <input id="name2" type="text" placeholder="Nombre completo" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+              </div>
+              <div>
+                <input id="email2" type="email" placeholder="Correo electrónico" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
+              </div>
+              <div>
+                <textarea id="message2" rows="4" placeholder="Mensaje" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required></textarea>
+              </div>
+              <button type="submit" class="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
+                Enviar Mensaje
+              </button>
+            </form>
+          </div>
+          <div class="md:w-1/2 bg-blue-600 text-white p-8 md:p-12">
+            <h3 class="text-2xl font-semibold mb-6">Información de Contacto</h3>
+            <div class="space-y-4">
+              <div class="flex items-center">
+                <i class="fas fa-phone-alt mr-4"></i>
+                <span>+34 643 229 507</span>
+              </div>
+              <div class="flex items-center">
+                <i class="fas fa-envelope mr-4"></i>
+                <span>info@tecnologiasonix.com</span>
+              </div>
+              <div class="flex items-center">
+                <i class="fas fa-map-marker-alt mr-4"></i>
+                <span>Barcelona, España</span>
+              </div>
+            </div>
+            <div class="mt-12">
+              <h4 class="text-xl font-semibold mb-4">Síguenos</h4>
+              <div class="flex space-x-4">
+                <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition duration-300">
+                  <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition duration-300">
+                  <i class="fab fa-instagram"></i>
+                </a>
+                <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition duration-300">
+                  <i class="fab fa-linkedin-in"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Script para enviar correo vía mailto -->
+  <script>
+    document.getElementById("contactForm2").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const name = document.getElementById("name2").value;
+      const email = document.getElementById("email2").value;
+      const message = document.getElementById("message2").value;
+      const subject = `Nuevo mensaje de contacto de ${name}`;
+      let body = `Nombre: ${name}%0D%0A`;
+      body += `Email: ${email}%0D%0A`;
+      body += `%0D%0AMensaje:%0D%0A${message}`;
+      window.location.href = `mailto:info@tecnologiasonix.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    });
+  </script>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-white py-12">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between mb-12">
+        <div class="mb-8 md:mb-0">
+          <div class="flex items-center mb-6">
+            <span class="ml-2 text-lg font-medium text-gray-300">Tecnologías</span>
+            <span class="text-3xl font-bold text-blue-400">ONIX</span>
+          </div>
+          <p class="text-gray-400 max-w-xs">
+            Soluciones tecnológicas innovadoras para impulsar tu negocio hacia el futuro digital.
+          </p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Enlaces rápidos</h4>
+            <ul class="space-y-2">
+              <li><a href="#inicio" class="text-gray-400 hover:text-white transition duration-300">Inicio</a></li>
+              <li><a href="#servicios" class="text-gray-400 hover:text-white transition duration-300">Servicios</a></li>
+              <li><a href="#productos" class="text-gray-400 hover:text-white transition duration-300">Productos</a></li>
+              <li><a href="#proceso" class="text-gray-400 hover:text-white transition duration-300">Proceso</a></li>
+              <li><a href="#clientes" class="text-gray-400 hover:text-white transition duration-300">Clientes</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Productos</h4>
+            <ul class="space-y-2">
+              <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Camarero Digital</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Secretario Inteligente</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Comercio 24/7</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Emprendedores</a></li>
+              <li><a href="#" class="text-gray-400 hover:text-white transition duration-300">Reseñas para Google</a></li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="text-lg font-semibold mb-4">Contacto</h4>
+            <ul class="space-y-2">
+              <li class="flex items-center">
+                <i class="fas fa-phone-alt text-blue-400 mr-2"></i>
+                <span>643 229 507</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-envelope text-blue-400 mr-2"></i>
+                <span>info@tecnologiasonix.com</span>
+              </li>
+              <li class="flex items-center">
+                <i class="fas fa-map-marker-alt text-blue-400 mr-2"></i>
+                <span>Barcelona, España</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm mb-4 md:mb-0">
+          &copy; 2024 Tecnologías Onix. Todos los derechos reservados.
+        </p>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+            <i class="fab fa-facebook-f"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+            <i class="fab fa-instagram"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+            <i class="fab fa-twitter"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition duration-300">
+            <i class="fab fa-linkedin-in"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Cart Panel -->
+  <div id="cartPanel" class="fixed top-0 right-0 w-full md:w-96 h-full bg-white shadow-lg transform translate-x-full z-50">
+    <div class="flex flex-col h-full">
+      <div class="bg-blue-600 text-white p-4 flex justify-between items-center">
+        <h3 class="text-xl font-bold">Tu Carrito</h3>
+        <button id="closeCartButton" class="text-white hover:text-gray-200">
+          <i class="fas fa-times text-xl"></i>
+        </button>
+      </div>
+      <div id="cartItems" class="flex-grow p-4 overflow-y-auto">
+        <div class="text-center text-gray-500 py-8">
+          <i class="fas fa-shopping-cart text-4xl mb-3"></i>
+          <p>Tu carrito está vacío</p>
+        </div>
+      </div>
+      <div class="border-t p-4">
+        <div class="flex justify-between items-center mb-4">
+          <span class="text-gray-700 font-semibold">Total:</span>
+          <span id="cartTotal" class="text-xl font-bold text-blue-600">0€</span>
+        </div>
+        <button id="checkoutButton" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
+          Proceder al Pago
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div id="overlay" class="fixed inset-0 bg-black opacity-50 z-40 hidden"></div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    // Inicializa AOS
+    AOS.init({ duration: 800, once: true });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const cartButton = document.getElementById('cartButton');
+      const closeCartButton = document.getElementById('closeCartButton');
+      const cartPanel = document.getElementById('cartPanel');
+      const overlay = document.getElementById('overlay');
+      const cartItems = document.getElementById('cartItems');
+      const cartTotal = document.getElementById('cartTotal');
+      const cartCount = document.getElementById('cartCount');
+      const checkoutButton = document.getElementById('checkoutButton');
+      let cart = [];
+
+      // Controla cantidad
+      document.querySelectorAll('.quantity-btn').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const input = e.target.closest('.product-card').querySelector('.quantity-input');
+          if (e.target.classList.contains('increment')) {
+            input.value = parseInt(input.value) + 1;
+          } else if (e.target.classList.contains('decrement') && input.value > 1) {
+            input.value = parseInt(input.value) - 1;
+          }
+        });
+      });
+
+      // Agregar al carrito
+      document.querySelectorAll('.add-to-cart').forEach(button => {
+        button.addEventListener('click', function() {
+          const productCard = this.closest('.product-card');
+          const id = this.dataset.id;
+          const name = this.dataset.name;
+          const price = parseFloat(this.dataset.price);
+          const color = productCard.querySelector('input[name^="color-"]:checked').value;
+          const quantity = parseInt(productCard.querySelector('.quantity-input').value);
+          const existingItem = cart.find(item => item.id === id && item.color === color);
+          if (existingItem) { existingItem.quantity += quantity; }
+          else { cart.push({ id, name, price, color, quantity }); }
+          updateCart();
+          showCartPanel();
+        });
+      });
+
+      // Panel de carrito
+      cartButton.addEventListener('click', showCartPanel);
+      closeCartButton.addEventListener('click', hideCartPanel);
+      overlay.addEventListener('click', hideCartPanel);
+      function showCartPanel() {
+        cartPanel.style.transform = 'translateX(0)';
+        overlay.classList.remove('hidden');
+      }
+      function hideCartPanel() {
+        cartPanel.style.transform = 'translateX(100%)';
+        overlay.classList.add('hidden');
+      }
+
+      function updateCart() {
+        cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+        cartItems.innerHTML = cart.length === 0 ? 
+          `<div class="text-center text-gray-500 py-8">
+             <i class="fas fa-shopping-cart text-4xl mb-3"></i>
+             <p>Tu carrito está vacío</p>
+           </div>` : 
+          cart.map(item => `
+            <div class="cart-item mb-4 p-4 bg-gray-50 rounded-lg">
+              <div class="flex justify-between mb-2">
+                <div>
+                  <h4 class="font-semibold">${item.name}</h4>
+                  <p class="text-sm text-gray-600">Color: ${item.color}</p>
+                </div>
+                <span class="text-blue-600 font-semibold">${(item.price * item.quantity).toFixed(2)}€</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                  <button class="decrease-quantity px-2 py-1 bg-gray-200 rounded-lg" data-id="${item.id}" data-color="${item.color}">
+                    <i class="fas fa-minus text-sm"></i>
+                  </button>
+                  <span class="mx-3">${item.quantity}</span>
+                  <button class="increase-quantity px-2 py-1 bg-gray-200 rounded-lg" data-id="${item.id}" data-color="${item.color}">
+                    <i class="fas fa-plus text-sm"></i>
+                  </button>
+                </div>
+                <button class="remove-item text-red-500 hover:text-red-700" data-id="${item.id}" data-color="${item.color}">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </div>
+            </div>
+          `).join('');
+
+        document.querySelectorAll('.decrease-quantity').forEach(button => {
+          button.addEventListener('click', () => {
+            const item = cart.find(i => i.id === button.dataset.id && i.color === button.dataset.color);
+            if (item.quantity > 1) { item.quantity--; }
+            else { cart = cart.filter(i => !(i.id === button.dataset.id && i.color === button.dataset.color)); }
+            updateCart();
+          });
+        });
+        document.querySelectorAll('.increase-quantity').forEach(button => {
+          button.addEventListener('click', () => {
+            const item = cart.find(i => i.id === button.dataset.id && i.color === button.dataset.color);
+            item.quantity++;
+            updateCart();
+          });
+        });
+        document.querySelectorAll('.remove-item').forEach(button => {
+          button.addEventListener('click', () => {
+            cart = cart.filter(i => !(i.id === button.dataset.id && i.color === button.dataset.color));
+            updateCart();
+          });
+        });
+        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2);
+        cartTotal.textContent = `${total}€`;
+      }
+
+      // Integración checkout con Stripe
+      checkoutButton.addEventListener('click', () => {
+        if (cart.length > 0) {
+          fetch('/api/create-checkout-session', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              items: cart.map(item => ({
+                name: item.name,
+                price: Math.round(item.price * 100),
+                quantity: item.quantity
+              }))
+            })
+          })
+          .then(response => response.json())
+          .then(data => {
+            if (data.url) { window.location.href = data.url; }
+            else { alert('Error al crear la sesión de pago.'); }
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Error al conectarse al servicio de pago.');
+          });
+        } else { alert('El carrito está vacío'); }
+      });
+      
+      // Evento para actualizar la imagen al seleccionar un color
+      document.querySelectorAll('.color-selector').forEach(label => {
+        label.addEventListener('click', function() {
+          const input = label.querySelector('input');
+          const productCard = label.closest('.product-card');
+          const selectedColor = input.value;
+          // Se deja la lógica actual sin modificaciones para no alterar el resto del código.
+        });
+      });
+    });
+  </script>
+</body>
+</html>
