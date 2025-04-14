@@ -1,244 +1,239 @@
-SIN RESPONSIVE 
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contacto - Tecnologiasonix</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
-            overflow: hidden;
-        }
-        .slide-container {
-            width: 1280px;
-            min-height: 720px;
-            margin: 0 auto;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        }
-        .gradient-bg {
-            background: linear-gradient(135deg, #0062cc 0%, #0097ff 100%);
-        }
-        .accent {
-            color: #ff6b00;
-        }
-        .accent-bg {
-            background-color: #ff6b00;
-        }
-        .pattern {
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        }
-        .product-card {
-            transition: all 0.3s ease;
-            border-left: 4px solid transparent;
-        }
-        .product-card:hover {
-            transform: translateY(-5px);
-            border-left: 4px solid #ff6b00;
-        }
-        .btn-cta {
-            transition: all 0.3s ease;
-        }
-        .btn-cta:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 98, 204, 0.3);
-        }
-        .contact-icon {
-            transition: all 0.3s ease;
-        }
-        .contact-icon:hover {
-            transform: scale(1.1);
-            color: #ff6b00;
-        }
-        .floating {
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contacto - Tecnologiasonix</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #e4e9f2 100%);
+    }
+    .slide-container {
+      width: 100%;
+      max-width: 1280px;
+      min-height: 720px;
+      margin: 2rem auto; /* separación superior/inferior para evitar solapamientos */
+      overflow: hidden;
+      position: relative;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #0062cc 0%, #0097ff 100%);
+    }
+    .accent {
+      color: #ff6b00;
+    }
+    .accent-bg {
+      background-color: #ff6b00;
+    }
+    .pattern {
+      background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .product-card {
+      transition: all 0.3s ease;
+      border-left: 4px solid transparent;
+    }
+    .product-card:hover {
+      transform: translateY(-5px);
+      border-left: 4px solid #ff6b00;
+    }
+    .btn-cta {
+      transition: all 0.3s ease;
+    }
+    .btn-cta:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 98, 204, 0.3);
+    }
+    .contact-icon {
+      transition: all 0.3s ease;
+    }
+    .contact-icon:hover {
+      transform: scale(1.1);
+      color: #ff6b00;
+    }
+    .floating {
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+  </style>
 </head>
-<body class="flex items-center justify-center h-screen">
-    <div class="slide-container bg-white rounded-xl overflow-hidden pattern">
-        <div class="gradient-bg h-2"></div>
-        
-        <div class="flex flex-col h-full justify-between pb-10">
-            <!-- Header -->
-            <div class="flex justify-between items-center px-16 pt-12">
-                <div class="text-3xl font-bold text-gray-800">
-                    Tecnologías<span class="accent">Onix</span>
-                </div>
-                <div class="text-sm text-gray-500">
-                    Soluciones Tecnológicas Innovadoras
-                </div>
-            </div>
-            
-            <!-- Main content -->
-            <div class="px-16 -mt-10">
-                <h2 class="text-4xl font-bold mb-8 text-center text-gray-800">
-                    Transforma tu <span class="accent">Negocio</span> con Nuestras Soluciones
-                </h2>
-                
-                <!-- Products summary -->
-                <div class="grid grid-cols-5 gap-6 mb-8">
-                    <!-- Product 1 -->
-                    <div class="product-card bg-white p-5 rounded-xl shadow-md">
-                        <div class="bg-blue-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <i class="fas fa-utensils text-blue-600 text-xl"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-center text-gray-800 mb-2">Camarero Digital</h3>
-                        <p class="text-center text-gray-600 text-sm">
-                            Automatización de pedidos y reservas para el sector hostelero
-                        </p>
-                    </div>
-                    
-                    <!-- Product 2 -->
-                    <div class="product-card bg-white p-5 rounded-xl shadow-md">
-                        <div class="bg-blue-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <i class="fas fa-robot text-blue-600 text-xl"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-center text-gray-800 mb-2">Secretario Inteligente</h3>
-                        <p class="text-center text-gray-600 text-sm">
-                            Asistente con IA para optimizar gestión administrativa
-                        </p>
-                    </div>
-                    
-                    <!-- Product 3 -->
-                    <div class="product-card bg-white p-5 rounded-xl shadow-md">
-                        <div class="bg-blue-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <i class="fas fa-store text-blue-600 text-xl"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-center text-gray-800 mb-2">Comercio 24/7</h3>
-                        <p class="text-center text-gray-600 text-sm">
-                            Negocio siempre abierto con gestión automática
-                        </p>
-                    </div>
-                    
-                    <!-- Product 4 -->
-                    <div class="product-card bg-white p-5 rounded-xl shadow-md">
-                        <div class="bg-blue-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <i class="fas fa-rocket text-blue-600 text-xl"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-center text-gray-800 mb-2">Emprendedores</h3>
-                        <p class="text-center text-gray-600 text-sm">
-                            Desarrollo a medida para startups e ideas de negocio
-                        </p>
-                    </div>
-                    
-                    <!-- Product 5 -->
-                    <div class="product-card bg-white p-5 rounded-xl shadow-md">
-                        <div class="bg-blue-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <i class="fas fa-star text-blue-600 text-xl"></i>
-                        </div>
-                        <h3 class="text-lg font-bold text-center text-gray-800 mb-2">Reseñas Google</h3>
-                        <p class="text-center text-gray-600 text-sm">
-                            Producto físico para marketing y reputación digital
-                        </p>
-                    </div>
-                </div>
-                
-                <!-- Why choose us -->
-                <div class="bg-blue-50 p-6 rounded-xl mb-8">
-                    <h3 class="text-2xl font-bold text-blue-800 mb-4 text-center">¿Por qué elegirnos?</h3>
-                    
-                    <div class="grid grid-cols-3 gap-6">
-                        <div class="flex items-start">
-                            <div class="bg-white rounded-full p-3 mr-3 shadow-sm">
-                                <i class="fas fa-check text-blue-600"></i>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-gray-800">Soluciones Personalizadas</p>
-                                <p class="text-sm text-gray-600">Adaptadas a tus necesidades específicas</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="bg-white rounded-full p-3 mr-3 shadow-sm">
-                                <i class="fas fa-check text-blue-600"></i>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-gray-800">Tecnología Avanzada</p>
-                                <p class="text-sm text-gray-600">Utilizamos las últimas innovaciones</p>
-                            </div>
-                        </div>
-                        
-                        <div class="flex items-start">
-                            <div class="bg-white rounded-full p-3 mr-3 shadow-sm">
-                                <i class="fas fa-check text-blue-600"></i>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-gray-800">Soporte Continuo</p>
-                                <p class="text-sm text-gray-600">Mantenimiento integral por 1 año</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <!-- Contact section -->
-                <div class="text-center">
-                    <h3 class="text-2xl font-bold text-gray-800 mb-6">Contacta con Nosotros</h3>
-                    
-                    <div class="flex justify-center space-x-8 mb-6">
-                        <a href="https://wa.me/+34643229507" class="inline-flex flex-col items-center">
-                            <div class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mb-2 contact-icon">
-                                <i class="fab fa-whatsapp text-green-600 text-2xl"></i>
-                            </div>
-                            <span class="text-sm font-medium">WhatsApp</span>
-                        </a>
-                        
-                        <a href="tel:+34643229507" class="inline-flex flex-col items-center">
-                            <div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mb-2 contact-icon">
-                                <i class="fas fa-phone-alt text-blue-600 text-2xl"></i>
-                            </div>
-                            <span class="text-sm font-medium">Teléfono</span>
-                        </a>
-                        
-                        <a href="mailto:info@tecnologiasonix.com" class="inline-flex flex-col items-center">
-                            <div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mb-2 contact-icon">
-                                <i class="fas fa-envelope text-blue-600 text-2xl"></i>
-                            </div>
-                            <span class="text-sm font-medium">Email</span>
-                        </a>
-                        
-                        <a href="https://www.tecnologiasonix.com" class="inline-flex flex-col items-center">
-                            <div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mb-2 contact-icon">
-                                <i class="fas fa-globe text-blue-600 text-2xl"></i>
-                            </div>
-                            <span class="text-sm font-medium">Web</span>
-                        </a>
-                    </div>
-                    
-                    <a href="https://wa.me/+34643229507" class="btn-cta inline-block bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg">
-                        Solicitar una consulta gratuita
-                    </a>
-                </div>
-            </div>
-            
-            <!-- Footer -->
-            <div class="px-16 flex justify-between items-center mt-6">
-                <div class="flex items-center">
-                    <div class="w-2 h-8 accent-bg rounded-full mr-3"></div>
-                    <p class="text-sm text-gray-500">Soluciones tecnológicas para el éxito de tu negocio</p>
-                </div>
-                <div class="text-gray-500 text-sm">
-                    www.tecnologiasonix.com | +34 643 229 507
-                </div>
-            </div>
+<body class="min-h-screen p-4">
+  <div class="slide-container bg-white rounded-xl overflow-hidden pattern">
+    <div class="gradient-bg h-2"></div>
+
+    <div class="flex flex-col h-full justify-between pb-10">
+      <!-- Header -->
+      <div class="flex justify-between items-center px-4 md:px-16 pt-12">
+        <div class="text-3xl font-bold text-gray-800">
+          Tecnologías<span class="accent">Onix</span>
         </div>
-          <!-- Botón para avanzar -->
+       </div>
+       </br>
+
+      <!-- Main content -->
+      <div class="px-4 md:px-16 -mt-4">
+        <h2 class="text-3xl md:text-4xl font-bold mb-8 text-center text-gray-800">
+          Transforma tu <span class="accent">Negocio</span> con Nuestras Soluciones
+        </h2>
+
+        <!-- Products summary -->
+        <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 mb-8">
+          <!-- Producto 1 -->
+          <div class="product-card bg-white p-5 rounded-xl shadow-md">
+            <div class="bg-blue-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3">
+              <i class="fas fa-utensils text-blue-600 text-xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-center text-gray-800 mb-2">Camarero Digital</h3>
+            <p class="text-center text-gray-600 text-sm">
+              Automatización de pedidos y reservas para el sector hostelero
+            </p>
+          </div>
+
+          <!-- Producto 2 -->
+          <div class="product-card bg-white p-5 rounded-xl shadow-md">
+            <div class="bg-blue-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3">
+              <i class="fas fa-robot text-blue-600 text-xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-center text-gray-800 mb-2">Secretario Inteligente</h3>
+            <p class="text-center text-gray-600 text-sm">
+              Asistente con IA para optimizar gestión administrativa
+            </p>
+          </div>
+
+          <!-- Producto 3 -->
+          <div class="product-card bg-white p-5 rounded-xl shadow-md">
+            <div class="bg-blue-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3">
+              <i class="fas fa-store text-blue-600 text-xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-center text-gray-800 mb-2">Comercio 24/7</h3>
+            <p class="text-center text-gray-600 text-sm">
+              Negocio siempre abierto con gestión automática
+            </p>
+          </div>
+
+          <!-- Producto 4 -->
+          <div class="product-card bg-white p-5 rounded-xl shadow-md">
+            <div class="bg-blue-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3">
+              <i class="fas fa-rocket text-blue-600 text-xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-center text-gray-800 mb-2">Emprendedores</h3>
+            <p class="text-center text-gray-600 text-sm">
+              Desarrollo a medida para startups e ideas de negocio
+            </p>
+          </div>
+
+          <!-- Producto 5 -->
+          <div class="product-card bg-white p-5 rounded-xl shadow-md">
+            <div class="bg-blue-100 w-14 h-14 rounded-full flex items-center justify-center mx-auto mb-3">
+              <i class="fas fa-star text-blue-600 text-xl"></i>
+            </div>
+            <h3 class="text-lg font-bold text-center text-gray-800 mb-2">Reseñas Google</h3>
+            <p class="text-center text-gray-600 text-sm">
+              Producto físico para marketing y reputación digital
+            </p>
+          </div>
+        </div>
+
+        <!-- Sección "¿Por qué elegirnos?" -->
+        <div class="bg-blue-50 p-6 rounded-xl mb-8">
+          <h3 class="text-2xl font-bold text-blue-800 mb-4 text-center">¿Por qué elegirnos?</h3>
+
+          <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+            <div class="flex items-start">
+              <div class="bg-white rounded-full p-3 mr-3 shadow-sm">
+                <i class="fas fa-check text-blue-600"></i>
+              </div>
+              <div>
+                <p class="font-semibold text-gray-800">Soluciones Personalizadas</p>
+                <p class="text-sm text-gray-600">Adaptadas a tus necesidades específicas</p>
+              </div>
+            </div>
+
+            <div class="flex items-start">
+              <div class="bg-white rounded-full p-3 mr-3 shadow-sm">
+                <i class="fas fa-check text-blue-600"></i>
+              </div>
+              <div>
+                <p class="font-semibold text-gray-800">Tecnología Avanzada</p>
+                <p class="text-sm text-gray-600">Utilizamos las últimas innovaciones</p>
+              </div>
+            </div>
+
+            <div class="flex items-start">
+              <div class="bg-white rounded-full p-3 mr-3 shadow-sm">
+                <i class="fas fa-check text-blue-600"></i>
+              </div>
+              <div>
+                <p class="font-semibold text-gray-800">Soporte Continuo</p>
+                <p class="text-sm text-gray-600">Mantenimiento integral por 1 año</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Sección de contacto -->
+        <div class="text-center">
+          <h3 class="text-2xl font-bold text-gray-800 mb-6">Contacta con Nosotros</h3>
+
+          <div class="flex flex-wrap justify-center space-x-0 md:space-x-8 mb-6">
+            <a href="https://wa.me/+34643229507" class="inline-flex flex-col items-center m-2">
+              <div class="w-14 h-14 rounded-full bg-green-100 flex items-center justify-center mb-2 contact-icon">
+                <i class="fab fa-whatsapp text-green-600 text-2xl"></i>
+              </div>
+              <span class="text-sm font-medium">WhatsApp</span>
+            </a>
+
+            <a href="tel:+34643229507" class="inline-flex flex-col items-center m-2">
+              <div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mb-2 contact-icon">
+                <i class="fas fa-phone-alt text-blue-600 text-2xl"></i>
+              </div>
+              <span class="text-sm font-medium">Teléfono</span>
+            </a>
+
+            <a href="mailto:info@tecnologiasonix.com" class="inline-flex flex-col items-center m-2">
+              <div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mb-2 contact-icon">
+                <i class="fas fa-envelope text-blue-600 text-2xl"></i>
+              </div>
+              <span class="text-sm font-medium">Email</span>
+            </a>
+
+            <a href="https://www.tecnologiasonix.com" class="inline-flex flex-col items-center m-2">
+              <div class="w-14 h-14 rounded-full bg-blue-100 flex items-center justify-center mb-2 contact-icon">
+                <i class="fas fa-globe text-blue-600 text-2xl"></i>
+              </div>
+              <span class="text-sm font-medium">Web</span>
+            </a>
+          </div>
+
+          <a href="https://wa.me/+34643229507" class="btn-cta inline-block bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold py-3 px-8 rounded-full shadow-lg">
+            Solicitar una consulta gratuita
+          </a>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="px-4 md:px-16 flex flex-col md:flex-row justify-between items-center mt-6">
+        <div class="flex items-center mb-2 md:mb-0">
+          <div class="w-2 h-8 accent-bg rounded-full mr-3"></div>
+          <p class="text-sm text-gray-500">Soluciones tecnológicas para el éxito de tu negocio</p>
+        </div>
+        <div class="text-gray-500 text-sm">
+          www.tecnologiasonix.com | +34 643 229 507
+        </div>
+      </div>
+    </div>
+    <!-- Botón para avanzar -->
     <a href="https://tecnologiasonix.com" class="fixed bottom-6 right-6 bg-blue-600 text-white rounded-full shadow-lg w-14 h-14 flex items-center justify-center hover:bg-blue-700 transition">
       <i class="fas fa-arrow-right text-xl"></i>
     </a>
-    </div>
+  </div>
 </body>
 </html>
