@@ -1,581 +1,1264 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tecnologías Onix - Tienda NFC</title>
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
-  <style>
-    :root {
-      --primary: #2563eb;
-      --secondary: #10b981;
-      --dark: #1e293b;
-      --light: #f8fafc;
-      --accent: #7c3aed;
-    }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background-color: var(--light);
-    }
-    .hero-gradient { background: black; }
-    .product-card {
-      transition: all 0.3s ease;
-      background: white;
-    }
-    .product-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
-    }
-    .color-selector input:checked + span {
-      border: 2px solid var(--primary);
-      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
-    }
-    .quantity-btn { transition: all 0.2s ease; }
-    .quantity-btn:hover { background-color: #e2e8f0; }
-    .cart-item {
-      border-left: 3px solid transparent;
-      transition: all 0.3s ease;
-    }
-    .cart-item:hover { border-left: 3px solid var(--primary); }
-    #cartPanel { transition: right 0.3s ease; }
-    .nav-link::after {
-      content: '';
-      width: 0;
-      height: 2px;
-      background: var(--primary);
-      transition: width 0.3s;
-    }
-    .nav-link:hover::after { width: 100%; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tienda NFC — Tecnologías Onix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+:root {
+  --ink: #0d0d0d;
+  --ink-2: #3a3a3a;
+  --ink-3: #888;
+  --paper: #fafaf7;
+  --paper-2: #f2f0ea;
+  --blue: #1557f0;
+  --blue-2: #0d3fbe;
+  --blue-pale: #eef2ff;
+  --line: rgba(13,13,13,0.1);
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans: 'Geist', system-ui, sans-serif;
+  --r: 14px;
+}
+
+body {
+  font-family: var(--sans);
+  background: var(--paper);
+  color: var(--ink);
+  overflow-x: hidden;
+}
+
+/* ── NAV ──────────────────────────────────────── */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5%;
+  height: 64px;
+  background: rgba(250,250,247,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--line);
+}
+
+.logo {
+  display: flex; align-items: baseline; gap: 2px; text-decoration: none;
+}
+.logo-tec { font-family: var(--sans); font-weight: 300; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); }
+.logo-onix { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--ink); }
+
+.nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+.nav-links a { font-size: 13px; font-weight: 400; color: var(--ink-2); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--blue); }
+
+.nav-right { display: flex; align-items: center; gap: 16px; }
+
+.cart-btn {
+  position: relative;
+  width: 40px; height: 40px;
+  border-radius: 10px;
+  border: 1.5px solid var(--line);
+  background: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 16px; color: var(--ink-2);
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.cart-btn:hover { border-color: var(--blue); color: var(--blue); background: var(--blue-pale); }
+#cartCount {
+  position: absolute; top: -6px; right: -6px;
+  width: 18px; height: 18px;
+  background: var(--blue);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 10px; font-weight: 600;
+  display: flex; align-items: center; justify-content: center;
+  display: none;
+}
+#cartCount.show { display: flex; }
+
+.nav-btn-back {
+  padding: 8px 18px;
+  border: 1.5px solid var(--ink);
+  border-radius: 100px;
+  font-size: 12px; font-weight: 500;
+  color: var(--ink);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s;
+  letter-spacing: 0.04em;
+}
+.nav-btn-back:hover { background: var(--ink); color: var(--paper); }
+
+.menu-toggle {
+  display: none; background: none; border: none;
+  color: var(--ink); font-size: 20px; padding: 6px; cursor: pointer;
+}
+
+/* ── OVERLAY + SIDEBAR ───────────────────────── */
+.nav-overlay {
+  display: none; position: fixed; inset: 0; z-index: 199;
+  background: rgba(13,13,13,0.45); backdrop-filter: blur(3px);
+  opacity: 0; transition: opacity 0.3s;
+}
+.nav-overlay.open { display: block; opacity: 1; }
+
+.mobile-nav {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 200;
+  width: 78%; max-width: 320px;
+  background: var(--paper);
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: -8px 0 40px rgba(13,13,13,0.12);
+}
+.mobile-nav.open { transform: translateX(0); }
+
+.mobile-nav-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; height: 64px;
+  border-bottom: 1px solid var(--line); flex-shrink: 0;
+}
+.mobile-nav-logo { display: flex; align-items: baseline; gap: 2px; text-decoration: none; }
+.mobile-nav-logo .tec { font-size: 10px; font-weight: 300; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-3); }
+.mobile-nav-logo .onix { font-family: var(--serif); font-style: italic; font-size: 20px; color: var(--ink); }
+.mobile-nav-close {
+  background: none; border: 1px solid var(--line); border-radius: 8px;
+  width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
+  font-size: 15px; color: var(--ink-2); cursor: pointer;
+  transition: background 0.2s;
+}
+.mobile-nav-close:hover { background: var(--paper-2); }
+
+.mobile-nav-links { flex: 1; display: flex; flex-direction: column; padding: 8px 0; overflow-y: auto; }
+.mobile-nav-links a {
+  font-size: 15px; font-weight: 400; color: var(--ink-2);
+  text-decoration: none; padding: 14px 24px;
+  border-bottom: 1px solid var(--line);
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.15s, color 0.15s, padding-left 0.15s;
+}
+.mobile-nav-links a::after { content: '→'; font-size: 13px; color: var(--ink-3); transition: transform 0.2s; }
+.mobile-nav-links a:hover { background: var(--paper-2); color: var(--blue); padding-left: 30px; }
+.mobile-nav-links a:hover::after { transform: translateX(4px); color: var(--blue); }
+.mobile-nav-links a.cta-mob {
+  margin: 16px 24px 0; padding: 12px 20px;
+  background: var(--ink); color: #fff !important;
+  border-radius: 10px; border: none; font-weight: 500; justify-content: center;
+}
+.mobile-nav-links a.cta-mob::after { display: none; }
+.mobile-nav-links a.cta-mob:hover { background: var(--blue); padding-left: 20px; }
+
+/* ── HERO ────────────────────────────────────── */
+#inicio {
+  position: relative;
+  min-height: 75vh;
+  display: flex; align-items: center; justify-content: center;
+  text-align: center;
+  padding: 120px 5% 80px;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+.hero-video {
+  position: absolute; inset: 0; z-index: 0;
+}
+.hero-video video { width: 100%; height: 100%; object-fit: cover; }
+.hero-video-overlay {
+  position: absolute; inset: 0;
+  background: rgba(10,10,10,0.82);
+}
+
+.hero-grid-lines {
+  position: absolute; inset: 0; z-index: 1;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+.hero-content { position: relative; z-index: 2; max-width: 680px; }
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 6px 16px;
+  border: 1px solid rgba(255,255,255,0.15);
+  border-radius: 100px;
+  font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 28px;
+  background: rgba(255,255,255,0.05);
+}
+.hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: #4ade80; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.8)} }
+
+.hero-content h1 {
+  font-family: var(--serif);
+  font-size: clamp(44px, 7vw, 88px);
+  line-height: 0.95;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin-bottom: 20px;
+}
+.hero-content h1 em { font-style: italic; color: #6b9aff; }
+
+.hero-content p {
+  font-size: 17px; font-weight: 300; color: rgba(255,255,255,0.55);
+  line-height: 1.7; margin-bottom: 40px;
+}
+
+.hero-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+
+.btn-hero-primary {
+  padding: 14px 36px;
+  background: #fff; color: var(--ink);
+  border-radius: 100px;
+  font-size: 14px; font-weight: 600;
+  text-decoration: none;
+  transition: background 0.2s, transform 0.15s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-hero-primary:hover { background: #e8e8e5; transform: translateY(-2px); }
+
+.btn-hero-outline {
+  padding: 14px 32px;
+  border: 1.5px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.7);
+  border-radius: 100px;
+  font-size: 14px; font-weight: 400;
+  text-decoration: none;
+  transition: border-color 0.2s, color 0.2s;
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-hero-outline:hover { border-color: rgba(255,255,255,0.5); color: #fff; }
+
+/* ── FEATURES BAR ────────────────────────────── */
+.features-bar {
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 24px 5%;
+  display: flex; align-items: center; justify-content: center;
+  gap: 48px; flex-wrap: wrap;
+}
+.feat-item {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.5);
+}
+.feat-item i { color: #4ade80; font-size: 14px; }
+
+/* ── PRODUCTS ────────────────────────────────── */
+#productos {
+  padding: 100px 5%;
+  background: var(--paper);
+}
+
+.section-tag { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.section-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--blue); }
+.section-tag span { font-size: 11px; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blue); }
+
+.section-title {
+  font-family: var(--serif);
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1.0; letter-spacing: -0.02em; color: var(--ink);
+  margin-bottom: 12px;
+}
+.section-title em { font-style: italic; }
+.section-sub { font-size: 16px; font-weight: 300; color: var(--ink-2); line-height: 1.7; max-width: 480px; }
+
+.products-header {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 40px; align-items: end;
+  margin-bottom: 60px;
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+/* ── PRODUCT CARD ────────────────────────────── */
+.product-card {
+  background: #fff;
+  border: 1.5px solid rgba(13,13,13,0.1);
+  border-radius: calc(var(--r) + 4px);
+  overflow: hidden;
+  box-shadow: 0 2px 16px rgba(13,13,13,0.05);
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+  display: flex; flex-direction: column;
+}
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 48px rgba(13,13,13,0.1);
+  border-color: rgba(21,87,240,0.2);
+}
+
+/* Image gallery */
+.product-gallery {
+  position: relative;
+  background: var(--paper-2);
+  aspect-ratio: 4/3;
+  overflow: hidden;
+}
+.gallery-track {
+  display: flex;
+  height: 100%;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+}
+.gallery-track::-webkit-scrollbar { display: none; }
+.gallery-track img {
+  flex-shrink: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  scroll-snap-align: center;
+  padding: 16px;
+}
+
+.gallery-dots {
+  position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+  display: flex; gap: 5px;
+}
+.gallery-dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: rgba(13,13,13,0.2);
+  transition: background 0.2s, width 0.2s;
+  border: none; cursor: pointer; padding: 0;
+}
+.gallery-dot.active { background: var(--blue); width: 14px; border-radius: 3px; }
+
+/* Color badge */
+.color-badge {
+  position: absolute; top: 12px; left: 12px;
+  padding: 4px 10px;
+  background: rgba(250,250,247,0.92);
+  border: 1px solid var(--line);
+  border-radius: 100px;
+  font-size: 11px; font-weight: 500; color: var(--ink-2);
+  backdrop-filter: blur(8px);
+}
+
+/* Product body */
+.product-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+
+.product-name {
+  font-size: 18px; font-weight: 500; color: var(--ink); margin-bottom: 6px;
+}
+.product-desc { font-size: 13px; font-weight: 300; color: var(--ink-2); line-height: 1.6; margin-bottom: 20px; }
+
+/* Color selector */
+.color-row { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+.color-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+.color-options { display: flex; gap: 8px; }
+.color-opt { position: relative; cursor: pointer; }
+.color-opt input { position: absolute; opacity: 0; width: 0; height: 0; }
+.color-swatch {
+  width: 26px; height: 26px; border-radius: 50%;
+  display: block;
+  border: 2px solid transparent;
+  outline: 2px solid transparent;
+  transition: outline 0.15s, border-color 0.15s;
+}
+.color-opt input:checked + .color-swatch { outline: 2px solid var(--blue); outline-offset: 2px; }
+.swatch-negro { background: #0d0d0d; border-color: rgba(13,13,13,0.2); }
+.swatch-blanco { background: #fff; border-color: rgba(13,13,13,0.2); }
+
+/* Quantity */
+.qty-row { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+.qty-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
+.qty-controls { display: flex; align-items: center; border: 1.5px solid var(--line); border-radius: 10px; overflow: hidden; }
+.qty-btn {
+  width: 34px; height: 34px;
+  background: none; border: none;
+  font-size: 16px; color: var(--ink-2);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s, color 0.15s;
+}
+.qty-btn:hover { background: var(--paper-2); color: var(--ink); }
+.qty-input {
+  width: 40px; text-align: center;
+  border: none; border-left: 1.5px solid var(--line); border-right: 1.5px solid var(--line);
+  font-family: var(--sans); font-size: 14px; font-weight: 500; color: var(--ink);
+  background: none; outline: none; padding: 0; height: 34px;
+}
+
+/* Price + CTA */
+.product-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: auto; padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.product-price {
+  font-family: var(--serif); font-size: 28px;
+  color: var(--ink); letter-spacing: -0.02em;
+}
+.btn-add {
+  padding: 11px 22px;
+  background: var(--ink); color: #fff;
+  border: none; border-radius: 10px;
+  font-family: var(--sans); font-size: 13px; font-weight: 500;
+  cursor: pointer;
+  display: flex; align-items: center; gap: 7px;
+  transition: background 0.2s, transform 0.15s;
+}
+.btn-add:hover { background: var(--blue); transform: translateY(-1px); }
+.btn-add.added { background: #16a34a; }
+
+/* ── CART SIDEBAR ────────────────────────────── */
+.cart-overlay {
+  display: none; position: fixed; inset: 0; z-index: 299;
+  background: rgba(13,13,13,0.45); backdrop-filter: blur(3px);
+}
+.cart-overlay.open { display: block; }
+
+.cart-sidebar {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 300;
+  width: 100%; max-width: 400px;
+  background: var(--paper);
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: -8px 0 48px rgba(13,13,13,0.15);
+}
+.cart-sidebar.open { transform: translateX(0); }
+
+.cart-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--line);
+  flex-shrink: 0;
+}
+.cart-head h3 {
+  font-family: var(--serif); font-style: italic;
+  font-size: 22px; color: var(--ink);
+}
+.cart-close {
+  width: 34px; height: 34px; border-radius: 8px;
+  border: 1px solid var(--line); background: none;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; color: var(--ink-2); cursor: pointer;
+  transition: background 0.2s;
+}
+.cart-close:hover { background: var(--paper-2); }
+
+.cart-items { flex: 1; overflow-y: auto; padding: 16px 24px; }
+
+.cart-empty {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  height: 100%; gap: 12px; color: var(--ink-3); text-align: center;
+}
+.cart-empty i { font-size: 40px; opacity: 0.3; }
+.cart-empty p { font-size: 14px; }
+
+.cart-item {
+  display: flex; gap: 14px; align-items: flex-start;
+  padding: 16px 0; border-bottom: 1px solid var(--line);
+}
+.cart-item-img {
+  width: 56px; height: 56px; border-radius: 10px;
+  background: var(--paper-2); overflow: hidden; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  border: 1px solid var(--line);
+  font-size: 20px; color: var(--ink-3);
+}
+.cart-item-info { flex: 1; }
+.cart-item-name { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
+.cart-item-meta { font-size: 12px; color: var(--ink-3); margin-bottom: 8px; }
+.cart-item-qty { display: flex; align-items: center; gap: 8px; }
+.cart-item-qty button {
+  width: 24px; height: 24px; border-radius: 6px;
+  border: 1px solid var(--line); background: none;
+  font-size: 13px; color: var(--ink-2); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+}
+.cart-item-qty button:hover { background: var(--paper-2); }
+.cart-item-qty span { font-size: 13px; font-weight: 500; color: var(--ink); min-width: 20px; text-align: center; }
+.cart-item-price { font-size: 15px; font-weight: 600; color: var(--ink); flex-shrink: 0; }
+.cart-item-remove {
+  background: none; border: none; cursor: pointer;
+  color: var(--ink-3); font-size: 12px; padding: 4px;
+  transition: color 0.2s;
+}
+.cart-item-remove:hover { color: #ef4444; }
+
+.cart-foot {
+  padding: 20px 24px; border-top: 1px solid var(--line); flex-shrink: 0;
+}
+.cart-total-row {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;
+}
+.cart-total-label { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
+.cart-total-amount { font-family: var(--serif); font-size: 28px; color: var(--ink); letter-spacing: -0.02em; }
+.btn-checkout {
+  width: 100%; padding: 14px;
+  background: var(--ink); color: #fff;
+  border: none; border-radius: 10px;
+  font-family: var(--sans); font-size: 14px; font-weight: 600;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background 0.2s;
+  margin-bottom: 10px;
+}
+.btn-checkout:hover { background: var(--blue); }
+.btn-wa {
+  width: 100%; padding: 12px;
+  background: #25d366; color: #fff;
+  border: none; border-radius: 10px;
+  font-family: var(--sans); font-size: 13px; font-weight: 500;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background 0.2s;
+}
+.btn-wa:hover { background: #1da854; }
+
+/* ── ABOUT NFC ───────────────────────────────── */
+#about-nfc {
+  padding: 80px 5%;
+  background: var(--paper-2);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.about-nfc-grid {
+  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px;
+  background: var(--line); border: 1px solid var(--line);
+  border-radius: var(--r); overflow: hidden; margin-top: 48px;
+}
+.about-nfc-cell {
+  background: var(--paper-2); padding: 36px 32px;
+  transition: background 0.2s;
+}
+.about-nfc-cell:hover { background: #fff; }
+.nfc-cell-icon {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: var(--blue-pale);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; color: var(--blue);
+  margin-bottom: 16px;
+}
+.about-nfc-cell h3 { font-size: 16px; font-weight: 500; color: var(--ink); margin-bottom: 8px; }
+.about-nfc-cell p { font-size: 13px; font-weight: 300; color: var(--ink-2); line-height: 1.65; }
+
+/* ── CONTACT ─────────────────────────────────── */
+#contacto {
+  padding: 100px 5%;
+  background: var(--ink);
+}
+.contact-grid {
+  display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: start;
+}
+.contact-info .section-tag span { color: #6b9aff; }
+.contact-info .section-tag::before { background: #6b9aff; }
+.contact-info .section-title { color: #fff; }
+.contact-info .section-sub { color: rgba(250,250,247,0.5); margin-top: 12px; }
+
+.c-details { display: flex; flex-direction: column; gap: 14px; margin-top: 36px; }
+.c-detail {
+  display: flex; align-items: center; gap: 14px;
+  padding: 16px 20px;
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: var(--r);
+  text-decoration: none;
+  transition: border-color 0.2s, background 0.2s;
+}
+.c-detail:hover { border-color: rgba(107,154,255,0.35); background: rgba(107,154,255,0.06); }
+.c-detail-icon {
+  width: 36px; height: 36px; border-radius: 9px;
+  background: rgba(255,255,255,0.06);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 15px; color: #6b9aff; flex-shrink: 0;
+}
+.c-detail-lbl { font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(250,250,247,0.3); display: block; margin-bottom: 1px; }
+.c-detail-val { font-size: 13px; font-weight: 400; color: rgba(250,250,247,0.75); }
+
+.contact-form-box {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: calc(var(--r) + 4px);
+  padding: 40px;
+}
+.fg { margin-bottom: 16px; }
+.fg label { display: block; font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(250,250,247,0.3); margin-bottom: 7px; }
+.fg input, .fg textarea {
+  width: 100%; padding: 11px 15px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  color: rgba(250,250,247,0.9);
+  font-family: var(--sans); font-size: 14px; font-weight: 300;
+  outline: none; transition: border-color 0.2s;
+}
+.fg input::placeholder, .fg textarea::placeholder { color: rgba(255,255,255,0.18); }
+.fg input:focus, .fg textarea:focus { border-color: rgba(107,154,255,0.4); }
+.fg textarea { resize: vertical; min-height: 100px; }
+.btn-submit {
+  width: 100%; padding: 13px;
+  background: var(--blue); color: #fff;
+  border: none; border-radius: 10px;
+  font-family: var(--sans); font-size: 14px; font-weight: 600;
+  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
+  transition: background 0.2s;
+}
+.btn-submit:hover { background: var(--blue-2); }
+#formMsg2 { display: none; margin-top: 12px; padding: 12px 16px; border-radius: 10px; font-size: 13px; text-align: center; }
+
+/* ── FOOTER ──────────────────────────────────── */
+footer {
+  background: var(--ink);
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 48px 5% 28px;
+}
+.footer-row {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 32px; flex-wrap: wrap; margin-bottom: 32px;
+}
+.footer-logo { text-decoration: none; display: flex; align-items: baseline; gap: 2px; }
+.footer-logo-tec { font-size: 11px; font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(250,250,247,0.3); }
+.footer-logo-onix { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--paper); }
+.footer-tagline { font-size: 12px; font-weight: 300; color: rgba(250,250,247,0.3); margin-top: 4px; }
+
+.footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
+.footer-links a { font-size: 13px; font-weight: 300; color: rgba(250,250,247,0.4); text-decoration: none; transition: color 0.2s; }
+.footer-links a:hover { color: var(--paper); }
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 20px;
+  display: flex; align-items: center; justify-content: space-between;
+  flex-wrap: wrap; gap: 8px;
+}
+.footer-copy { font-size: 12px; font-weight: 300; color: rgba(250,250,247,0.22); }
+
+/* ── FLOATING BTNS ───────────────────────────── */
+#fab-whatsapp {
+  position: fixed; bottom: 28px; right: 28px; z-index: 99;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: #25d366; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px; text-decoration: none;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+#fab-whatsapp:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(37,211,102,0.5); }
+
+#fab-contact {
+  position: fixed; bottom: 28px; left: 28px; z-index: 99;
+  width: 52px; height: 52px; border-radius: 50%;
+  background: #0d0d0d; color: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 19px; text-decoration: none;
+  box-shadow: 0 4px 20px rgba(13,13,13,0.3);
+  transition: transform 0.2s, background 0.2s;
+}
+#fab-contact:hover { transform: scale(1.1); background: var(--blue); }
+
+/* ── TOAST ───────────────────────────────────── */
+#toast {
+  position: fixed; bottom: 90px; right: 28px; z-index: 400;
+  background: var(--ink); color: #fff;
+  padding: 12px 20px; border-radius: 12px;
+  font-size: 13px; font-weight: 500;
+  display: flex; align-items: center; gap: 8px;
+  box-shadow: 0 8px 24px rgba(13,13,13,0.2);
+  transform: translateY(16px); opacity: 0;
+  transition: transform 0.3s, opacity 0.3s;
+  pointer-events: none;
+}
+#toast.show { transform: translateY(0); opacity: 1; }
+#toast i { color: #4ade80; }
+
+/* ── RESPONSIVE ──────────────────────────────── */
+@media (max-width: 1024px) {
+  .products-header { grid-template-columns: 1fr; gap: 16px; }
+  .products-grid { grid-template-columns: 1fr 1fr; }
+  .about-nfc-grid { grid-template-columns: 1fr 1fr; }
+  .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+}
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .menu-toggle { display: block; }
+  .nav-btn-back { display: none; }
+  .products-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
+  .product-body { padding: 16px; }
+  .product-name { font-size: 15px; }
+  .product-desc { display: none; }
+  .product-price { font-size: 22px; }
+  .btn-add { padding: 9px 14px; font-size: 12px; }
+  .about-nfc-grid { grid-template-columns: 1fr; }
+  .features-bar { gap: 24px; }
+  .contact-form-box { padding: 24px 20px; }
+  .footer-row { flex-direction: column; align-items: flex-start; }
+  .footer-links { gap: 16px; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  #inicio { min-height: 60vh; }
+  .hero-content h1 { font-size: 38px; }
+}
+@media (max-width: 480px) {
+  .products-grid { grid-template-columns: 1fr; }
+}
+</style>
 </head>
-<body class="bg-gray-50">
-  <!-- Navbar -->
-  <nav class="bg-white shadow-md fixed w-full z-50">
-    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
-      <div class="flex items-center">
-        <span class="ml-2 text-lg font-medium text-gray-600">TECNOLOGÍAS</span>
-        <span class="text-3xl font-bold text-blue-600">ONIX</span>
-      </div>
-      <div class="hidden md:flex space-x-8">
-        <a href="#inicio" class="nav-link relative text-gray-700 hover:text-blue-600 px-2 py-1">Inicio</a>
-        <a href="#productos" class="nav-link relative text-gray-700 hover:text-blue-600 px-2 py-1">Productos</a>
-        <a href="#contacto" class="nav-link relative text-gray-700 hover:text-blue-600 px-2 py-1">Contacto</a>
-      </div>
-      <div class="relative">
-        <button id="cartButton" class="p-2 text-gray-600 hover:text-blue-600 relative">
-          <i class="fas fa-shopping-cart text-xl"></i>
-          <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
-        </button>
-      </div>
-    </div>
-  </nav>
+<body>
 
-  <!-- Hero Section -->
-  <section class="relative hero-gradient text-white pt-28 pb-20">
-    <!-- Video Background -->
-    <div class="absolute top-0 left-0 w-full h-full z-0">
-      <video autoplay muted loop class="w-full h-full object-cover">
-        <source src="https://github.com/Onixmanager/TecnologiasOnix/raw/refs/heads/main/videocabecera.mp4" type="video/mp4">
-        Tu navegador no soporta la etiqueta de video.
-      </video>
-    </div>
-    <!-- Overlay -->
-    <div class="absolute top-0 left-0 w-full h-full bg-black opacity-90 z-10"></div>
-    <!-- Content -->
-    <div class="container mx-auto px-6 text-center relative z-20" data-aos="fade-up">
-      <h1 class="text-4xl md:text-5xl font-bold mb-6">Productos NFC Premium</h1>
-      <p class="text-xl mb-8">Tecnología avanzada con personalización total</p>
-      <a href="#productos" class="inline-block px-8 py-3 bg-white text-blue-600 rounded-lg shadow-lg hover:bg-gray-100 transition duration-300">
-        Ver Colección
-      </a>
-    </div>
-  </section>
+<!-- NAV -->
+<nav>
+  <a href="#inicio" class="logo">
+    <span class="logo-tec">Tecnologías&nbsp;</span>
+    <span class="logo-onix">Onix</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#productos">Productos</a></li>
+    <li><a href="#about-nfc">¿Qué es NFC?</a></li>
+    <li><a href="#contacto">Contacto</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="cart-btn" id="cartButton" aria-label="Carrito">
+      <i class="fas fa-shopping-bag"></i>
+      <span id="cartCount">0</span>
+    </button>
+    <a href="https://tecnologiasonix.com" class="nav-btn-back">← Web principal</a>
+    <button class="menu-toggle" onclick="openMenu()" aria-label="Menú"><i class="fas fa-bars"></i></button>
+  </div>
+</nav>
 
-  <!-- Products Section -->
-  <section id="productos" class="py-20 bg-white">
-    <div class="container mx-auto px-6">
-      <div class="text-center mb-16" data-aos="fade-up">
-        <h2 class="text-3xl font-bold text-gray-800">Nuestros Modelos NFC</h2>
-        <div class="w-24 h-1 bg-blue-600 mx-auto mt-4 rounded-full"></div>
-      </div>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Producto 1 -->
-        <div class="product-card rounded-xl shadow-lg overflow-hidden"
-             data-imgNegro="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/main/Tecnologias_20250307_124742_0000.png"
-             data-imgBlanco="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/main/white-version-nfc-logo.png"
-             data-aos="fade-up" data-aos-delay="100">
-          <!-- Galería adaptada para imágenes rectangulares -->
-          <div class="bg-gray-100 p-4" style="aspect-ratio: 4/3;">
-            <div class="flex snap-x snap-mandatory overflow-x-auto h-full">
-              <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Rese%C3%B1a-NFC-LOGO-Black.png" alt="Imagen del producto" class="product-image h-full object-contain flex-shrink-0 snap-center min-w-full">
-              <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Rese%C3%B1a-NFC-LOGO-White.png" alt="Imagen del producto" class="product-image h-full object-contain flex-shrink-0 snap-center min-w-full">
-            </div>
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-semibold text-gray-800 mb-4">Modelo NFC Logo</h3>
-            <p class="text-gray-600 mb-4">Personaliza con tu logo corporativo</p>
-            <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Color:</label>
-              <div class="flex space-x-2">
-                <label class="color-selector cursor-pointer">
-                  <input type="radio" name="color-nfc-logo" value="negro" class="sr-only" checked>
-                  <span class="w-8 h-8 bg-black rounded-full block border-2 border-gray-200"></span>
-                </label>
-                <label class="color-selector cursor-pointer">
-                  <input type="radio" name="color-nfc-logo" value="blanco" class="sr-only">
-                  <span class="w-8 h-8 bg-white rounded-full block border-2 border-gray-200"></span>
-                </label>
-              </div>
-            </div>
-            <div class="mb-6">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Cantidad:</label>
-              <div class="flex items-center">
-                <button class="quantity-btn decrement px-3 py-1 border rounded-l-lg">-</button>
-                <input type="number" value="1" min="1" class="w-16 text-center border-y px-2 py-1 quantity-input">
-                <button class="quantity-btn increment px-3 py-1 border rounded-r-lg">+</button>
-              </div>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-xl font-bold text-blue-600">19.99€</span>
-              <button class="add-to-cart px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
-                      data-id="nfc-logo"
-                      data-name="Modelo NFC Logo"
-                      data-price="19.99">
-                Añadir al Carrito
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- Producto 2 -->
-        <div class="product-card rounded-xl shadow-lg overflow-hidden"
-             data-imgNegro="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/main/Tecnologias_20250307_124742_0000.png"
-             data-imgBlanco="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/main/white-version-clean.png"
-             data-aos="fade-up" data-aos-delay="200">
-          <div class="bg-gray-100 p-4" style="aspect-ratio: 4/3;">
-            <div class="flex snap-x snap-mandatory overflow-x-auto h-full">
-              <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Rese%C3%B1a-NFC-Clean-Black.png" alt="Imagen del producto" class="product-image h-full object-contain flex-shrink-0 snap-center min-w-full">
-              <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Rese%C3%B1a-NFC-Clean-White.png" alt="Imagen del producto" class="product-image h-full object-contain flex-shrink-0 snap-center min-w-full">
-            </div>
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-semibold text-gray-800 mb-4">Modelo Clean</h3>
-            <p class="text-gray-600 mb-4">Diseño minimalista profesional</p>
-            <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Color:</label>
-              <div class="flex space-x-2">
-                <label class="color-selector cursor-pointer">
-                  <input type="radio" name="color-clean" value="negro" class="sr-only" checked>
-                  <span class="w-8 h-8 bg-black rounded-full block border-2 border-gray-200"></span>
-                </label>
-                <label class="color-selector cursor-pointer">
-                  <input type="radio" name="color-clean" value="blanco" class="sr-only">
-                  <span class="w-8 h-8 bg-white rounded-full block border-2 border-gray-200"></span>
-                </label>
-              </div>
-            </div>
-            <div class="mb-6">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Cantidad:</label>
-              <div class="flex items-center">
-                <button class="quantity-btn decrement px-3 py-1 border rounded-l-lg">-</button>
-                <input type="number" value="1" min="1" class="w-16 text-center border-y px-2 py-1 quantity-input">
-                <button class="quantity-btn increment px-3 py-1 border rounded-r-lg">+</button>
-              </div>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-xl font-bold text-blue-600">19.99€</span>
-              <button class="add-to-cart px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
-                      data-id="clean"
-                      data-name="Modelo Clean"
-                      data-price="19.99">
-                Añadir al Carrito
-              </button>
-            </div>
-          </div>
-        </div>
-        <!-- Producto 3 -->
-        <div class="product-card rounded-xl shadow-lg overflow-hidden"
-             data-imgNegro="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/main/Tecnologias_20250307_124742_0000.png"
-             data-imgBlanco="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/main/white-version-nfc-qr.png"
-             data-aos="fade-up" data-aos-delay="300">
-          <div class="bg-gray-100 p-4" style="aspect-ratio: 4/3;">
-            <div class="flex snap-x snap-mandatory overflow-x-auto h-full">
-              <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Rese%C3%B1a-NFC-QR-Black.png" alt="Imagen del producto" class="product-image h-full object-contain flex-shrink-0 snap-center min-w-full">
-              <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Rese%C3%B1a-NFC-QR-White.png" alt="Imagen del producto" class="product-image h-full object-contain flex-shrink-0 snap-center min-w-full">
-            </div>
-          </div>
-          <div class="p-6">
-            <h3 class="text-xl font-semibold text-gray-800 mb-4">Modelo NFC + QR</h3>
-            <p class="text-gray-600 mb-4">Compatibilidad máxima con dispositivos</p>
-            <div class="mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Color:</label>
-              <div class="flex space-x-2">
-                <label class="color-selector cursor-pointer">
-                  <input type="radio" name="color-nfc-qr" value="negro" class="sr-only" checked>
-                  <span class="w-8 h-8 bg-black rounded-full block border-2 border-gray-200"></span>
-                </label>
-                <label class="color-selector cursor-pointer">
-                  <input type="radio" name="color-nfc-qr" value="blanco" class="sr-only">
-                  <span class="w-8 h-8 bg-white rounded-full block border-2 border-gray-200"></span>
-                </label>
-              </div>
-            </div>
-            <div class="mb-6">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Cantidad:</label>
-              <div class="flex items-center">
-                <button class="quantity-btn decrement px-3 py-1 border rounded-l-lg">-</button>
-                <input type="number" value="1" min="1" class="w-16 text-center border-y px-2 py-1 quantity-input">
-                <button class="quantity-btn increment px-3 py-1 border rounded-r-lg">+</button>
-              </div>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-xl font-bold text-blue-600">19.99€</span>
-              <button class="add-to-cart px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300"
-                      data-id="nfc-qr"
-                      data-name="Modelo NFC + QR"
-                      data-price="19.99">
-                Añadir al Carrito
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+<!-- OVERLAY + SIDEBAR -->
+<div class="nav-overlay" id="navOverlay" onclick="closeMenu()"></div>
+<div class="mobile-nav" id="mobileNav">
+  <div class="mobile-nav-header">
+    <a href="#inicio" class="mobile-nav-logo" onclick="closeMenu()">
+      <span class="tec">Tecnologías&nbsp;</span><span class="onix">Onix</span>
+    </a>
+    <button class="mobile-nav-close" onclick="closeMenu()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="mobile-nav-links">
+    <a href="#productos" onclick="closeMenu()">Productos NFC</a>
+    <a href="#about-nfc" onclick="closeMenu()">¿Qué es NFC?</a>
+    <a href="#contacto" onclick="closeMenu()">Contacto</a>
+    <a href="https://tecnologiasonix.com" class="cta-mob" onclick="closeMenu()">← Web principal</a>
+  </div>
+</div>
 
-  <!-- Contact Section -->
-  <section id="contacto" class="py-20 bg-gray-50">
-    <div class="container mx-auto px-6">
-      <div class="bg-white rounded-xl shadow-2xl overflow-hidden" data-aos="fade-up">
-        <div class="flex flex-col md:flex-row">
-          <div class="md:w-1/2 p-8 md:p-12">
-            <h3 class="text-2xl font-semibold text-gray-800 mb-6">Contáctanos</h3>
-            <form id="contactForm2" class="space-y-6">
-              <div>
-                <input id="name2" type="text" placeholder="Nombre completo" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
-              </div>
-              <div>
-                <input id="email2" type="email" placeholder="Correo electrónico" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required>
-              </div>
-              <div>
-                <textarea id="message2" rows="4" placeholder="Mensaje" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" required></textarea>
-              </div>
-              <button type="submit" class="w-full px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition duration-300">
-                Enviar Mensaje
-              </button>
-            </form>
-          </div>
-          <div class="md:w-1/2 bg-blue-600 text-white p-8 md:p-12">
-            <h3 class="text-2xl font-semibold mb-6">Información de Contacto</h3>
-            <div class="space-y-4">
-              <div class="flex items-center">
-                <i class="fas fa-phone-alt mr-4"></i>
-                <span>+34 643 229 507</span>
-              </div>
-              <div class="flex items-center">
-                <i class="fas fa-envelope mr-4"></i>
-                <span>info@tecnologiasonix.com</span>
-              </div>
-              <div class="flex items-center">
-                <i class="fas fa-map-marker-alt mr-4"></i>
-                <span>Barcelona, España</span>
-              </div>
-            </div>
-            <div class="mt-12">
-              <h4 class="text-xl font-semibold mb-4">Síguenos</h4>
-              <div class="flex space-x-4">
-                <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition duration-300">
-                  <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition duration-300">
-                  <i class="fab fa-instagram"></i>
-                </a>
-                <a href="#" class="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center hover:bg-opacity-30 transition duration-300">
-                  <i class="fab fa-linkedin-in"></i>
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Script para enviar correo vía mailto -->
-  <script>
-    document.getElementById("contactForm2").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const name = document.getElementById("name2").value;
-      const email = document.getElementById("email2").value;
-      const message = document.getElementById("message2").value;
-      const subject = `Nuevo mensaje de contacto de ${name}`;
-      let body = `Nombre: ${name}%0D%0A`;
-      body += `Email: ${email}%0D%0A`;
-      body += `%0D%0AMensaje:%0D%0A${message}`;
-      window.location.href = `mailto:info@tecnologiasonix.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-    });
-  </script>
-
-  <!-- Footer -->
-  <footer class="bg-gray-900 text-white py-12">
-    <div class="container mx-auto px-6">
-      <div class="flex flex-col md:flex-row justify-between mb-12">
-        <div class="mb-8 md:mb-0">
-          <div class="flex items-center mb-6">
-            <span class="ml-2 text-lg font-medium text-gray-300">Tecnologías</span>
-            <span class="text-3xl font-bold text-blue-400">ONIX</span>
-          </div>
-          <p class="text-gray-400 max-w-xs">
-            Soluciones tecnológicas innovadoras para impulsar tu negocio hacia el futuro digital.
-          </p>
-        </div>
-        <div class="grid grid-cols-2 md:grid-cols-3 gap-8">
-          <div>
-            <h4 class="text-lg font-semibold mb-4">Enlaces rápidos</h4>
-            <ul class="space-y-2">
-              <li><a href="https://tecnologiasonix.com/#inicio" class="text-gray-400 hover:text-white transition duration-300">Inicio</a></li>
-              <li><a href="https://tecnologiasonix.com/#servicios" class="text-gray-400 hover:text-white transition duration-300">Servicios</a></li>
-              <li><a href="https://tecnologiasonix.com/#productos" class="text-gray-400 hover:text-white transition duration-300">Productos</a></li>
-              <li><a href="https://tecnologiasonix.com/#proceso" class="text-gray-400 hover:text-white transition duration-300">Proceso</a></li>
-              <li><a href="https://tecnologiasonix.com/#clientes" class="text-gray-400 hover:text-white transition duration-300">Clientes</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="text-lg font-semibold mb-4">Productos</h4>
-            <ul class="space-y-2">
-              <li><a href="https://tecnologiasonix.com/#productos" class="text-gray-400 hover:text-white transition duration-300">Camarero Digital</a></li>
-              <li><a href="https://tecnologiasonix.com/#productos" class="text-gray-400 hover:text-white transition duration-300">Secretario Inteligente</a></li>
-              <li><a href="https://tecnologiasonix.com/#productos" class="text-gray-400 hover:text-white transition duration-300">Comercio 24/7</a></li>
-              <li><a href="https://tecnologiasonix.com/#productos" class="text-gray-400 hover:text-white transition duration-300">Emprendedores</a></li>
-              <li><a href="https://tecnologiasonix.com/#productos" class="text-gray-400 hover:text-white transition duration-300">Tienda</a></li>
-            </ul>
-          </div>
-          <div>
-            <h4 class="text-lg font-semibold mb-4">Contacto</h4>
-            <ul class="space-y-2">
-              <li class="flex items-center">
-                <i class="fas fa-phone-alt text-blue-400 mr-2"></i>
-                <span>643 229 507</span>
-              </li>
-              <li class="flex items-center">
-                <i class="fas fa-envelope text-blue-400 mr-2"></i>
-                <span>info@tecnologiasonix.com</span>
-              </li>
-              <li class="flex items-center">
-                <i class="fas fa-map-marker-alt text-blue-400 mr-2"></i>
-                <span>Barcelona, España</span>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
-        <p class="text-gray-400 text-sm mb-4 md:mb-0">
-          &copy; 2024 Tecnologías Onix. Todos los derechos reservados.
-        </p>
-        <div class="flex space-x-4">
-          <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-            <i class="fab fa-facebook-f"></i>
-          </a>
-          <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-            <i class="fab fa-instagram"></i>
-          </a>
-          <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-            <i class="fab fa-twitter"></i>
-          </a>
-          <a href="#" class="text-gray-400 hover:text-white transition duration-300">
-            <i class="fab fa-linkedin-in"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Cart Panel -->
-  <div id="cartPanel" class="fixed top-0 right-0 w-full md:w-96 h-full bg-white shadow-lg transform translate-x-full z-50">
-    <div class="flex flex-col h-full">
-      <div class="bg-blue-600 text-white p-4 flex justify-between items-center">
-        <h3 class="text-xl font-bold">Tu Carrito</h3>
-        <button id="closeCartButton" class="text-white hover:text-gray-200">
-          <i class="fas fa-times text-xl"></i>
-        </button>
-      </div>
-      <div id="cartItems" class="flex-grow p-4 overflow-y-auto">
-        <div class="text-center text-gray-500 py-8">
-          <i class="fas fa-shopping-cart text-4xl mb-3"></i>
-          <p>Tu carrito está vacío</p>
-        </div>
-      </div>
-      <div class="border-t p-4">
-        <div class="flex justify-between items-center mb-4">
-          <span class="text-gray-700 font-semibold">Total:</span>
-          <span id="cartTotal" class="text-xl font-bold text-blue-600">0€</span>
-        </div>
-        <button id="checkoutButton" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition duration-300">
-          Proceder al Pago
-        </button>
-      </div>
+<!-- HERO -->
+<section id="inicio">
+  <div class="hero-video">
+    <video autoplay muted loop playsinline>
+      <source src="https://github.com/Onixmanager/TecnologiasOnix/raw/refs/heads/main/videocabecera.mp4" type="video/mp4">
+    </video>
+    <div class="hero-video-overlay"></div>
+  </div>
+  <div class="hero-grid-lines"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><span class="hero-badge-dot"></span> Tecnología NFC Premium</div>
+    <h1>Reseñas Google<br><em>sin fricción</em></h1>
+    <p>Productos NFC personalizados para tu negocio. Un toque y tus clientes dejan su reseña al instante. Sin apps, sin complicaciones.</p>
+    <div class="hero-actions">
+      <a href="#productos" class="btn-hero-primary"><i class="fas fa-cube"></i> Ver colección</a>
+      <a href="#about-nfc" class="btn-hero-outline">¿Cómo funciona?</a>
     </div>
   </div>
+</section>
 
-  <!-- Overlay -->
-  <div id="overlay" class="fixed inset-0 bg-black opacity-50 z-40 hidden"></div>
+<!-- FEATURES BAR -->
+<div class="features-bar">
+  <div class="feat-item"><i class="fas fa-check-circle"></i> Configuración incluida</div>
+  <div class="feat-item"><i class="fas fa-check-circle"></i> Envío rápido</div>
+  <div class="feat-item"><i class="fas fa-check-circle"></i> Compatible con todos los móviles</div>
+  <div class="feat-item"><i class="fas fa-check-circle"></i> Soporte técnico 1 año</div>
+</div>
 
-  <!-- Scripts -->
-  <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    // Inicializa AOS
-    AOS.init({ duration: 800, once: true });
+<!-- PRODUCTS -->
+<section id="productos">
+  <div class="products-header">
+    <div>
+      <div class="section-tag"><span>Colección NFC</span></div>
+      <h2 class="section-title">Nuestros <em>Modelos</em></h2>
+    </div>
+    <p class="section-sub">Tres modelos diseñados para cada tipo de negocio. Selecciona el color y la cantidad que necesitas.</p>
+  </div>
 
-    document.addEventListener('DOMContentLoaded', function() {
-      const cartButton = document.getElementById('cartButton');
-      const closeCartButton = document.getElementById('closeCartButton');
-      const cartPanel = document.getElementById('cartPanel');
-      const overlay = document.getElementById('overlay');
-      const cartItems = document.getElementById('cartItems');
-      const cartTotal = document.getElementById('cartTotal');
-      const cartCount = document.getElementById('cartCount');
-      const checkoutButton = document.getElementById('checkoutButton');
-      let cart = [];
+  <div class="products-grid">
 
-      // Controla cantidad
-      document.querySelectorAll('.quantity-btn').forEach(button => {
-        button.addEventListener('click', (e) => {
-          const input = e.target.closest('.product-card').querySelector('.quantity-input');
-          if (e.target.classList.contains('increment')) {
-            input.value = parseInt(input.value) + 1;
-          } else if (e.target.classList.contains('decrement') && input.value > 1) {
-            input.value = parseInt(input.value) - 1;
-          }
-        });
-      });
+    <!-- PRODUCTO 1 - NFC Logo -->
+    <div class="product-card">
+      <div class="product-gallery">
+        <div class="gallery-track" id="gallery-nfc-logo">
+          <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Rese%C3%B1a-NFC-LOGO-Black.png" alt="NFC Logo Negro">
+          <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Rese%C3%B1a-NFC-LOGO-White.png" alt="NFC Logo Blanco">
+        </div>
+        <div class="gallery-dots">
+          <button class="gallery-dot active" onclick="scrollGallery('gallery-nfc-logo',0,this)"></button>
+          <button class="gallery-dot" onclick="scrollGallery('gallery-nfc-logo',1,this)"></button>
+        </div>
+        <span class="color-badge" id="badge-nfc-logo">Negro</span>
+      </div>
+      <div class="product-body">
+        <h3 class="product-name">Modelo NFC Logo</h3>
+        <p class="product-desc">Personaliza con tu logo corporativo para una imagen de marca impecable.</p>
+        <div class="color-row">
+          <span class="color-label">Color</span>
+          <div class="color-options">
+            <label class="color-opt">
+              <input type="radio" name="color-nfc-logo" value="negro" checked onchange="changeColor('nfc-logo','negro',0)">
+              <span class="color-swatch swatch-negro"></span>
+            </label>
+            <label class="color-opt">
+              <input type="radio" name="color-nfc-logo" value="blanco" onchange="changeColor('nfc-logo','blanco',1)">
+              <span class="color-swatch swatch-blanco"></span>
+            </label>
+          </div>
+        </div>
+        <div class="qty-row">
+          <span class="qty-label">Cantidad</span>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="changeQty('qty-nfc-logo',-1)">−</button>
+            <input type="number" class="qty-input" id="qty-nfc-logo" value="1" min="1">
+            <button class="qty-btn" onclick="changeQty('qty-nfc-logo',1)">+</button>
+          </div>
+        </div>
+        <div class="product-footer">
+          <span class="product-price">19.99€</span>
+          <button class="btn-add" onclick="addToCart('nfc-logo','Modelo NFC Logo',19.99,'qty-nfc-logo','color-nfc-logo',this)">
+            <i class="fas fa-plus"></i> Añadir
+          </button>
+        </div>
+      </div>
+    </div>
 
-      // Agregar al carrito
-      document.querySelectorAll('.add-to-cart').forEach(button => {
-        button.addEventListener('click', function() {
-          const productCard = this.closest('.product-card');
-          const id = this.dataset.id;
-          const name = this.dataset.name;
-          const price = parseFloat(this.dataset.price);
-          const color = productCard.querySelector('input[name^="color-"]:checked').value;
-          const quantity = parseInt(productCard.querySelector('.quantity-input').value);
-          const existingItem = cart.find(item => item.id === id && item.color === color);
-          if (existingItem) { existingItem.quantity += quantity; }
-          else { cart.push({ id, name, price, color, quantity }); }
-          updateCart();
-          showCartPanel();
-        });
-      });
+    <!-- PRODUCTO 2 - Clean -->
+    <div class="product-card">
+      <div class="product-gallery">
+        <div class="gallery-track" id="gallery-clean">
+          <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Rese%C3%B1a-NFC-Clean-Black.png" alt="NFC Clean Negro">
+          <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Rese%C3%B1a-NFC-Clean-White.png" alt="NFC Clean Blanco">
+        </div>
+        <div class="gallery-dots">
+          <button class="gallery-dot active" onclick="scrollGallery('gallery-clean',0,this)"></button>
+          <button class="gallery-dot" onclick="scrollGallery('gallery-clean',1,this)"></button>
+        </div>
+        <span class="color-badge" id="badge-clean">Negro</span>
+      </div>
+      <div class="product-body">
+        <h3 class="product-name">Modelo Clean</h3>
+        <p class="product-desc">Diseño minimalista profesional, sin distracciones. La elegancia en su máxima expresión.</p>
+        <div class="color-row">
+          <span class="color-label">Color</span>
+          <div class="color-options">
+            <label class="color-opt">
+              <input type="radio" name="color-clean" value="negro" checked onchange="changeColor('clean','negro',0)">
+              <span class="color-swatch swatch-negro"></span>
+            </label>
+            <label class="color-opt">
+              <input type="radio" name="color-clean" value="blanco" onchange="changeColor('clean','blanco',1)">
+              <span class="color-swatch swatch-blanco"></span>
+            </label>
+          </div>
+        </div>
+        <div class="qty-row">
+          <span class="qty-label">Cantidad</span>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="changeQty('qty-clean',-1)">−</button>
+            <input type="number" class="qty-input" id="qty-clean" value="1" min="1">
+            <button class="qty-btn" onclick="changeQty('qty-clean',1)">+</button>
+          </div>
+        </div>
+        <div class="product-footer">
+          <span class="product-price">19.99€</span>
+          <button class="btn-add" onclick="addToCart('clean','Modelo Clean',19.99,'qty-clean','color-clean',this)">
+            <i class="fas fa-plus"></i> Añadir
+          </button>
+        </div>
+      </div>
+    </div>
 
-      // Panel de carrito
-      cartButton.addEventListener('click', showCartPanel);
-      closeCartButton.addEventListener('click', hideCartPanel);
-      overlay.addEventListener('click', hideCartPanel);
-      function showCartPanel() {
-        cartPanel.style.transform = 'translateX(0)';
-        overlay.classList.remove('hidden');
-      }
-      function hideCartPanel() {
-        cartPanel.style.transform = 'translateX(100%)';
-        overlay.classList.add('hidden');
-      }
+    <!-- PRODUCTO 3 - NFC + QR -->
+    <div class="product-card">
+      <div class="product-gallery">
+        <div class="gallery-track" id="gallery-nfc-qr">
+          <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Rese%C3%B1a-NFC-QR-Black.png" alt="NFC QR Negro">
+          <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/Rese%C3%B1a-NFC-QR-White.png" alt="NFC QR Blanco">
+        </div>
+        <div class="gallery-dots">
+          <button class="gallery-dot active" onclick="scrollGallery('gallery-nfc-qr',0,this)"></button>
+          <button class="gallery-dot" onclick="scrollGallery('gallery-nfc-qr',1,this)"></button>
+        </div>
+        <span class="color-badge" id="badge-nfc-qr">Negro</span>
+      </div>
+      <div class="product-body">
+        <h3 class="product-name">Modelo NFC + QR</h3>
+        <p class="product-desc">Compatibilidad máxima. NFC para móviles modernos y QR para cualquier dispositivo.</p>
+        <div class="color-row">
+          <span class="color-label">Color</span>
+          <div class="color-options">
+            <label class="color-opt">
+              <input type="radio" name="color-nfc-qr" value="negro" checked onchange="changeColor('nfc-qr','negro',0)">
+              <span class="color-swatch swatch-negro"></span>
+            </label>
+            <label class="color-opt">
+              <input type="radio" name="color-nfc-qr" value="blanco" onchange="changeColor('nfc-qr','blanco',1)">
+              <span class="color-swatch swatch-blanco"></span>
+            </label>
+          </div>
+        </div>
+        <div class="qty-row">
+          <span class="qty-label">Cantidad</span>
+          <div class="qty-controls">
+            <button class="qty-btn" onclick="changeQty('qty-nfc-qr',-1)">−</button>
+            <input type="number" class="qty-input" id="qty-nfc-qr" value="1" min="1">
+            <button class="qty-btn" onclick="changeQty('qty-nfc-qr',1)">+</button>
+          </div>
+        </div>
+        <div class="product-footer">
+          <span class="product-price">19.99€</span>
+          <button class="btn-add" onclick="addToCart('nfc-qr','Modelo NFC + QR',19.99,'qty-nfc-qr','color-nfc-qr',this)">
+            <i class="fas fa-plus"></i> Añadir
+          </button>
+        </div>
+      </div>
+    </div>
 
-      function updateCart() {
-        cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
-        cartItems.innerHTML = cart.length === 0 ? 
-          `<div class="text-center text-gray-500 py-8">
-             <i class="fas fa-shopping-cart text-4xl mb-3"></i>
-             <p>Tu carrito está vacío</p>
-           </div>` : 
-          cart.map(item => `
-            <div class="cart-item mb-4 p-4 bg-gray-50 rounded-lg">
-              <div class="flex justify-between mb-2">
-                <div>
-                  <h4 class="font-semibold">${item.name}</h4>
-                  <p class="text-sm text-gray-600">Color: ${item.color}</p>
-                </div>
-                <span class="text-blue-600 font-semibold">${(item.price * item.quantity).toFixed(2)}€</span>
-              </div>
-              <div class="flex justify-between items-center">
-                <div class="flex items-center">
-                  <button class="decrease-quantity px-2 py-1 bg-gray-200 rounded-lg" data-id="${item.id}" data-color="${item.color}">
-                    <i class="fas fa-minus text-sm"></i>
-                  </button>
-                  <span class="mx-3">${item.quantity}</span>
-                  <button class="increase-quantity px-2 py-1 bg-gray-200 rounded-lg" data-id="${item.id}" data-color="${item.color}">
-                    <i class="fas fa-plus text-sm"></i>
-                  </button>
-                </div>
-                <button class="remove-item text-red-500 hover:text-red-700" data-id="${item.id}" data-color="${item.color}">
-                  <i class="fas fa-trash"></i>
-                </button>
-              </div>
-            </div>
-          `).join('');
+  </div>
+</section>
 
-        document.querySelectorAll('.decrease-quantity').forEach(button => {
-          button.addEventListener('click', () => {
-            const item = cart.find(i => i.id === button.dataset.id && i.color === button.dataset.color);
-            if (item.quantity > 1) { item.quantity--; }
-            else { cart = cart.filter(i => !(i.id === button.dataset.id && i.color === button.dataset.color)); }
-            updateCart();
-          });
-        });
-        document.querySelectorAll('.increase-quantity').forEach(button => {
-          button.addEventListener('click', () => {
-            const item = cart.find(i => i.id === button.dataset.id && i.color === button.dataset.color);
-            item.quantity++;
-            updateCart();
-          });
-        });
-        document.querySelectorAll('.remove-item').forEach(button => {
-          button.addEventListener('click', () => {
-            cart = cart.filter(i => !(i.id === button.dataset.id && i.color === button.dataset.color));
-            updateCart();
-          });
-        });
-        const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2);
-        cartTotal.textContent = `${total}€`;
-      }
+<!-- ABOUT NFC -->
+<section id="about-nfc">
+  <div class="section-tag"><span>Tecnología NFC</span></div>
+  <h2 class="section-title">¿Cómo <em>funciona?</em></h2>
+  <p class="section-sub">Tres pasos. Sin apps. Sin complicaciones. Más reseñas para tu negocio.</p>
+  <div class="about-nfc-grid">
+    <div class="about-nfc-cell">
+      <div class="nfc-cell-icon"><i class="fas fa-hand-pointer"></i></div>
+      <h3>1. El cliente acerca su móvil</h3>
+      <p>Solo necesita acercar el teléfono al dispositivo NFC. Compatible con todos los smartphones modernos, Android e iPhone.</p>
+    </div>
+    <div class="about-nfc-cell">
+      <div class="nfc-cell-icon"><i class="fas fa-external-link-alt"></i></div>
+      <h3>2. Se abre Google automáticamente</h3>
+      <p>En menos de un segundo el navegador redirige directamente a la página de reseñas de tu negocio en Google Maps.</p>
+    </div>
+    <div class="about-nfc-cell">
+      <div class="nfc-cell-icon"><i class="fas fa-star"></i></div>
+      <h3>3. Deja su reseña al instante</h3>
+      <p>El cliente valora con estrellas y escribe su experiencia. Sin fricciones, sin pasos extra. Tú recibes más reseñas positivas.</p>
+    </div>
+  </div>
+</section>
 
-      // Integración checkout con Stripe
-      checkoutButton.addEventListener('click', () => {
-        if (cart.length > 0) {
-          fetch('/api/create-checkout-session', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              items: cart.map(item => ({
-                name: item.name,
-                price: Math.round(item.price * 100),
-                quantity: item.quantity
-              }))
-            })
-          })
-          .then(response => response.json())
-          .then(data => {
-            if (data.url) { window.location.href = data.url; }
-            else { alert('Error al crear la sesión de pago.'); }
-          })
-          .catch(error => {
-            console.error('Error:', error);
-            alert('Error al conectarse al servicio de pago.');
-          });
-        } else { alert('El carrito está vacío'); }
-      });
-      
-      // Evento para actualizar la imagen al seleccionar un color
-      document.querySelectorAll('.color-selector').forEach(label => {
-        label.addEventListener('click', function() {
-          const input = label.querySelector('input');
-          const productCard = label.closest('.product-card');
-          const selectedColor = input.value;
-          // Se deja la lógica actual sin modificaciones para no alterar el resto del código.
-        });
-      });
+<!-- CONTACT -->
+<section id="contacto">
+  <div class="contact-grid">
+    <div class="contact-info">
+      <div class="section-tag"><span>Contacto</span></div>
+      <h2 class="section-title">¿Tienes <em>preguntas?</em></h2>
+      <p class="section-sub">Estamos aquí para ayudarte. Cuéntanos lo que necesitas y te respondemos enseguida.</p>
+      <div class="c-details">
+        <a href="https://wa.me/+34643229507" target="_blank" class="c-detail">
+          <div class="c-detail-icon"><i class="fab fa-whatsapp"></i></div>
+          <div><span class="c-detail-lbl">WhatsApp</span><span class="c-detail-val">+34 643 229 507</span></div>
+        </a>
+        <a href="mailto:info@tecnologiasonix.com" class="c-detail">
+          <div class="c-detail-icon"><i class="fas fa-envelope"></i></div>
+          <div><span class="c-detail-lbl">Email</span><span class="c-detail-val">info@tecnologiasonix.com</span></div>
+        </a>
+        <div class="c-detail" style="cursor:default;">
+          <div class="c-detail-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <div><span class="c-detail-lbl">Ubicación</span><span class="c-detail-val">Barcelona, España</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form-box">
+      <form id="contactForm2" onsubmit="submitContactForm(event)">
+        <input type="hidden" name="access_key" value="968eb422-de93-4087-a983-1f93b53a2cce">
+        <input type="hidden" name="subject" value="Consulta desde Tienda NFC — Tecnologías Onix">
+        <input type="hidden" name="from_name" value="Tienda NFC Onix">
+        <input type="checkbox" name="botcheck" style="display:none;">
+        <div class="fg">
+          <label>Nombre completo</label>
+          <input type="text" name="nombre" placeholder="Tu nombre" required>
+        </div>
+        <div class="fg">
+          <label>Email</label>
+          <input type="email" name="email" placeholder="correo@empresa.com" required>
+        </div>
+        <div class="fg">
+          <label>Mensaje</label>
+          <textarea name="mensaje" placeholder="¿En qué podemos ayudarte?" rows="4" required></textarea>
+        </div>
+        <button type="submit" class="btn-submit" id="submitBtn2">
+          <i class="fas fa-paper-plane"></i> <span id="btnText2">Enviar mensaje</span>
+        </button>
+        <div id="formMsg2"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-row">
+    <div>
+      <a href="https://tecnologiasonix.com" class="footer-logo">
+        <span class="footer-logo-tec">Tecnologías&nbsp;</span>
+        <span class="footer-logo-onix">Onix</span>
+      </a>
+      <p class="footer-tagline">Tienda NFC · Soluciones digitales para negocios</p>
+    </div>
+    <div class="footer-links">
+      <a href="#productos">Productos</a>
+      <a href="#about-nfc">¿Qué es NFC?</a>
+      <a href="#contacto">Contacto</a>
+      <a href="https://tecnologiasonix.com">Web principal</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p class="footer-copy">© 2025 Tecnologías Onix — Todos los derechos reservados.</p>
+    <p class="footer-copy">Barcelona, España</p>
+  </div>
+</footer>
+
+<!-- CART SIDEBAR -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<div class="cart-sidebar" id="cartSidebar">
+  <div class="cart-head">
+    <h3>Tu carrito</h3>
+    <button class="cart-close" onclick="toggleCart()"><i class="fas fa-times"></i></button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">
+      <i class="fas fa-shopping-bag"></i>
+      <p>Tu carrito está vacío</p>
+    </div>
+  </div>
+  <div class="cart-foot" id="cartFoot" style="display:none;">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-amount" id="cartTotal">0€</span>
+    </div>
+    <button class="btn-checkout" id="checkoutButton" onclick="checkout()">
+      <i class="fas fa-lock"></i> Proceder al pago
+    </button>
+    <button class="btn-wa" onclick="checkoutWhatsApp()">
+      <i class="fab fa-whatsapp"></i> Pedir por WhatsApp
+    </button>
+  </div>
+</div>
+
+<!-- FLOATING BTNS -->
+<a href="https://wa.me/+34643229507" target="_blank" id="fab-whatsapp" aria-label="WhatsApp">
+  <i class="fab fa-whatsapp"></i>
+</a>
+<a href="#contacto" id="fab-contact" aria-label="Contacto">
+  <i class="fas fa-envelope"></i>
+</a>
+
+<!-- TOAST -->
+<div id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Añadido al carrito</span></div>
+
+<script>
+// ── MENU ────────────────────────────────────────
+function openMenu() {
+  document.getElementById('mobileNav').classList.add('open');
+  document.getElementById('navOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeMenu() {
+  document.getElementById('mobileNav').classList.remove('open');
+  document.getElementById('navOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ── GALLERY ─────────────────────────────────────
+function scrollGallery(id, index, dotEl) {
+  const track = document.getElementById(id);
+  track.scrollTo({ left: index * track.offsetWidth, behavior: 'smooth' });
+  track.parentElement.querySelectorAll('.gallery-dot').forEach((d,i) => {
+    d.classList.toggle('active', i === index);
+  });
+}
+
+function changeColor(product, color, imgIndex) {
+  scrollGallery('gallery-' + product, imgIndex,
+    document.querySelector('#gallery-' + product).parentElement.querySelectorAll('.gallery-dot')[imgIndex]);
+  const badge = document.getElementById('badge-' + product);
+  if (badge) badge.textContent = color.charAt(0).toUpperCase() + color.slice(1);
+}
+
+// ── QUANTITY ─────────────────────────────────────
+function changeQty(id, delta) {
+  const input = document.getElementById(id);
+  const val = parseInt(input.value) + delta;
+  if (val >= 1) input.value = val;
+}
+
+// ── CART STATE ───────────────────────────────────
+let cart = [];
+
+function addToCart(id, name, price, qtyId, colorName, btn) {
+  const qty = parseInt(document.getElementById(qtyId).value) || 1;
+  const color = document.querySelector(`input[name="${colorName}"]:checked`)?.value || 'negro';
+  const key = id + '-' + color;
+
+  const existing = cart.find(i => i.key === key);
+  if (existing) {
+    existing.qty += qty;
+  } else {
+    cart.push({ key, id, name, price, color, qty });
+  }
+
+  updateCartUI();
+  showToast(`${name} (${color}) añadido`);
+
+  btn.classList.add('added');
+  btn.innerHTML = '<i class="fas fa-check"></i> Añadido';
+  setTimeout(() => {
+    btn.classList.remove('added');
+    btn.innerHTML = '<i class="fas fa-plus"></i> Añadir';
+  }, 1800);
+}
+
+function removeFromCart(key) {
+  cart = cart.filter(i => i.key !== key);
+  updateCartUI();
+}
+
+function changeCartQty(key, delta) {
+  const item = cart.find(i => i.key === key);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty <= 0) cart = cart.filter(i => i.key !== key);
+  updateCartUI();
+}
+
+function updateCartUI() {
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const count = cart.reduce((s, i) => s + i.qty, 0);
+
+  // Count badge
+  const countEl = document.getElementById('cartCount');
+  countEl.textContent = count;
+  countEl.classList.toggle('show', count > 0);
+
+  // Items
+  const itemsEl = document.getElementById('cartItems');
+  const footEl = document.getElementById('cartFoot');
+
+  if (cart.length === 0) {
+    itemsEl.innerHTML = `<div class="cart-empty"><i class="fas fa-shopping-bag"></i><p>Tu carrito está vacío</p></div>`;
+    footEl.style.display = 'none';
+    return;
+  }
+
+  footEl.style.display = 'block';
+  document.getElementById('cartTotal').textContent = total.toFixed(2) + '€';
+
+  itemsEl.innerHTML = cart.map(item => `
+    <div class="cart-item">
+      <div class="cart-item-img"><i class="fas fa-wifi"></i></div>
+      <div class="cart-item-info">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-meta">Color: ${item.color.charAt(0).toUpperCase()+item.color.slice(1)}</div>
+        <div class="cart-item-qty">
+          <button onclick="changeCartQty('${item.key}',-1)">−</button>
+          <span>${item.qty}</span>
+          <button onclick="changeCartQty('${item.key}',1)">+</button>
+          <button class="cart-item-remove" onclick="removeFromCart('${item.key}')"><i class="fas fa-trash-alt"></i></button>
+        </div>
+      </div>
+      <div class="cart-item-price">${(item.price * item.qty).toFixed(2)}€</div>
+    </div>
+  `).join('');
+}
+
+function toggleCart() {
+  const sidebar = document.getElementById('cartSidebar');
+  const overlay = document.getElementById('cartOverlay');
+  const isOpen = sidebar.classList.contains('open');
+  sidebar.classList.toggle('open', !isOpen);
+  overlay.classList.toggle('open', !isOpen);
+  document.body.style.overflow = isOpen ? '' : 'hidden';
+}
+
+document.getElementById('cartButton').addEventListener('click', toggleCart);
+
+// ── CHECKOUT ─────────────────────────────────────
+function checkout() {
+  if (cart.length === 0) return;
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const lines = cart.map(i => `• ${i.name} (${i.color}) x${i.qty} — ${(i.price*i.qty).toFixed(2)}€`).join('\n');
+  alert(`Pedido:\n\n${lines}\n\nTotal: ${total.toFixed(2)}€\n\nPara completar el pago contáctenos por WhatsApp o email.`);
+}
+
+function checkoutWhatsApp() {
+  if (cart.length === 0) return;
+  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const lines = cart.map(i => `• ${i.name} (${i.color}) x${i.qty}`).join('%0A');
+  const msg = `Hola, quiero realizar un pedido:%0A%0A${lines}%0A%0ATotal: ${total.toFixed(2)}€`;
+  window.open(`https://wa.me/+34643229507?text=${msg}`, '_blank');
+}
+
+// ── TOAST ─────────────────────────────────────────
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  document.getElementById('toastMsg').textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2800);
+}
+
+// ── CONTACT FORM ─────────────────────────────────
+async function submitContactForm(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn2');
+  const btnText = document.getElementById('btnText2');
+  const msg = document.getElementById('formMsg2');
+
+  btnText.textContent = 'Enviando…';
+  btn.disabled = true; btn.style.opacity = '0.7';
+
+  const data = Object.fromEntries(new FormData(e.target));
+  try {
+    const res = await fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify(data)
     });
-  </script>
+    const json = await res.json();
+    if (json.success) {
+      msg.style.display = 'block';
+      msg.style.background = 'rgba(74,222,128,0.12)';
+      msg.style.border = '1px solid rgba(74,222,128,0.3)';
+      msg.style.color = '#4ade80';
+      msg.style.borderRadius = '10px';
+      msg.style.padding = '12px 16px';
+      msg.style.marginTop = '12px';
+      msg.textContent = '✓ Mensaje enviado. Te contactamos pronto.';
+      e.target.reset();
+    } else throw new Error();
+  } catch {
+    msg.style.display = 'block';
+    msg.style.background = 'rgba(248,113,113,0.12)';
+    msg.style.border = '1px solid rgba(248,113,113,0.3)';
+    msg.style.color = '#f87171';
+    msg.style.borderRadius = '10px';
+    msg.style.padding = '12px 16px';
+    msg.style.marginTop = '12px';
+    msg.textContent = '✗ Error al enviar. Escríbenos por WhatsApp.';
+  }
+  btnText.textContent = 'Enviar mensaje';
+  btn.disabled = false; btn.style.opacity = '1';
+}
+
+// ── SMOOTH SCROLL ─────────────────────────────────
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const t = document.querySelector(a.getAttribute('href'));
+    if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+</script>
 </body>
 </html>
