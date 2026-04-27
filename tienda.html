@@ -9,7 +9,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: smooth; font-size: 16px; }
 
 :root {
   --ink: #0d0d0d;
@@ -33,7 +33,7 @@ body {
   overflow-x: hidden;
 }
 
-/* ── NAV ──────────────────────────────────────── */
+/* ── NAV ─────────────────────────────────────── */
 nav {
   position: fixed;
   top: 0; left: 0; right: 0;
@@ -52,9 +52,9 @@ nav {
   display: flex; align-items: baseline; gap: 2px; text-decoration: none;
 }
 .logo-tec { font-family: var(--sans); font-weight: 300; font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-3); }
-.logo-onix { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--ink); }
+.logo-onix { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--ink); letter-spacing: -0.01em; }
 
-.nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
+.nav-links { display: flex; align-items: center; gap: 40px; list-style: none; }
 .nav-links a { font-size: 13px; font-weight: 400; color: var(--ink-2); text-decoration: none; letter-spacing: 0.04em; transition: color 0.2s; }
 .nav-links a:hover { color: var(--blue); }
 
@@ -79,22 +79,23 @@ nav {
   color: #fff;
   border-radius: 50%;
   font-size: 10px; font-weight: 600;
-  display: flex; align-items: center; justify-content: center;
   display: none;
+  align-items: center; justify-content: center;
 }
 #cartCount.show { display: flex; }
 
-.nav-btn-back {
-  padding: 8px 18px;
+.nav-btn {
+  padding: 9px 22px;
   border: 1.5px solid var(--ink);
   border-radius: 100px;
-  font-size: 12px; font-weight: 500;
-  color: var(--ink);
+  font-size: 13px; font-weight: 500;
+  color: #fff;
+  background: var(--ink);
   text-decoration: none;
-  transition: background 0.2s, color 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
   letter-spacing: 0.04em;
 }
-.nav-btn-back:hover { background: var(--ink); color: var(--paper); }
+.nav-btn:hover { background: var(--blue); border-color: var(--blue); }
 
 .menu-toggle {
   display: none; background: none; border: none;
@@ -158,7 +159,7 @@ nav {
 /* ── HERO ────────────────────────────────────── */
 #inicio {
   position: relative;
-  min-height: 75vh;
+  min-height: 80vh;
   display: flex; align-items: center; justify-content: center;
   text-align: center;
   padding: 120px 5% 80px;
@@ -166,14 +167,9 @@ nav {
   background: var(--ink);
 }
 
-.hero-video {
-  position: absolute; inset: 0; z-index: 0;
-}
+.hero-video { position: absolute; inset: 0; z-index: 0; }
 .hero-video video { width: 100%; height: 100%; object-fit: cover; }
-.hero-video-overlay {
-  position: absolute; inset: 0;
-  background: rgba(10,10,10,0.82);
-}
+.hero-video-overlay { position: absolute; inset: 0; background: rgba(10,10,10,0.82); }
 
 .hero-grid-lines {
   position: absolute; inset: 0; z-index: 1;
@@ -253,10 +249,7 @@ nav {
 .feat-item i { color: #4ade80; font-size: 14px; }
 
 /* ── PRODUCTS ────────────────────────────────── */
-#productos {
-  padding: 100px 5%;
-  background: var(--paper);
-}
+#productos { padding: 100px 5%; background: var(--paper); }
 
 .section-tag { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
 .section-tag::before { content: ''; display: block; width: 24px; height: 1px; background: var(--blue); }
@@ -299,7 +292,6 @@ nav {
   border-color: rgba(21,87,240,0.2);
 }
 
-/* Image gallery */
 .product-gallery {
   position: relative;
   background: var(--paper-2);
@@ -307,19 +299,13 @@ nav {
   overflow: hidden;
 }
 .gallery-track {
-  display: flex;
-  height: 100%;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scrollbar-width: none;
+  display: flex; height: 100%;
+  overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
 }
 .gallery-track::-webkit-scrollbar { display: none; }
 .gallery-track img {
-  flex-shrink: 0;
-  width: 100%; height: 100%;
-  object-fit: contain;
-  scroll-snap-align: center;
-  padding: 16px;
+  flex-shrink: 0; width: 100%; height: 100%;
+  object-fit: contain; scroll-snap-align: center; padding: 16px;
 }
 
 .gallery-dots {
@@ -334,7 +320,6 @@ nav {
 }
 .gallery-dot.active { background: var(--blue); width: 14px; border-radius: 3px; }
 
-/* Color badge */
 .color-badge {
   position: absolute; top: 12px; left: 12px;
   padding: 4px 10px;
@@ -345,15 +330,11 @@ nav {
   backdrop-filter: blur(8px);
 }
 
-/* Product body */
 .product-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
 
-.product-name {
-  font-size: 18px; font-weight: 500; color: var(--ink); margin-bottom: 6px;
-}
+.product-name { font-size: 18px; font-weight: 500; color: var(--ink); margin-bottom: 6px; }
 .product-desc { font-size: 13px; font-weight: 300; color: var(--ink-2); line-height: 1.6; margin-bottom: 20px; }
 
-/* Color selector */
 .color-row { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
 .color-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
 .color-options { display: flex; gap: 8px; }
@@ -361,16 +342,13 @@ nav {
 .color-opt input { position: absolute; opacity: 0; width: 0; height: 0; }
 .color-swatch {
   width: 26px; height: 26px; border-radius: 50%;
-  display: block;
-  border: 2px solid transparent;
-  outline: 2px solid transparent;
+  display: block; border: 2px solid transparent; outline: 2px solid transparent;
   transition: outline 0.15s, border-color 0.15s;
 }
 .color-opt input:checked + .color-swatch { outline: 2px solid var(--blue); outline-offset: 2px; }
 .swatch-negro { background: #0d0d0d; border-color: rgba(13,13,13,0.2); }
 .swatch-blanco { background: #fff; border-color: rgba(13,13,13,0.2); }
 
-/* Quantity */
 .qty-row { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
 .qty-label { font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-3); }
 .qty-controls { display: flex; align-items: center; border: 1.5px solid var(--line); border-radius: 10px; overflow: hidden; }
@@ -389,7 +367,6 @@ nav {
   background: none; outline: none; padding: 0; height: 34px;
 }
 
-/* Price + CTA */
 .product-footer {
   display: flex; align-items: center; justify-content: space-between;
   margin-top: auto; padding-top: 16px;
@@ -399,17 +376,44 @@ nav {
   font-family: var(--serif); font-size: 28px;
   color: var(--ink); letter-spacing: -0.02em;
 }
+
 .btn-add {
-  padding: 11px 22px;
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 20px;
   background: var(--ink); color: #fff;
-  border: none; border-radius: 10px;
+  border: none; border-radius: 100px;
   font-family: var(--sans); font-size: 13px; font-weight: 500;
-  cursor: pointer;
-  display: flex; align-items: center; gap: 7px;
-  transition: background 0.2s, transform 0.15s;
+  cursor: pointer; transition: background 0.2s, transform 0.15s;
+  letter-spacing: 0.02em;
 }
 .btn-add:hover { background: var(--blue); transform: translateY(-1px); }
 .btn-add.added { background: #16a34a; }
+
+/* ── ABOUT NFC ───────────────────────────────── */
+#about-nfc { padding: 100px 5%; background: var(--paper-2); }
+
+.about-nfc-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 1px; background: var(--line);
+  border: 1px solid var(--line); border-radius: var(--r);
+  overflow: hidden; margin-top: 48px;
+}
+.about-nfc-cell {
+  background: var(--paper-2);
+  padding: 40px 32px;
+  transition: background 0.2s;
+}
+.about-nfc-cell:hover { background: #fff; }
+.nfc-cell-icon {
+  width: 48px; height: 48px;
+  border-radius: 12px;
+  background: var(--blue-pale);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; color: var(--blue);
+  margin-bottom: 20px;
+}
+.about-nfc-cell h3 { font-size: 16px; font-weight: 500; color: var(--ink); margin-bottom: 8px; }
+.about-nfc-cell p { font-size: 13px; font-weight: 300; color: var(--ink-2); line-height: 1.65; }
 
 /* ── CART SIDEBAR ────────────────────────────── */
 .cart-overlay {
@@ -420,7 +424,7 @@ nav {
 
 .cart-sidebar {
   position: fixed; top: 0; right: 0; bottom: 0; z-index: 300;
-  width: 100%; max-width: 400px;
+  width: 400px; max-width: 92vw;
   background: var(--paper);
   display: flex; flex-direction: column;
   transform: translateX(100%);
@@ -431,18 +435,13 @@ nav {
 
 .cart-head {
   display: flex; align-items: center; justify-content: space-between;
-  padding: 20px 24px;
-  border-bottom: 1px solid var(--line);
-  flex-shrink: 0;
+  padding: 0 24px; height: 64px;
+  border-bottom: 1px solid var(--line); flex-shrink: 0;
 }
-.cart-head h3 {
-  font-family: var(--serif); font-style: italic;
-  font-size: 22px; color: var(--ink);
-}
+.cart-head h3 { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--ink); }
 .cart-close {
-  width: 34px; height: 34px; border-radius: 8px;
-  border: 1px solid var(--line); background: none;
-  display: flex; align-items: center; justify-content: center;
+  background: none; border: 1px solid var(--line); border-radius: 8px;
+  width: 34px; height: 34px; display: flex; align-items: center; justify-content: center;
   font-size: 15px; color: var(--ink-2); cursor: pointer;
   transition: background 0.2s;
 }
@@ -452,30 +451,29 @@ nav {
 
 .cart-empty {
   display: flex; flex-direction: column; align-items: center; justify-content: center;
-  height: 100%; gap: 12px; color: var(--ink-3); text-align: center;
+  height: 100%; gap: 12px; color: var(--ink-3);
 }
 .cart-empty i { font-size: 40px; opacity: 0.3; }
 .cart-empty p { font-size: 14px; }
 
 .cart-item {
-  display: flex; gap: 14px; align-items: flex-start;
+  display: flex; align-items: flex-start; gap: 14px;
   padding: 16px 0; border-bottom: 1px solid var(--line);
 }
 .cart-item-img {
   width: 56px; height: 56px; border-radius: 10px;
-  background: var(--paper-2); overflow: hidden; flex-shrink: 0;
+  background: var(--paper-2); border: 1px solid var(--line);
   display: flex; align-items: center; justify-content: center;
-  border: 1px solid var(--line);
-  font-size: 20px; color: var(--ink-3);
+  font-size: 20px; color: var(--ink-3); flex-shrink: 0;
 }
 .cart-item-info { flex: 1; }
 .cart-item-name { font-size: 14px; font-weight: 500; color: var(--ink); margin-bottom: 3px; }
 .cart-item-meta { font-size: 12px; color: var(--ink-3); margin-bottom: 8px; }
 .cart-item-qty { display: flex; align-items: center; gap: 8px; }
 .cart-item-qty button {
-  width: 24px; height: 24px; border-radius: 6px;
+  width: 26px; height: 26px; border-radius: 6px;
   border: 1px solid var(--line); background: none;
-  font-size: 13px; color: var(--ink-2); cursor: pointer;
+  font-size: 14px; color: var(--ink-2); cursor: pointer;
   display: flex; align-items: center; justify-content: center;
   transition: background 0.15s;
 }
@@ -483,230 +481,106 @@ nav {
 .cart-item-qty span { font-size: 13px; font-weight: 500; color: var(--ink); min-width: 20px; text-align: center; }
 .cart-item-price { font-size: 15px; font-weight: 600; color: var(--ink); flex-shrink: 0; }
 .cart-item-remove {
-  background: none; border: none; cursor: pointer;
-  color: var(--ink-3); font-size: 12px; padding: 4px;
+  background: none; border: none; padding: 4px;
+  font-size: 13px; color: var(--ink-3); cursor: pointer;
   transition: color 0.2s;
 }
 .cart-item-remove:hover { color: #ef4444; }
 
 .cart-foot {
-  padding: 20px 24px; border-top: 1px solid var(--line); flex-shrink: 0;
+  padding: 20px 24px;
+  border-top: 1px solid var(--line);
+  background: var(--paper); flex-shrink: 0;
 }
 .cart-total-row {
-  display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;
+  display: flex; align-items: baseline; justify-content: space-between;
+  margin-bottom: 16px;
 }
 .cart-total-label { font-size: 13px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); }
 .cart-total-amount { font-family: var(--serif); font-size: 28px; color: var(--ink); letter-spacing: -0.02em; }
+
 .btn-checkout {
-  width: 100%; padding: 14px;
+  width: 100%; padding: 15px;
   background: var(--ink); color: #fff;
-  border: none; border-radius: 10px;
+  border: none; border-radius: 100px;
   font-family: var(--sans); font-size: 14px; font-weight: 600;
-  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-  transition: background 0.2s;
-  margin-bottom: 10px;
+  cursor: pointer; transition: background 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  margin-bottom: 10px; letter-spacing: 0.02em;
 }
 .btn-checkout:hover { background: var(--blue); }
+.btn-checkout:disabled { opacity: 0.6; cursor: not-allowed; }
+
 .btn-wa {
-  width: 100%; padding: 12px;
-  background: #25d366; color: #fff;
-  border: none; border-radius: 10px;
-  font-family: var(--sans); font-size: 13px; font-weight: 500;
-  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-  transition: background 0.2s;
-}
-.btn-wa:hover { background: #1da854; }
-
-/* ── ABOUT NFC ───────────────────────────────── */
-#about-nfc {
-  padding: 80px 5%;
-  background: var(--paper-2);
-  border-top: 1px solid var(--line);
-  border-bottom: 1px solid var(--line);
-}
-.about-nfc-grid {
-  display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px;
-  background: var(--line); border: 1px solid var(--line);
-  border-radius: var(--r); overflow: hidden; margin-top: 48px;
-}
-.about-nfc-cell {
-  background: var(--paper-2); padding: 36px 32px;
-  transition: background 0.2s;
-}
-.about-nfc-cell:hover { background: #fff; }
-.nfc-cell-icon {
-  width: 44px; height: 44px; border-radius: 12px;
-  background: var(--blue-pale);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 18px; color: var(--blue);
-  margin-bottom: 16px;
-}
-.about-nfc-cell h3 { font-size: 16px; font-weight: 500; color: var(--ink); margin-bottom: 8px; }
-.about-nfc-cell p { font-size: 13px; font-weight: 300; color: var(--ink-2); line-height: 1.65; }
-
-/* ── CONTACT ─────────────────────────────────── */
-#contacto {
-  padding: 100px 5%;
-  background: var(--ink);
-}
-.contact-grid {
-  display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; align-items: start;
-}
-.contact-info .section-tag span { color: #6b9aff; }
-.contact-info .section-tag::before { background: #6b9aff; }
-.contact-info .section-title { color: #fff; }
-.contact-info .section-sub { color: rgba(250,250,247,0.5); margin-top: 12px; }
-
-.c-details { display: flex; flex-direction: column; gap: 14px; margin-top: 36px; }
-.c-detail {
-  display: flex; align-items: center; gap: 14px;
-  padding: 16px 20px;
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: var(--r);
-  text-decoration: none;
-  transition: border-color 0.2s, background 0.2s;
-}
-.c-detail:hover { border-color: rgba(107,154,255,0.35); background: rgba(107,154,255,0.06); }
-.c-detail-icon {
-  width: 36px; height: 36px; border-radius: 9px;
-  background: rgba(255,255,255,0.06);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 15px; color: #6b9aff; flex-shrink: 0;
-}
-.c-detail-lbl { font-size: 10px; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(250,250,247,0.3); display: block; margin-bottom: 1px; }
-.c-detail-val { font-size: 13px; font-weight: 400; color: rgba(250,250,247,0.75); }
-
-.contact-form-box {
-  background: rgba(255,255,255,0.03);
-  border: 1px solid rgba(255,255,255,0.07);
-  border-radius: calc(var(--r) + 4px);
-  padding: 40px;
-}
-.fg { margin-bottom: 16px; }
-.fg label { display: block; font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(250,250,247,0.3); margin-bottom: 7px; }
-.fg input, .fg textarea {
-  width: 100%; padding: 11px 15px;
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 10px;
-  color: rgba(250,250,247,0.9);
-  font-family: var(--sans); font-size: 14px; font-weight: 300;
-  outline: none; transition: border-color 0.2s;
-}
-.fg input::placeholder, .fg textarea::placeholder { color: rgba(255,255,255,0.18); }
-.fg input:focus, .fg textarea:focus { border-color: rgba(107,154,255,0.4); }
-.fg textarea { resize: vertical; min-height: 100px; }
-.btn-submit {
   width: 100%; padding: 13px;
-  background: var(--blue); color: #fff;
-  border: none; border-radius: 10px;
-  font-family: var(--sans); font-size: 14px; font-weight: 600;
-  cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px;
-  transition: background 0.2s;
+  background: none; color: var(--ink-2);
+  border: 1.5px solid var(--line); border-radius: 100px;
+  font-family: var(--sans); font-size: 13px; font-weight: 400;
+  cursor: pointer; transition: border-color 0.2s, color 0.2s;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
 }
-.btn-submit:hover { background: var(--blue-2); }
-#formMsg2 { display: none; margin-top: 12px; padding: 12px 16px; border-radius: 10px; font-size: 13px; text-align: center; }
+.btn-wa:hover { border-color: #25d366; color: #25d366; }
 
 /* ── FOOTER ──────────────────────────────────── */
 footer {
   background: var(--ink);
-  border-top: 1px solid rgba(255,255,255,0.07);
-  padding: 48px 5% 28px;
+  padding: 60px 5% 40px;
+  color: rgba(250,250,247,0.5);
 }
-.footer-row {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: 32px; flex-wrap: wrap; margin-bottom: 32px;
+.footer-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.08);
+  gap: 40px; flex-wrap: wrap; margin-bottom: 32px;
 }
-.footer-logo { text-decoration: none; display: flex; align-items: baseline; gap: 2px; }
-.footer-logo-tec { font-size: 11px; font-weight: 300; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(250,250,247,0.3); }
-.footer-logo-onix { font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--paper); }
-.footer-tagline { font-size: 12px; font-weight: 300; color: rgba(250,250,247,0.3); margin-top: 4px; }
-
-.footer-links { display: flex; gap: 28px; flex-wrap: wrap; }
-.footer-links a { font-size: 13px; font-weight: 300; color: rgba(250,250,247,0.4); text-decoration: none; transition: color 0.2s; }
-.footer-links a:hover { color: var(--paper); }
-
-.footer-bottom {
-  border-top: 1px solid rgba(255,255,255,0.06);
-  padding-top: 20px;
-  display: flex; align-items: center; justify-content: space-between;
-  flex-wrap: wrap; gap: 8px;
-}
-.footer-copy { font-size: 12px; font-weight: 300; color: rgba(250,250,247,0.22); }
-
-/* ── FLOATING BTNS ───────────────────────────── */
-#fab-whatsapp {
-  position: fixed; bottom: 28px; right: 28px; z-index: 99;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: #25d366; color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 22px; text-decoration: none;
-  box-shadow: 0 4px 20px rgba(37,211,102,0.4);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-#fab-whatsapp:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(37,211,102,0.5); }
-
-#fab-contact {
-  position: fixed; bottom: 28px; left: 28px; z-index: 99;
-  width: 52px; height: 52px; border-radius: 50%;
-  background: #0d0d0d; color: #fff;
-  display: flex; align-items: center; justify-content: center;
-  font-size: 19px; text-decoration: none;
-  box-shadow: 0 4px 20px rgba(13,13,13,0.3);
-  transition: transform 0.2s, background 0.2s;
-}
-#fab-contact:hover { transform: scale(1.1); background: var(--blue); }
+.footer-logo .logo-tec { color: rgba(250,250,247,0.35); }
+.footer-logo .logo-onix { color: #fff; }
+.footer-tagline { font-size: 13px; font-weight: 300; color: rgba(250,250,247,0.4); margin-top: 8px; max-width: 200px; line-height: 1.6; }
+.footer-links { display: flex; gap: 60px; flex-wrap: wrap; }
+.footer-col h4 { font-size: 11px; font-weight: 600; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(250,250,247,0.35); margin-bottom: 16px; }
+.footer-col a { display: block; font-size: 13px; font-weight: 300; color: rgba(250,250,247,0.55); text-decoration: none; margin-bottom: 10px; transition: color 0.2s; }
+.footer-col a:hover { color: #fff; }
+.footer-bottom { display: flex; align-items: center; justify-content: space-between; font-size: 12px; flex-wrap: wrap; gap: 12px; }
 
 /* ── TOAST ───────────────────────────────────── */
 #toast {
-  position: fixed; bottom: 90px; right: 28px; z-index: 400;
+  position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
   background: var(--ink); color: #fff;
-  padding: 12px 20px; border-radius: 12px;
+  padding: 12px 20px; border-radius: 100px;
   font-size: 13px; font-weight: 500;
   display: flex; align-items: center; gap: 8px;
-  box-shadow: 0 8px 24px rgba(13,13,13,0.2);
-  transform: translateY(16px); opacity: 0;
-  transition: transform 0.3s, opacity 0.3s;
-  pointer-events: none;
+  z-index: 999; opacity: 0; transition: opacity 0.3s, transform 0.3s;
+  white-space: nowrap;
 }
-#toast.show { transform: translateY(0); opacity: 1; }
+#toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 #toast i { color: #4ade80; }
 
 /* ── RESPONSIVE ──────────────────────────────── */
-@media (max-width: 1024px) {
+@media (max-width: 900px) {
+  .nav-links { display: none; }
+  .nav-btn { display: none; }
+  .menu-toggle { display: block; }
   .products-header { grid-template-columns: 1fr; gap: 16px; }
   .products-grid { grid-template-columns: 1fr 1fr; }
   .about-nfc-grid { grid-template-columns: 1fr 1fr; }
-  .contact-grid { grid-template-columns: 1fr; gap: 40px; }
 }
-@media (max-width: 768px) {
-  .nav-links { display: none; }
-  .menu-toggle { display: block; }
-  .nav-btn-back { display: none; }
+@media (max-width: 640px) {
   .products-grid { grid-template-columns: 1fr 1fr; gap: 14px; }
   .product-body { padding: 16px; }
   .product-name { font-size: 15px; }
   .product-desc { display: none; }
   .product-price { font-size: 22px; }
-  .btn-add { padding: 9px 14px; font-size: 12px; }
   .about-nfc-grid { grid-template-columns: 1fr; }
   .features-bar { gap: 24px; }
-  .contact-form-box { padding: 24px 20px; }
-  .footer-row { flex-direction: column; align-items: flex-start; }
-  .footer-links { gap: 16px; }
-  .footer-bottom { flex-direction: column; text-align: center; }
-  #inicio { min-height: 60vh; }
-  .hero-content h1 { font-size: 38px; }
+  .footer-links { gap: 32px; }
 }
-@media (max-width: 480px) {
+@media (max-width: 420px) {
   .products-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- ── NAV ──────────────────────────────────── -->
 <nav>
   <a href="#inicio" class="logo">
     <span class="logo-tec">Tecnologías&nbsp;</span>
@@ -714,37 +588,38 @@ footer {
   </a>
   <ul class="nav-links">
     <li><a href="#productos">Productos</a></li>
-    <li><a href="#about-nfc">¿Qué es NFC?</a></li>
-    <li><a href="#contacto">Contacto</a></li>
+    <li><a href="#about-nfc">Cómo funciona</a></li>
+    <li><a href="https://tecnologiasonix.vercel.app" target="_blank">Web principal</a></li>
   </ul>
   <div class="nav-right">
     <button class="cart-btn" id="cartButton" aria-label="Carrito">
       <i class="fas fa-shopping-bag"></i>
       <span id="cartCount">0</span>
     </button>
-    <a href="https://tecnologiasonix.com" class="nav-btn-back">← Web principal</a>
+    <a href="#productos" class="nav-btn">Ver tienda</a>
     <button class="menu-toggle" onclick="openMenu()" aria-label="Menú"><i class="fas fa-bars"></i></button>
   </div>
 </nav>
 
-<!-- OVERLAY + SIDEBAR -->
+<!-- Mobile nav overlay -->
 <div class="nav-overlay" id="navOverlay" onclick="closeMenu()"></div>
 <div class="mobile-nav" id="mobileNav">
   <div class="mobile-nav-header">
     <a href="#inicio" class="mobile-nav-logo" onclick="closeMenu()">
-      <span class="tec">Tecnologías&nbsp;</span><span class="onix">Onix</span>
+      <span class="tec">Tecnologías&nbsp;</span>
+      <span class="onix">Onix</span>
     </a>
     <button class="mobile-nav-close" onclick="closeMenu()"><i class="fas fa-times"></i></button>
   </div>
   <div class="mobile-nav-links">
-    <a href="#productos" onclick="closeMenu()">Productos NFC</a>
-    <a href="#about-nfc" onclick="closeMenu()">¿Qué es NFC?</a>
-    <a href="#contacto" onclick="closeMenu()">Contacto</a>
-    <a href="https://tecnologiasonix.com" class="cta-mob" onclick="closeMenu()">← Web principal</a>
+    <a href="#productos" onclick="closeMenu()">Productos</a>
+    <a href="#about-nfc" onclick="closeMenu()">Cómo funciona</a>
+    <a href="https://tecnologiasonix.vercel.app" target="_blank">Web principal</a>
+    <a href="#productos" class="cta-mob" onclick="closeMenu()">Ver tienda</a>
   </div>
 </div>
 
-<!-- HERO -->
+<!-- ── HERO ──────────────────────────────────── -->
 <section id="inicio">
   <div class="hero-video">
     <video autoplay muted loop playsinline>
@@ -772,7 +647,7 @@ footer {
   <div class="feat-item"><i class="fas fa-check-circle"></i> Soporte técnico 1 año</div>
 </div>
 
-<!-- PRODUCTS -->
+<!-- ── PRODUCTS ───────────────────────────────── -->
 <section id="productos">
   <div class="products-header">
     <div>
@@ -823,7 +698,7 @@ footer {
         </div>
         <div class="product-footer">
           <span class="product-price">19.99€</span>
-          <button class="btn-add" onclick="addToCart('nfc-logo','Modelo NFC Logo',19.99,'qty-nfc-logo','color-nfc-logo',this)">
+          <button class="btn-add" onclick="addToCart('nfc-logo','Modelo NFC Logo',1999,'qty-nfc-logo','color-nfc-logo',this)">
             <i class="fas fa-plus"></i> Añadir
           </button>
         </div>
@@ -869,7 +744,7 @@ footer {
         </div>
         <div class="product-footer">
           <span class="product-price">19.99€</span>
-          <button class="btn-add" onclick="addToCart('clean','Modelo Clean',19.99,'qty-clean','color-clean',this)">
+          <button class="btn-add" onclick="addToCart('clean','Modelo Clean',1999,'qty-clean','color-clean',this)">
             <i class="fas fa-plus"></i> Añadir
           </button>
         </div>
@@ -915,7 +790,7 @@ footer {
         </div>
         <div class="product-footer">
           <span class="product-price">19.99€</span>
-          <button class="btn-add" onclick="addToCart('nfc-qr','Modelo NFC + QR',19.99,'qty-nfc-qr','color-nfc-qr',this)">
+          <button class="btn-add" onclick="addToCart('nfc-qr','Modelo NFC + QR',1999,'qty-nfc-qr','color-nfc-qr',this)">
             <i class="fas fa-plus"></i> Añadir
           </button>
         </div>
@@ -925,7 +800,7 @@ footer {
   </div>
 </section>
 
-<!-- ABOUT NFC -->
+<!-- ── ABOUT NFC ──────────────────────────────── -->
 <section id="about-nfc">
   <div class="section-tag"><span>Tecnología NFC</span></div>
   <h2 class="section-title">¿Cómo <em>funciona?</em></h2>
@@ -949,79 +824,36 @@ footer {
   </div>
 </section>
 
-<!-- CONTACT -->
-<section id="contacto">
-  <div class="contact-grid">
-    <div class="contact-info">
-      <div class="section-tag"><span>Contacto</span></div>
-      <h2 class="section-title">¿Tienes <em>preguntas?</em></h2>
-      <p class="section-sub">Estamos aquí para ayudarte. Cuéntanos lo que necesitas y te respondemos enseguida.</p>
-      <div class="c-details">
-        <a href="https://wa.me/+34643229507" target="_blank" class="c-detail">
-          <div class="c-detail-icon"><i class="fab fa-whatsapp"></i></div>
-          <div><span class="c-detail-lbl">WhatsApp</span><span class="c-detail-val">+34 643 229 507</span></div>
-        </a>
-        <a href="mailto:info@tecnologiasonix.com" class="c-detail">
-          <div class="c-detail-icon"><i class="fas fa-envelope"></i></div>
-          <div><span class="c-detail-lbl">Email</span><span class="c-detail-val">info@tecnologiasonix.com</span></div>
-        </a>
-        <div class="c-detail" style="cursor:default;">
-          <div class="c-detail-icon"><i class="fas fa-map-marker-alt"></i></div>
-          <div><span class="c-detail-lbl">Ubicación</span><span class="c-detail-val">Barcelona, España</span></div>
-        </div>
-      </div>
-    </div>
-    <div class="contact-form-box">
-      <form id="contactForm2" onsubmit="submitContactForm(event)">
-        <input type="hidden" name="access_key" value="968eb422-de93-4087-a983-1f93b53a2cce">
-        <input type="hidden" name="subject" value="Consulta desde Tienda NFC — Tecnologías Onix">
-        <input type="hidden" name="from_name" value="Tienda NFC Onix">
-        <input type="checkbox" name="botcheck" style="display:none;">
-        <div class="fg">
-          <label>Nombre completo</label>
-          <input type="text" name="nombre" placeholder="Tu nombre" required>
-        </div>
-        <div class="fg">
-          <label>Email</label>
-          <input type="email" name="email" placeholder="correo@empresa.com" required>
-        </div>
-        <div class="fg">
-          <label>Mensaje</label>
-          <textarea name="mensaje" placeholder="¿En qué podemos ayudarte?" rows="4" required></textarea>
-        </div>
-        <button type="submit" class="btn-submit" id="submitBtn2">
-          <i class="fas fa-paper-plane"></i> <span id="btnText2">Enviar mensaje</span>
-        </button>
-        <div id="formMsg2"></div>
-      </form>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
+<!-- ── FOOTER ─────────────────────────────────── -->
 <footer>
-  <div class="footer-row">
+  <div class="footer-top">
     <div>
-      <a href="https://tecnologiasonix.com" class="footer-logo">
-        <span class="footer-logo-tec">Tecnologías&nbsp;</span>
-        <span class="footer-logo-onix">Onix</span>
+      <a href="#inicio" class="logo footer-logo">
+        <span class="logo-tec">Tecnologías&nbsp;</span>
+        <span class="logo-onix">Onix</span>
       </a>
-      <p class="footer-tagline">Tienda NFC · Soluciones digitales para negocios</p>
+      <p class="footer-tagline">Soluciones NFC para negocios que quieren crecer.</p>
     </div>
     <div class="footer-links">
-      <a href="#productos">Productos</a>
-      <a href="#about-nfc">¿Qué es NFC?</a>
-      <a href="#contacto">Contacto</a>
-      <a href="https://tecnologiasonix.com">Web principal</a>
+      <div class="footer-col">
+        <h4>Tienda</h4>
+        <a href="#productos">Productos NFC</a>
+        <a href="#about-nfc">Cómo funciona</a>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <a href="https://tecnologiasonix.vercel.app" target="_blank">Web principal</a>
+        <a href="https://wa.me/+34643229507" target="_blank">WhatsApp</a>
+      </div>
     </div>
   </div>
   <div class="footer-bottom">
-    <p class="footer-copy">© 2025 Tecnologías Onix — Todos los derechos reservados.</p>
-    <p class="footer-copy">Barcelona, España</p>
+    <span>© 2025 Tecnologías Onix. Todos los derechos reservados.</span>
+    <span>Pagos seguros con <strong style="color:rgba(255,255,255,0.7)">Stripe</strong></span>
   </div>
 </footer>
 
-<!-- CART SIDEBAR -->
+<!-- ── CART SIDEBAR ───────────────────────────── -->
 <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
 <div class="cart-sidebar" id="cartSidebar">
   <div class="cart-head">
@@ -1040,7 +872,7 @@ footer {
       <span class="cart-total-amount" id="cartTotal">0€</span>
     </div>
     <button class="btn-checkout" id="checkoutButton" onclick="checkout()">
-      <i class="fas fa-lock"></i> Proceder al pago
+      <i class="fas fa-lock"></i> Pagar con Stripe
     </button>
     <button class="btn-wa" onclick="checkoutWhatsApp()">
       <i class="fab fa-whatsapp"></i> Pedir por WhatsApp
@@ -1048,19 +880,11 @@ footer {
   </div>
 </div>
 
-<!-- FLOATING BTNS -->
-<a href="https://wa.me/+34643229507" target="_blank" id="fab-whatsapp" aria-label="WhatsApp">
-  <i class="fab fa-whatsapp"></i>
-</a>
-<a href="#contacto" id="fab-contact" aria-label="Contacto">
-  <i class="fas fa-envelope"></i>
-</a>
-
-<!-- TOAST -->
+<!-- ── TOAST ──────────────────────────────────── -->
 <div id="toast"><i class="fas fa-check-circle"></i> <span id="toastMsg">Añadido al carrito</span></div>
 
 <script>
-// ── MENU ────────────────────────────────────────
+// ── MENU ─────────────────────────────────────────
 function openMenu() {
   document.getElementById('mobileNav').classList.add('open');
   document.getElementById('navOverlay').classList.add('open');
@@ -1096,9 +920,10 @@ function changeQty(id, delta) {
 }
 
 // ── CART STATE ───────────────────────────────────
+// price is stored in CENTS for Stripe compatibility
 let cart = [];
 
-function addToCart(id, name, price, qtyId, colorName, btn) {
+function addToCart(id, name, priceInCents, qtyId, colorName, btn) {
   const qty = parseInt(document.getElementById(qtyId).value) || 1;
   const color = document.querySelector(`input[name="${colorName}"]:checked`)?.value || 'negro';
   const key = id + '-' + color;
@@ -1107,7 +932,7 @@ function addToCart(id, name, price, qtyId, colorName, btn) {
   if (existing) {
     existing.qty += qty;
   } else {
-    cart.push({ key, id, name, price, color, qty });
+    cart.push({ key, id, name, priceInCents, color, qty });
   }
 
   updateCartUI();
@@ -1135,15 +960,13 @@ function changeCartQty(key, delta) {
 }
 
 function updateCartUI() {
-  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const totalCents = cart.reduce((s, i) => s + i.priceInCents * i.qty, 0);
   const count = cart.reduce((s, i) => s + i.qty, 0);
 
-  // Count badge
   const countEl = document.getElementById('cartCount');
   countEl.textContent = count;
   countEl.classList.toggle('show', count > 0);
 
-  // Items
   const itemsEl = document.getElementById('cartItems');
   const footEl = document.getElementById('cartFoot');
 
@@ -1154,7 +977,7 @@ function updateCartUI() {
   }
 
   footEl.style.display = 'block';
-  document.getElementById('cartTotal').textContent = total.toFixed(2) + '€';
+  document.getElementById('cartTotal').textContent = (totalCents / 100).toFixed(2) + '€';
 
   itemsEl.innerHTML = cart.map(item => `
     <div class="cart-item">
@@ -1169,7 +992,7 @@ function updateCartUI() {
           <button class="cart-item-remove" onclick="removeFromCart('${item.key}')"><i class="fas fa-trash-alt"></i></button>
         </div>
       </div>
-      <div class="cart-item-price">${(item.price * item.qty).toFixed(2)}€</div>
+      <div class="cart-item-price">${((item.priceInCents * item.qty) / 100).toFixed(2)}€</div>
     </div>
   `).join('');
 }
@@ -1185,17 +1008,46 @@ function toggleCart() {
 
 document.getElementById('cartButton').addEventListener('click', toggleCart);
 
-// ── CHECKOUT ─────────────────────────────────────
-function checkout() {
+// ── CHECKOUT (Stripe) ─────────────────────────────
+async function checkout() {
   if (cart.length === 0) return;
-  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
-  const lines = cart.map(i => `• ${i.name} (${i.color}) x${i.qty} — ${(i.price*i.qty).toFixed(2)}€`).join('\n');
-  alert(`Pedido:\n\n${lines}\n\nTotal: ${total.toFixed(2)}€\n\nPara completar el pago contáctenos por WhatsApp o email.`);
+
+  const btn = document.getElementById('checkoutButton');
+  btn.disabled = true;
+  btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando…';
+
+  // Build items payload — name + price in cents + quantity
+  const items = cart.map(i => ({
+    name: `${i.name} (${i.color.charAt(0).toUpperCase()+i.color.slice(1)})`,
+    price: i.priceInCents,
+    quantity: i.qty
+  }));
+
+  try {
+    const res = await fetch('/api/create-checkout-session', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ items })
+    });
+
+    const data = await res.json();
+
+    if (data.url) {
+      window.location.href = data.url;
+    } else {
+      throw new Error(data.error || 'Sin URL de pago');
+    }
+  } catch (err) {
+    alert('Error al iniciar el pago. Por favor inténtalo de nuevo o contáctanos por WhatsApp.');
+    btn.disabled = false;
+    btn.innerHTML = '<i class="fas fa-lock"></i> Pagar con Stripe';
+  }
 }
 
+// ── WHATSAPP FALLBACK ─────────────────────────────
 function checkoutWhatsApp() {
   if (cart.length === 0) return;
-  const total = cart.reduce((s, i) => s + i.price * i.qty, 0);
+  const total = cart.reduce((s, i) => s + i.priceInCents * i.qty, 0) / 100;
   const lines = cart.map(i => `• ${i.name} (${i.color}) x${i.qty}`).join('%0A');
   const msg = `Hola, quiero realizar un pedido:%0A%0A${lines}%0A%0ATotal: ${total.toFixed(2)}€`;
   window.open(`https://wa.me/+34643229507?text=${msg}`, '_blank');
@@ -1207,49 +1059,6 @@ function showToast(msg) {
   document.getElementById('toastMsg').textContent = msg;
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 2800);
-}
-
-// ── CONTACT FORM ─────────────────────────────────
-async function submitContactForm(e) {
-  e.preventDefault();
-  const btn = document.getElementById('submitBtn2');
-  const btnText = document.getElementById('btnText2');
-  const msg = document.getElementById('formMsg2');
-
-  btnText.textContent = 'Enviando…';
-  btn.disabled = true; btn.style.opacity = '0.7';
-
-  const data = Object.fromEntries(new FormData(e.target));
-  try {
-    const res = await fetch('https://api.web3forms.com/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify(data)
-    });
-    const json = await res.json();
-    if (json.success) {
-      msg.style.display = 'block';
-      msg.style.background = 'rgba(74,222,128,0.12)';
-      msg.style.border = '1px solid rgba(74,222,128,0.3)';
-      msg.style.color = '#4ade80';
-      msg.style.borderRadius = '10px';
-      msg.style.padding = '12px 16px';
-      msg.style.marginTop = '12px';
-      msg.textContent = '✓ Mensaje enviado. Te contactamos pronto.';
-      e.target.reset();
-    } else throw new Error();
-  } catch {
-    msg.style.display = 'block';
-    msg.style.background = 'rgba(248,113,113,0.12)';
-    msg.style.border = '1px solid rgba(248,113,113,0.3)';
-    msg.style.color = '#f87171';
-    msg.style.borderRadius = '10px';
-    msg.style.padding = '12px 16px';
-    msg.style.marginTop = '12px';
-    msg.textContent = '✗ Error al enviar. Escríbenos por WhatsApp.';
-  }
-  btnText.textContent = 'Enviar mensaje';
-  btn.disabled = false; btn.style.opacity = '1';
 }
 
 // ── SMOOTH SCROLL ─────────────────────────────────
