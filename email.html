@@ -1,0 +1,804 @@
+<!DOCTYPE html>
+<html lang="es" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="color-scheme" content="light">
+<meta name="supported-color-schemes" content="light">
+<title>Tu negocio merece más — Tecnologías Onix</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  /* ── RESET ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body, table, td, p, a, li, blockquote { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+  table { border-collapse: collapse !important; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+  img { border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; }
+  a { text-decoration: none; }
+
+  /* ── TOKENS ── */
+  :root {
+    --ink: #1c1c1c;
+    --ink-2: #4a4a4a;
+    --ink-3: #909090;
+    --paper: #fafaf7;
+    --paper-2: #f2f0ea;
+    --blue: #1557f0;
+    --blue-2: #0d3fbe;
+    --blue-pale: #eef2ff;
+    --serif: 'Instrument Serif', Georgia, serif;
+    --sans: 'Geist', -apple-system, system-ui, sans-serif;
+  }
+
+  /* ── BODY ── */
+  body {
+    margin: 0 !important;
+    padding: 0 !important;
+    background-color: #e8e6e0;
+    font-family: 'Geist', -apple-system, system-ui, sans-serif;
+    color: #0d0d0d;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── WRAPPER ── */
+  .email-wrapper {
+    width: 100%;
+    background-color: #e8e6e0;
+    padding: 40px 16px;
+  }
+
+  .email-card {
+    max-width: 600px;
+    margin: 0 auto;
+    background: #fafaf7;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 8px 60px rgba(13,13,13,0.12), 0 2px 12px rgba(13,13,13,0.06);
+  }
+
+  /* ── HEADER ── */
+  .header {
+    background: #0d0d0d;
+    padding: 28px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -60px; right: -60px;
+    width: 200px; height: 200px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(21,87,240,0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .header-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+  }
+  .header-logo-img {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,0.12);
+  }
+  .header-logo-text {
+    display: flex;
+    align-items: baseline;
+    gap: 3px;
+  }
+  .logo-tec {
+    font-family: 'Geist', system-ui, sans-serif;
+    font-weight: 300;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+  }
+  .logo-onix {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: 22px;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+  }
+  .header-badge {
+    background: rgba(21,87,240,0.2);
+    border: 1px solid rgba(21,87,240,0.5);
+    color: #7ba8ff;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    padding: 52px 40px 44px;
+    background: #fafaf7;
+    border-bottom: 1px solid rgba(13,13,13,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::after {
+    content: '01';
+    position: absolute;
+    bottom: -20px;
+    right: -10px;
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: 130px;
+    color: rgba(13,13,13,0.03);
+    line-height: 1;
+    pointer-events: none;
+    user-select: none;
+  }
+  .hero-eyebrow {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  .eyebrow-line {
+    width: 28px;
+    height: 1px;
+    background: #1557f0;
+    flex-shrink: 0;
+  }
+  .eyebrow-text {
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #1557f0;
+  }
+  .hero-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-size: 44px;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    color: #1c1c1c;
+    margin-bottom: 18px;
+  }
+  .hero-title em {
+    font-style: italic;
+    color: #1557f0;
+  }
+  .hero-sub {
+    font-size: 15px;
+    font-weight: 300;
+    color: #4a4a4a;
+    line-height: 1.7;
+    max-width: 480px;
+  }
+  .hero-sub strong {
+    font-weight: 600;
+    color: #1c1c1c;
+  }
+
+  /* ── NFC STRIP ── */
+  .nfc-strip {
+    background: #0d0d0d;
+    padding: 18px 40px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .nfc-icon {
+    width: 36px;
+    height: 36px;
+    background: #1557f0;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .nfc-icon svg {
+    width: 20px; height: 20px; fill: white;
+  }
+  .nfc-text strong {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: 0.02em;
+  }
+  .nfc-text span {
+    font-size: 11.5px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.62);
+    letter-spacing: 0.04em;
+  }
+  .nfc-vs {
+    margin-left: auto;
+    font-size: 11px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.55);
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 4px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+    letter-spacing: 0.06em;
+  }
+
+  /* ── BODY CONTENT ── */
+  .body-content {
+    padding: 44px 40px 36px;
+  }
+
+  /* ── SECTION LABEL ── */
+  .section-label {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: #888;
+    border-top: 1px solid rgba(13,13,13,0.1);
+    padding-top: 12px;
+    margin-bottom: 24px;
+  }
+
+  /* ── BENEFIT CARDS ── */
+  .benefits-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 36px;
+  }
+  .benefit-card {
+    background: #f2f0ea;
+    border-radius: 14px;
+    padding: 22px 20px;
+    position: relative;
+    overflow: hidden;
+    border: 1px solid rgba(13,13,13,0.06);
+    transition: transform 0.2s;
+  }
+  .benefit-card.blue {
+    background: #0d0d0d;
+    border-color: transparent;
+    grid-column: 1 / -1;
+  }
+  .benefit-icon {
+    width: 38px;
+    height: 38px;
+    background: rgba(13,13,13,0.07);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+  }
+  .benefit-card.blue .benefit-icon {
+    background: rgba(21,87,240,0.2);
+  }
+  .benefit-icon svg {
+    width: 18px; height: 18px; fill: #0d0d0d;
+  }
+  .benefit-card.blue .benefit-icon svg {
+    fill: #7ba8ff;
+  }
+  .benefit-num {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: 28px;
+    font-weight: 400;
+    color: #1c1c1c;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .benefit-card.blue .benefit-num {
+    color: #fff;
+  }
+  .benefit-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #4a4a4a;
+    line-height: 1.4;
+  }
+  .benefit-card.blue .benefit-label {
+    color: rgba(255,255,255,0.6);
+  }
+  .benefit-desc {
+    font-size: 11.5px;
+    font-weight: 300;
+    color: #888;
+    line-height: 1.5;
+    margin-top: 6px;
+  }
+  .benefit-card.blue .benefit-desc {
+    color: rgba(255,255,255,0.35);
+  }
+
+  /* ── SERVICES ── */
+  .services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 36px;
+  }
+  .service-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    background: #f2f0ea;
+    border-radius: 12px;
+    padding: 16px 18px;
+    border: 1px solid rgba(13,13,13,0.06);
+  }
+  .service-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    background: #1557f0;
+    flex-shrink: 0;
+  }
+  .service-info {
+    flex: 1;
+  }
+  .service-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #1c1c1c;
+  }
+  .service-detail {
+    font-size: 11.5px;
+    font-weight: 300;
+    color: #888;
+    margin-top: 2px;
+  }
+  .service-tag {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #1557f0;
+    background: #eef2ff;
+    padding: 3px 9px;
+    border-radius: 100px;
+    white-space: nowrap;
+  }
+
+  /* ── GAIN SECTION ── */
+  .gain-section {
+    background: #f2f0ea;
+    border-radius: 16px;
+    padding: 28px 28px;
+    margin-bottom: 36px;
+    border: 1px solid rgba(13,13,13,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .gain-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #1557f0, #5e87ff, #1557f0);
+  }
+  .gain-title {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: 20px;
+    color: #0d0d0d;
+    margin-bottom: 18px;
+    line-height: 1.2;
+  }
+  .gain-title strong {
+    font-style: normal;
+    font-weight: 400;
+    color: #1557f0;
+  }
+  .gain-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .gain-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 13px;
+    font-weight: 400;
+    color: #4a4a4a;
+    line-height: 1.5;
+  }
+  .gain-check {
+    width: 18px; height: 18px;
+    background: #1557f0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 1px;
+  }
+  .gain-check svg {
+    width: 10px; height: 10px; fill: white; stroke: white;
+  }
+
+  /* ── CTA ── */
+  .cta-section {
+    text-align: center;
+    padding: 0 0 8px;
+  }
+  .cta-pre {
+    font-size: 12px;
+    font-weight: 400;
+    color: #888;
+    letter-spacing: 0.04em;
+    margin-bottom: 14px;
+  }
+  .cta-btn {
+    display: inline-block;
+    background: #0d0d0d;
+    color: #fafaf7 !important;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 15px 38px;
+    border-radius: 100px;
+    letter-spacing: 0.02em;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .cta-btn:hover {
+    background: #1557f0;
+    transform: translateY(-2px);
+  }
+  .cta-whatsapp {
+    display: inline-block;
+    background: #25d366;
+    color: #ffffff !important;
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    padding: 15px 38px;
+    border-radius: 100px;
+    letter-spacing: 0.02em;
+    margin-left: 10px;
+  }
+  .cta-note {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 14px;
+    line-height: 1.6;
+  }
+
+  /* ── DIVIDER ── */
+  .divider {
+    height: 1px;
+    background: rgba(13,13,13,0.08);
+    margin: 32px 0;
+  }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: #0d0d0d;
+    padding: 32px 40px;
+    border-radius: 0 0 20px 20px;
+  }
+  .footer-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    gap: 16px;
+  }
+  .camarero-logo {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    text-decoration: none;
+  }
+  .cam-eyebrow {
+    font-size: 8.5px;
+    font-weight: 600;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+  }
+  .cam-name {
+    font-family: 'Instrument Serif', Georgia, serif;
+    font-style: italic;
+    font-size: 20px;
+    color: #ffffff;
+    letter-spacing: -0.01em;
+    line-height: 1;
+  }
+  .cam-sub {
+    font-size: 10px;
+    font-weight: 300;
+    color: rgba(255,255,255,0.58);
+    letter-spacing: 0.08em;
+    margin-top: 3px;
+  }
+  .footer-contact {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    text-align: right;
+  }
+  .footer-contact a {
+    font-size: 12px;
+    font-weight: 400;
+    color: rgba(255,255,255,0.68);
+    text-decoration: none;
+    letter-spacing: 0.02em;
+    transition: color 0.2s;
+  }
+  .footer-contact a:hover { color: #7ba8ff; }
+  .footer-logo-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .footer-logo-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .footer-copy {
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.42);
+    letter-spacing: 0.04em;
+  }
+  .footer-unsubscribe {
+    font-size: 10.5px;
+    color: rgba(255,255,255,0.42);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+  .footer-unsubscribe:hover { color: rgba(255,255,255,0.65); }
+
+  /* ── RESPONSIVE ── */
+  @media only screen and (max-width: 600px) {
+    .email-wrapper { padding: 16px 8px; }
+    .email-card { border-radius: 16px; }
+    .header { padding: 22px 22px; }
+    .logo-onix { font-size: 20px; }
+    .header-badge { font-size: 9.5px; padding: 4px 10px; }
+    .hero { padding: 36px 22px 32px; }
+    .hero-title { font-size: 34px; }
+    .hero-sub { font-size: 14px; }
+    .nfc-strip { padding: 14px 22px; }
+    .nfc-vs { display: none; }
+    .body-content { padding: 30px 22px 28px; }
+    .benefits-grid { grid-template-columns: 1fr; }
+    .benefit-card.blue { grid-column: auto; }
+    .benefit-num { font-size: 24px; }
+    .gain-section { padding: 22px 20px; }
+    .cta-btn, .cta-whatsapp { display: block; margin: 0 0 10px; padding: 14px 24px; }
+    .footer { padding: 26px 22px; border-radius: 0 0 16px 16px; }
+    .footer-top { flex-direction: column; align-items: flex-start; gap: 20px; }
+    .footer-contact { text-align: left; }
+    .footer-bottom { flex-direction: column; align-items: flex-start; gap: 6px; }
+  }
+  @media only screen and (max-width: 380px) {
+    .hero-title { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="email-wrapper">
+  <div class="email-card">
+
+    <!-- ══════════════════════════════════════════
+         HEADER
+    ══════════════════════════════════════════ -->
+    <div class="header">
+      <a href="https://tecnologiasonix.com" class="header-logo" target="_blank">
+        <img src="data:image/webp;base64,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" alt="Tecnologías Onix" class="header-logo-img">
+        <div class="header-logo-text">
+          <span class="logo-tec">Tecnologías&nbsp;</span>
+          <span class="logo-onix">Onix</span>
+        </div>
+      </a>
+      <span class="header-badge">Soluciones Digitales</span>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         HERO
+    ══════════════════════════════════════════ -->
+    <div class="hero">
+      <div class="hero-eyebrow">
+        <div class="eyebrow-line"></div>
+        <span class="eyebrow-text">Primer contacto · Sin compromiso</span>
+      </div>
+      <h1 class="hero-title">
+        Tu negocio merece<br>
+        <em>trabajar menos</em><br>
+        y ganar más.
+      </h1>
+      <p class="hero-sub">
+        Hola, somos <strong>Tecnologías Onix</strong>.<br>
+        Ayudamos a bares y restaurantes a atraer más clientes, mejorar su experiencia y ganar visibilidad online — de forma simple, sin complicaciones técnicas.
+      </p>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         NFC STRIP
+    ══════════════════════════════════════════ -->
+    <div class="nfc-strip">
+      <div class="nfc-icon">
+        <!-- NFC wave icon -->
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 2.5a7.5 7.5 0 1 1-7.5 7.5A7.5 7.5 0 0 1 12 4.5zm0 3a4.5 4.5 0 1 0 4.5 4.5A4.5 4.5 0 0 0 12 7.5zm0 2.5a2 2 0 1 1-2 2 2 2 0 0 1 2-2z"/>
+        </svg>
+      </div>
+      <div class="nfc-text">
+        <strong>Tecnología NFC — No usamos QR</strong>
+        <span>Más rápido · Más elegante · Sin app ni escáner</span>
+      </div>
+      <span class="nfc-vs">NFC &gt; QR</span>
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         BODY CONTENT
+    ══════════════════════════════════════════ -->
+    <div class="body-content">
+
+      <span class="section-label">Lo que incluye</span>
+
+      <!-- Benefit cards -->
+      <div class="benefits-grid">
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <!-- Waiter icon -->
+            <svg viewBox="0 0 24 24"><path d="M12 2a3 3 0 1 0 3 3 3 3 0 0 0-3-3zm7 8H5a1 1 0 0 0-1 1v1a7 7 0 0 0 6 6.92V21H8v2h8v-2h-2v-2.08A7 7 0 0 0 20 11v-1a1 1 0 0 0-1-1z"/></svg>
+          </div>
+          <div class="benefit-num">24/7</div>
+          <div class="benefit-label">Camarero Digital siempre activo</div>
+          <div class="benefit-desc">Tu carta digital accesible con solo acercar el móvil</div>
+        </div>
+
+        <div class="benefit-card">
+          <div class="benefit-icon">
+            <!-- Globe icon -->
+            <svg viewBox="0 0 24 24"><path d="M12 2a10 10 0 1 0 10 10A10 10 0 0 0 12 2zm0 2c.83 0 1.62.12 2.38.33L12 7.5 9.62 4.33A8 8 0 0 1 12 4zm-3.5.76L10.5 8H5.27a8.07 8.07 0 0 1 3.23-3.24zM4 12a8 8 0 0 1 .28-2H10l2 4-2 4H4.28A8 8 0 0 1 4 12zm4.5 7.24A8.07 8.07 0 0 1 5.27 16H10.5l-2 3.24zm3.5.67L12 16.5l2.38 3.17A8 8 0 0 1 8 20.91zM14 12l-2-4 2-4h5.72a8 8 0 0 1 0 8zm1.5 7.24L13.5 16h5.23a8.07 8.07 0 0 1-3.23 3.24z"/></svg>
+          </div>
+          <div class="benefit-num">+top</div>
+          <div class="benefit-label">Web profesional visible en Google</div>
+          <div class="benefit-desc">Página rápida, bonita y bien posicionada</div>
+        </div>
+
+        <div class="benefit-card blue">
+          <div class="benefit-icon">
+            <!-- Map pin icon -->
+            <svg viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5a2.5 2.5 0 1 1 0-5 2.5 2.5 0 0 1 0 5z"/></svg>
+          </div>
+          <div class="benefit-num" style="font-size: 20px; margin-bottom: 6px;">Google Maps</div>
+          <div class="benefit-label">Indexación y presencia en Google Maps</div>
+          <div class="benefit-desc">Que te encuentren cuando buscan un sitio como el tuyo</div>
+        </div>
+      </div>
+
+      <!-- Services detail -->
+      <span class="section-label">Cómo funciona</span>
+
+      <div class="services-list">
+        <div class="service-row">
+          <div class="service-dot"></div>
+          <div class="service-info">
+            <div class="service-name">Camarero Digital con NFC</div>
+            <div class="service-detail">Una pequeña placa en la mesa — el cliente acerca el móvil y ve tu carta al instante. Sin descargas, sin QR.</div>
+          </div>
+          <span class="service-tag">NFC</span>
+        </div>
+        <div class="service-row">
+          <div class="service-dot"></div>
+          <div class="service-info">
+            <div class="service-name">Web profesional a medida</div>
+            <div class="service-detail">Diseño elegante, carga rápida y optimizada para aparecer en los primeros resultados de Google.</div>
+          </div>
+          <span class="service-tag">SEO</span>
+        </div>
+        <div class="service-row">
+          <div class="service-dot"></div>
+          <div class="service-info">
+            <div class="service-name">Posicionamiento en Google Maps</div>
+            <div class="service-detail">Aumentamos tu visibilidad local para que más personas encuentren tu local cuando te buscan cerca.</div>
+          </div>
+          <span class="service-tag">Local</span>
+        </div>
+      </div>
+
+      <!-- What they gain -->
+      <div class="gain-section">
+        <div class="gain-title">
+          ¿Qué gana<br><strong>tu negocio?</strong>
+        </div>
+        <div class="gain-items">
+          <div class="gain-item">
+            <div class="gain-check">
+              <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span>Más clientes que te encuentran en Google antes de salir de casa</span>
+          </div>
+          <div class="gain-item">
+            <div class="gain-check">
+              <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span>Una carta digital siempre actualizada, sin imprimir nada</span>
+          </div>
+          <div class="gain-item">
+            <div class="gain-check">
+              <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span>Imagen profesional que transmite confianza desde el primer clic</span>
+          </div>
+          <div class="gain-item">
+            <div class="gain-check">
+              <svg viewBox="0 0 12 12"><polyline points="2,6 5,9 10,3" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+            <span>Más tiempo para atender a tus clientes — nosotros gestionamos lo digital</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- CTA -->
+      <div class="cta-section">
+        <p class="cta-pre">¿Te lo explicamos sin compromiso?</p>
+        <a href="https://wa.me/34643229507?text=Hola%2C%20me%20interesa%20saber%20más%20sobre%20el%20Camarero%20Digital%20y%20los%20servicios%20para%20mi%20negocio." class="cta-btn" target="_blank">Hablemos por WhatsApp</a>
+        <a href="https://tecnologiasonix.com" class="cta-whatsapp" target="_blank" style="background: #1557f0; color: #fafaf7 !important;">Ver Camarero Digital</a>
+        <p class="cta-note">
+          Sin permanencia · Sin contrato largo · Te respondemos en menos de 24h
+        </p>
+      </div>
+
+    </div>
+
+    <!-- ══════════════════════════════════════════
+         FOOTER
+    ══════════════════════════════════════════ -->
+    <div class="footer">
+      <div class="footer-top">
+        <a href="https://tecnologiasonix.com" target="_blank" class="camarero-logo">
+          <span class="cam-eyebrow">Producto de Tecnologías Onix</span>
+          <span class="cam-name">Camarero Digital</span>
+          <span class="cam-sub">Tecnología NFC · Hostelería inteligente</span>
+        </a>
+        <div class="footer-contact">
+          <a href="https://wa.me/34643229507" target="_blank">+34 643 229 507</a>
+          <a href="mailto:info@tecnologiasonix.com">info@tecnologiasonix.com</a>
+          <a href="https://tecnologiasonix.com" target="_blank">tecnologiasonix.com</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2025 Tecnologías Onix — Todos los derechos reservados.</span>
+        <a href="#" class="footer-unsubscribe">Darse de baja</a>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+</body>
+</html>
