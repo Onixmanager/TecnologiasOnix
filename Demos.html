@@ -45,6 +45,13 @@
     .btn-version:active {
       transform: translateY(1px);
     }
+    .btn-elegir {
+      transition: all 0.2s ease;
+    }
+    .btn-elegir:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
     .iframe-loading {
       position: absolute;
       top: 50%;
@@ -65,9 +72,6 @@
       0%, 100% { opacity: 0.6; }
       50% { opacity: 1; }
     }
-    .loading-indicator {
-      animation: pulse 1.2s infinite;
-    }
     @media (max-width: 768px) {
       iframe {
         height: 55vh;
@@ -77,9 +81,8 @@
     footer a {
       transition: color 0.2s;
     }
-    /* Ajuste para el logo en navbar */
     .logo-img {
-      max-height: 36px;
+      max-height: 40px;
       width: auto;
       object-fit: contain;
     }
@@ -92,7 +95,7 @@
     <div class="max-w-7xl mx-auto px-5 sm:px-8">
       <div class="flex justify-between items-center h-16 md:h-20">
         <div class="flex items-center gap-3">
-          <!-- Logo real de Tecnologías Onix (eliminado el fondo azul y el icono genérico) -->
+          <!-- Logo real de Tecnologías Onix -->
           <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/logo%20tecnonoligasonix%20circulo.png" 
                alt="Logo Tecnologías Onix" 
                class="logo-img w-9 h-9 md:w-10 md:h-10 rounded-full object-cover shadow-sm">
@@ -101,8 +104,8 @@
           </a>
         </div>
         <div class="hidden sm:flex gap-1 text-sm font-medium text-slate-500">
-          <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700">Demostración</span>
           <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700">Comparador Visual</span>
+          <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700">Envío por WhatsApp</span>
         </div>
       </div>
     </div>
@@ -117,43 +120,34 @@
           <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
           <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-600"></span>
         </span>
-        Selección interactiva
+        Elige tu favorita
       </div>
       <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-800 mb-4">
         Mira a ver qué versión te gusta más <br> 
         <span class="bg-gradient-to-r from-indigo-600 to-amber-500 bg-clip-text text-transparent">para tu página profesional</span>
       </h1>
       <p class="text-slate-500 text-lg max-w-2xl mx-auto">
-        Haz clic en cualquiera de los dos botones y previsualiza la versión de tu sitio web en tiempo real. 
-        Elige la que mejor representa la identidad de tu negocio.
+        Visualiza ambas propuestas y elige la que mejor representa tu negocio. Puedes enviarme tu decisión directamente por WhatsApp.
       </p>
     </div>
 
-    <!-- grupo de botones centrados -->
-    <div class="flex flex-wrap justify-center gap-5 md:gap-6 mb-10">
-      <!-- Botón Versión 1 -->
+    <!-- Panel de botones para visualizar versiones -->
+    <div class="flex flex-wrap justify-center gap-5 md:gap-6 mb-6">
       <button id="btnVersion1" class="btn-version group relative px-8 py-3.5 rounded-2xl font-bold text-lg shadow-md transition-all duration-300 flex items-center gap-3 bg-white border-2 border-indigo-200 text-indigo-700 hover:bg-indigo-50 hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-300">
         <span class="text-2xl">①</span>
-        <span>Versión 1 · Estilo Clásico</span>
+        <span>Versión 1 · Logo generico moderno</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 group-hover:translate-x-0.5 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </button>
       
-      <!-- Botón Versión 2 -->
       <button id="btnVersion2" class="btn-version group relative px-8 py-3.5 rounded-2xl font-bold text-lg shadow-md transition-all duration-300 flex items-center gap-3 bg-gradient-to-r from-indigo-600 to-indigo-500 text-white hover:from-indigo-700 hover:to-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400">
         <span class="text-2xl">②</span>
-        <span>Versión 2 · Moderno + Logo</span>
+        <span>Versión 2 · Logo original</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 group-hover:translate-x-0.5 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </button>
     </div>
 
-    <!-- Panel de información sutil -->
-    <div class="flex justify-center mb-4 text-sm text-slate-500 gap-4 flex-wrap">
-      <div class="flex items-center gap-1.5 bg-slate-100/70 px-3 py-1 rounded-full"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Vista previa en tiempo real</div>
-      <div class="flex items-center gap-1.5 bg-slate-100/70 px-3 py-1 rounded-full"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Carga ambas webs dentro del marco</div>
-    </div>
-
     <!-- Contenedor del iframe con efecto de carga -->
-    <div class="iframe-container relative rounded-2xl border border-slate-200/80 bg-white shadow-2xl overflow-hidden">
+    <div class="iframe-container relative rounded-2xl border border-slate-200/80 bg-white shadow-2xl overflow-hidden mb-8">
       <div id="iframeLoader" class="iframe-loading hidden items-center gap-2 text-slate-700">
         <svg class="animate-spin h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
@@ -163,16 +157,41 @@
       </div>
       <iframe id="previewFrame" src="about:blank" title="Vista previa de la versión web" class="w-full bg-white transition-opacity duration-300"></iframe>
     </div>
-    
-    <!-- Texto informativo final con instrucciones para insertar URLs -->
-    <div class="text-center text-slate-400 text-sm mt-6 border-t border-slate-200 pt-6">
-      💡 Los enlaces de las versiones son totalmente configurables.  
-      <br>Edita las variables <code class="bg-slate-100 px-1 rounded font-mono text-indigo-700">version1Url</code> y <code class="bg-slate-100 px-1 rounded font-mono text-indigo-700">version2Url</code> en el código (sección JavaScript) para cargar tus páginas reales.
+
+    <!-- SECCIÓN DE ELECCIÓN Y ENVÍO A WHATSAPP -->
+    <div class="bg-white/60 backdrop-blur-sm rounded-2xl p-6 md:p-8 shadow-lg border border-slate-200/80 mb-6">
+      <div class="text-center mb-6">
+        <h2 class="text-2xl font-bold text-slate-800">¿Cuál prefieres?</h2>
+        <p class="text-slate-500 mt-1">Haz clic en el botón de la versión que hayas seleccionado y te enviaré un mensaje directo a WhatsApp con tu elección.</p>
+      </div>
+      
+      <!-- Campo opcional para comentarios adicionales -->
+      <div class="max-w-lg mx-auto mb-6">
+        <label for="comentario" class="block text-sm font-medium text-slate-700 mb-1">Comentario adicional (opcional):</label>
+        <textarea id="comentario" rows="2" class="w-full px-4 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition" placeholder="Ej: Me gusta el color de la Versión 2, pero prefiero el menú de la Versión 1..."></textarea>
+        <p class="text-xs text-slate-400 mt-1">Este mensaje se incluirá en el WhatsApp.</p>
+      </div>
+      
+      <div class="flex flex-col sm:flex-row justify-center gap-5">
+        <!-- Botón elegir versión 1 -->
+        <button id="elegirVersion1" class="btn-elegir flex-1 max-w-xs mx-auto sm:mx-0 bg-white border-2 border-emerald-500 text-emerald-700 hover:bg-emerald-50 font-bold py-3 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Elijo la Versión 1
+        </button>
+        
+        <!-- Botón elegir versión 2 -->
+        <button id="elegirVersion2" class="btn-elegir flex-1 max-w-xs mx-auto sm:mx-0 bg-gradient-to-r from-indigo-600 to-indigo-500 text-white hover:from-indigo-700 hover:to-indigo-600 font-bold py-3 px-6 rounded-xl transition-all flex items-center justify-center gap-2 shadow-md">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          Elijo la Versión 2
+        </button>
+      </div>
+      <p class="text-center text-xs text-slate-400 mt-5">* Al hacer clic se abrirá WhatsApp (escritorio o móvil) con un mensaje predefinido. Solo tienes que enviarlo.</p>
     </div>
-  </main>
+    
+    
 
   <!-- Footer sencillo -->
-  <footer class="border-t border-slate-200 bg-white/50 mt-10 py-6">
+  <footer class="border-t border-slate-200 bg-white/50 mt-6 py-6">
     <div class="max-w-7xl mx-auto px-5 text-center text-slate-500 text-sm flex flex-wrap justify-between items-center gap-3">
       <span>© 2025 Tecnologías Onix · Comparador profesional para clientes</span>
       <div class="flex gap-5">
@@ -188,23 +207,25 @@
     //  ============================================================
     //  IMPORTANTE: Sustituye estas dos rutas con las URLs definitivas
     //  de las páginas que quieras mostrar en el comparador.
-    //  Por defecto están vacías (about:blank) para que no haya contenido de prueba.
     //  Ejemplo: 
     //    const version1Url = "https://tudominio.com/version-antigua/index.html";
     //    const version2Url = "https://tudominio.com/version-nueva/index.html";
     // ============================================================
     
-    let version1Url = "";   // <- Introduce aquí la URL de la VERSIÓN 1 (estilo clásico)
-    let version2Url = "";   // <- Introduce aquí la URL de la VERSIÓN 2 (moderno con logo)
+    let version1Url = "https://drew-at-services.vercel.app/";   // <- Introduce aquí la URL de la VERSIÓN 1 (estilo clásico)
+    let version2Url = "https://drew-at-services.vercel.app/index2.html";   // <- Introduce aquí la URL de la VERSIÓN 2 (moderno con logo)
     
-    // Si las URLs están vacías, mostramos un aviso amigable en consola y dejamos el iframe en blanco.
-    // El usuario deberá rellenarlas manualmente.
+    // Número de WhatsApp del destinatario (empresa / desarrollador)
+    const WHATSAPP_NUMBER = "+34625240302";  // Formato internacional sin espacios ni signos raros
     
     // Elementos del DOM
     const iframe = document.getElementById('previewFrame');
     const loader = document.getElementById('iframeLoader');
     const btnV1 = document.getElementById('btnVersion1');
     const btnV2 = document.getElementById('btnVersion2');
+    const elegirV1 = document.getElementById('elegirVersion1');
+    const elegirV2 = document.getElementById('elegirVersion2');
+    const comentarioInput = document.getElementById('comentario');
     
     // Función para cargar una URL en el iframe con indicador de carga
     function loadVersion(url, versionName) {
@@ -218,7 +239,6 @@
         const blob = new Blob([blankDoc], { type: 'text/html' });
         const fakeUrl = URL.createObjectURL(blob);
         iframe.src = fakeUrl;
-        // Limpiar objeto URL después de cargar
         iframe.onload = () => URL.revokeObjectURL(fakeUrl);
         loader.classList.add('hidden');
         loader.classList.remove('flex');
@@ -255,7 +275,23 @@
       }, 4000);
     }
     
-    // Eventos de los botones
+    // Función para enviar mensaje por WhatsApp con la elección
+    function enviarEleccion(version, comentarioExtra = "") {
+      let mensaje = `¡Hola! Después de revisar las dos versiones web, he decidido que prefiero la ${version} para mi página profesional.`;
+      if (comentarioExtra && comentarioExtra.trim() !== "") {
+        mensaje += `\n\nComentario adicional: ${comentarioExtra.trim()}`;
+      }
+      mensaje += `\n\nEnviado desde el comparador de Tecnologías Onix.`;
+      
+      // Codificar el mensaje para URL
+      const textoCodificado = encodeURIComponent(mensaje);
+      const urlWhatsApp = `https://wa.me/${WHATSAPP_NUMBER.replace(/[^0-9]/g, '')}?text=${textoCodificado}`;
+      
+      // Abrir WhatsApp en nueva pestaña
+      window.open(urlWhatsApp, '_blank');
+    }
+    
+    // Eventos de los botones de visualización
     btnV1.addEventListener('click', () => {
       loadVersion(version1Url, 'Versión 1');
       btnV1.classList.add('ring-2', 'ring-indigo-300', 'ring-offset-2');
@@ -266,6 +302,22 @@
       loadVersion(version2Url, 'Versión 2');
       btnV2.classList.add('ring-2', 'ring-indigo-300', 'ring-offset-2');
       btnV1.classList.remove('ring-2', 'ring-indigo-300', 'ring-offset-2');
+    });
+    
+    // Eventos de los botones de elección (envío a WhatsApp)
+    elegirV1.addEventListener('click', () => {
+      const comentario = comentarioInput.value;
+      enviarEleccion("Versión 1", comentario);
+      // Pequeño feedback visual
+      elegirV1.classList.add('bg-emerald-100');
+      setTimeout(() => elegirV1.classList.remove('bg-emerald-100'), 300);
+    });
+    
+    elegirV2.addEventListener('click', () => {
+      const comentario = comentarioInput.value;
+      enviarEleccion("Versión 2", comentario);
+      elegirV2.classList.add('brightness-110');
+      setTimeout(() => elegirV2.classList.remove('brightness-110'), 300);
     });
     
     // Cargar por defecto la versión 1 solo si hay URL configurada, de lo contrario mostrar mensaje
@@ -288,8 +340,9 @@
     });
     
     // Mensaje en consola para facilitar la personalización
-    console.log('%c🔷 Tecnologías Onix | Comparador de versiones', 'background: #1e293b; color: #facc15; font-size: 14px; padding: 4px 8px; border-radius: 8px');
+    console.log('%c🔷 Tecnologías Onix | Comparador con envío a WhatsApp', 'background: #1e293b; color: #facc15; font-size: 14px; padding: 4px 8px; border-radius: 8px');
     console.log('%c👉 Para usar tus propias webs, edita las variables "version1Url" y "version2Url" en el script.', 'color: #0f3b5c; font-weight: bold;');
+    console.log('%c📲 El número configurado para recibir elecciones es: ' + WHATSAPP_NUMBER, 'color: #2d6a4f;');
   </script>
 </body>
 </html>
