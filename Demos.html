@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Tecnologías Onix | Comparador de versiones web</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <!-- Favicon: logo de Tecnologías Onix -->
+  <link rel="icon" type="image/png" href="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/logo%20tecnonoligasonix%20circulo.png">
+  <link rel="apple-touch-icon" href="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/logo%20tecnonoligasonix%20circulo.png">
+  <style>
+    * {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+    }
+    .iframe-container {
+      position: relative;
+      overflow: hidden;
+      border-radius: 1.5rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      background: #fff;
+      transition: all 0.2s ease;
+    }
+    iframe {
+      width: 100%;
+      height: 70vh;
+      min-height: 500px;
+      border: none;
+      background: white;
+      transition: opacity 0.25s ease;
+    }
+    .btn-version {
+      transition: all 0.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+    }
+    .btn-version:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 25px -12px rgba(0, 0, 0, 0.15);
+    }
+    .btn-version:active {
+      transform: translateY(1px);
+    }
+    .iframe-loading {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(255,255,240,0.9);
+      padding: 12px 24px;
+      border-radius: 60px;
+      font-weight: 500;
+      pointer-events: none;
+      z-index: 10;
+      backdrop-filter: blur(8px);
+      font-size: 0.9rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      color: #1e293b;
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
+    }
+    .loading-indicator {
+      animation: pulse 1.2s infinite;
+    }
+    @media (max-width: 768px) {
+      iframe {
+        height: 55vh;
+        min-height: 400px;
+      }
+    }
+    footer a {
+      transition: color 0.2s;
+    }
+    /* Ajuste para el logo en navbar */
+    .logo-img {
+      max-height: 36px;
+      width: auto;
+      object-fit: contain;
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- ==================== NAVBAR ==================== -->
+  <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-slate-200/80 shadow-sm">
+    <div class="max-w-7xl mx-auto px-5 sm:px-8">
+      <div class="flex justify-between items-center h-16 md:h-20">
+        <div class="flex items-center gap-3">
+          <!-- Logo real de Tecnologías Onix (eliminado el fondo azul y el icono genérico) -->
+          <img src="https://raw.githubusercontent.com/Onixmanager/TecnologiasOnix/refs/heads/main/logo%20tecnonoligasonix%20circulo.png" 
+               alt="Logo Tecnologías Onix" 
+               class="logo-img w-9 h-9 md:w-10 md:h-10 rounded-full object-cover shadow-sm">
+          <a href="#" class="text-xl md:text-2xl font-bold tracking-tight bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent hover:from-indigo-700 hover:to-indigo-500 transition-all">
+            Tecnologías Onix
+          </a>
+        </div>
+        <div class="hidden sm:flex gap-1 text-sm font-medium text-slate-500">
+          <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700">Demostración</span>
+          <span class="px-3 py-1 rounded-full bg-slate-100 text-slate-700">Comparador Visual</span>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ==================== MAIN CONTENT ==================== -->
+  <main class="max-w-6xl mx-auto px-5 md:px-8 py-8 md:py-12">
+    <!-- cabecera con mensaje principal -->
+    <div class="text-center max-w-3xl mx-auto mb-10 md:mb-12">
+      <div class="inline-flex items-center gap-2 bg-indigo-50 text-indigo-700 px-4 py-1.5 rounded-full text-sm font-medium mb-4 border border-indigo-100/80 shadow-sm">
+        <span class="relative flex h-2 w-2">
+          <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
+          <span class="relative inline-flex rounded-full h-2 w-2 bg-indigo-600"></span>
+        </span>
+        Selección interactiva
+      </div>
+      <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-800 mb-4">
+        Mira a ver qué versión te gusta más <br> 
+        <span class="bg-gradient-to-r from-indigo-600 to-amber-500 bg-clip-text text-transparent">para tu página profesional</span>
+      </h1>
+      <p class="text-slate-500 text-lg max-w-2xl mx-auto">
+        Haz clic en cualquiera de los dos botones y previsualiza la versión de tu sitio web en tiempo real. 
+        Elige la que mejor representa la identidad de tu negocio.
+      </p>
+    </div>
+
+    <!-- grupo de botones centrados -->
+    <div class="flex flex-wrap justify-center gap-5 md:gap-6 mb-10">
+      <!-- Botón Versión 1 -->
+      <button id="btnVersion1" class="btn-version group relative px-8 py-3.5 rounded-2xl font-bold text-lg shadow-md transition-all duration-300 flex items-center gap-3 bg-white border-2 border-indigo-200 text-indigo-700 hover:bg-indigo-50 hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-300">
+        <span class="text-2xl">①</span>
+        <span>Versión 1 · Estilo Clásico</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 group-hover:translate-x-0.5 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+      
+      <!-- Botón Versión 2 -->
+      <button id="btnVersion2" class="btn-version group relative px-8 py-3.5 rounded-2xl font-bold text-lg shadow-md transition-all duration-300 flex items-center gap-3 bg-gradient-to-r from-indigo-600 to-indigo-500 text-white hover:from-indigo-700 hover:to-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+        <span class="text-2xl">②</span>
+        <span>Versión 2 · Moderno + Logo</span>
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 group-hover:translate-x-0.5 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+      </button>
+    </div>
+
+    <!-- Panel de información sutil -->
+    <div class="flex justify-center mb-4 text-sm text-slate-500 gap-4 flex-wrap">
+      <div class="flex items-center gap-1.5 bg-slate-100/70 px-3 py-1 rounded-full"><span class="w-2 h-2 rounded-full bg-emerald-500"></span> Vista previa en tiempo real</div>
+      <div class="flex items-center gap-1.5 bg-slate-100/70 px-3 py-1 rounded-full"><span class="w-2 h-2 rounded-full bg-amber-500"></span> Carga ambas webs dentro del marco</div>
+    </div>
+
+    <!-- Contenedor del iframe con efecto de carga -->
+    <div class="iframe-container relative rounded-2xl border border-slate-200/80 bg-white shadow-2xl overflow-hidden">
+      <div id="iframeLoader" class="iframe-loading hidden items-center gap-2 text-slate-700">
+        <svg class="animate-spin h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+        </svg>
+        <span>Cargando vista previa...</span>
+      </div>
+      <iframe id="previewFrame" src="about:blank" title="Vista previa de la versión web" class="w-full bg-white transition-opacity duration-300"></iframe>
+    </div>
+    
+    <!-- Texto informativo final con instrucciones para insertar URLs -->
+    <div class="text-center text-slate-400 text-sm mt-6 border-t border-slate-200 pt-6">
+      💡 Los enlaces de las versiones son totalmente configurables.  
+      <br>Edita las variables <code class="bg-slate-100 px-1 rounded font-mono text-indigo-700">version1Url</code> y <code class="bg-slate-100 px-1 rounded font-mono text-indigo-700">version2Url</code> en el código (sección JavaScript) para cargar tus páginas reales.
+    </div>
+  </main>
+
+  <!-- Footer sencillo -->
+  <footer class="border-t border-slate-200 bg-white/50 mt-10 py-6">
+    <div class="max-w-7xl mx-auto px-5 text-center text-slate-500 text-sm flex flex-wrap justify-between items-center gap-3">
+      <span>© 2025 Tecnologías Onix · Comparador profesional para clientes</span>
+      <div class="flex gap-5">
+        <a href="#" class="hover:text-indigo-600 transition">Acerca del demo</a>
+        <a href="#" class="hover:text-indigo-600 transition">Personalizar URLs</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // ============================================================
+    //  CONFIGURACIÓN DE ENLACES REALES PARA LAS DOS VERSIONES
+    //  ============================================================
+    //  IMPORTANTE: Sustituye estas dos rutas con las URLs definitivas
+    //  de las páginas que quieras mostrar en el comparador.
+    //  Por defecto están vacías (about:blank) para que no haya contenido de prueba.
+    //  Ejemplo: 
+    //    const version1Url = "https://tudominio.com/version-antigua/index.html";
+    //    const version2Url = "https://tudominio.com/version-nueva/index.html";
+    // ============================================================
+    
+    let version1Url = "";   // <- Introduce aquí la URL de la VERSIÓN 1 (estilo clásico)
+    let version2Url = "";   // <- Introduce aquí la URL de la VERSIÓN 2 (moderno con logo)
+    
+    // Si las URLs están vacías, mostramos un aviso amigable en consola y dejamos el iframe en blanco.
+    // El usuario deberá rellenarlas manualmente.
+    
+    // Elementos del DOM
+    const iframe = document.getElementById('previewFrame');
+    const loader = document.getElementById('iframeLoader');
+    const btnV1 = document.getElementById('btnVersion1');
+    const btnV2 = document.getElementById('btnVersion2');
+    
+    // Función para cargar una URL en el iframe con indicador de carga
+    function loadVersion(url, versionName) {
+      if (!url || url.trim() === "") {
+        // Si no hay URL configurada, mostramos un mensaje en el iframe (página amigable)
+        const blankDoc = `<!DOCTYPE html>
+        <html>
+        <head><meta charset="UTF-8"><title>Sin configuración</title><style>body{font-family:system-ui; display:flex; align-items:center; justify-content:center; height:100vh; background:#f1f5f9; margin:0;}</style></head>
+        <body><div style="text-align:center; padding:2rem;"><div style="font-size:3rem;">🔧</div><h2 style="color:#1e293b;">URL no configurada</h2><p style="color:#475569;">Edita las variables <code style="background:#e2e8f0; padding:0.2rem 0.5rem; border-radius:8px;">version1Url</code> y <code style="background:#e2e8f0; padding:0.2rem 0.5rem; border-radius:8px;">version2Url</code><br>en el código JavaScript para cargar tus páginas reales.</p></div></body>
+        </html>`;
+        const blob = new Blob([blankDoc], { type: 'text/html' });
+        const fakeUrl = URL.createObjectURL(blob);
+        iframe.src = fakeUrl;
+        // Limpiar objeto URL después de cargar
+        iframe.onload = () => URL.revokeObjectURL(fakeUrl);
+        loader.classList.add('hidden');
+        loader.classList.remove('flex');
+        iframe.style.opacity = '1';
+        return;
+      }
+      
+      // Mostrar loader
+      loader.classList.remove('hidden');
+      loader.classList.add('flex');
+      iframe.style.opacity = '0.6';
+      
+      // Cambiar el src
+      iframe.src = url;
+      
+      function onLoadOrError() {
+        loader.classList.add('hidden');
+        loader.classList.remove('flex');
+        iframe.style.opacity = '1';
+        iframe.removeEventListener('load', onLoadOrError);
+        iframe.removeEventListener('error', onLoadOrError);
+      }
+      
+      iframe.addEventListener('load', onLoadOrError, { once: true });
+      iframe.addEventListener('error', onLoadOrError, { once: true });
+      
+      // Timeout de seguridad
+      setTimeout(() => {
+        if (loader.classList.contains('flex')) {
+          loader.classList.add('hidden');
+          loader.classList.remove('flex');
+          iframe.style.opacity = '1';
+        }
+      }, 4000);
+    }
+    
+    // Eventos de los botones
+    btnV1.addEventListener('click', () => {
+      loadVersion(version1Url, 'Versión 1');
+      btnV1.classList.add('ring-2', 'ring-indigo-300', 'ring-offset-2');
+      btnV2.classList.remove('ring-2', 'ring-indigo-300', 'ring-offset-2');
+    });
+    
+    btnV2.addEventListener('click', () => {
+      loadVersion(version2Url, 'Versión 2');
+      btnV2.classList.add('ring-2', 'ring-indigo-300', 'ring-offset-2');
+      btnV1.classList.remove('ring-2', 'ring-indigo-300', 'ring-offset-2');
+    });
+    
+    // Cargar por defecto la versión 1 solo si hay URL configurada, de lo contrario mostrar mensaje
+    window.addEventListener('load', () => {
+      if (version1Url && version1Url.trim() !== "") {
+        loadVersion(version1Url, 'Versión 1');
+        btnV1.classList.add('ring-2', 'ring-indigo-300', 'ring-offset-2');
+      } else {
+        // Mostrar mensaje de configuración pendiente
+        const blankSetup = `<!DOCTYPE html>
+        <html>
+        <head><meta charset="UTF-8"><title>Esperando URLs</title><style>body{font-family:system-ui; display:flex; align-items:center; justify-content:center; height:100vh; background:#f8fafc; margin:0;}</style></head>
+        <body><div style="text-align:center; max-width:500px; padding:1rem;"><div style="font-size:4rem;">🌐</div><h2 style="color:#0f172a;">Panel de previsualización</h2><p style="color:#334155;">Para comenzar, asigna las direcciones web de tus dos versiones en las variables <strong style="background:#e2e8f0; padding:0.1rem 0.3rem; border-radius:6px;">version1Url</strong> y <strong style="background:#e2e8f0; padding:0.1rem 0.3rem; border-radius:6px;">version2Url</strong> dentro del código.</p><p class="text-sm text-slate-400">Luego haz clic en los botones para comparar.</p></div></body>
+        </html>`;
+        const blobMsg = new Blob([blankSetup], { type: 'text/html' });
+        const msgUrl = URL.createObjectURL(blobMsg);
+        iframe.src = msgUrl;
+        iframe.onload = () => URL.revokeObjectURL(msgUrl);
+      }
+    });
+    
+    // Mensaje en consola para facilitar la personalización
+    console.log('%c🔷 Tecnologías Onix | Comparador de versiones', 'background: #1e293b; color: #facc15; font-size: 14px; padding: 4px 8px; border-radius: 8px');
+    console.log('%c👉 Para usar tus propias webs, edita las variables "version1Url" y "version2Url" en el script.', 'color: #0f3b5c; font-weight: bold;');
+  </script>
+</body>
+</html>
