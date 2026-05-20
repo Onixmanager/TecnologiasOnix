@@ -46,6 +46,13 @@
     .btn-version:active {
       transform: translateY(1px);
     }
+    /* Clase para el botón de versión activo */
+    .btn-version-active {
+      background-color: #4f46e5 !important; /* indigo-600 */
+      color: white !important;
+      border-color: #4f46e5 !important;
+      box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.3) !important;
+    }
     .btn-elegir {
       transition: all 0.2s ease;
     }
@@ -133,33 +140,34 @@
         <span class="bg-gradient-to-r from-indigo-600 to-amber-500 bg-clip-text text-transparent">para tu página profesional</span>
       </h1>
       <p class="text-slate-500 text-lg max-w-2xl mx-auto">
-        Visualiza ambas propuestas y elige la que mejor representa tu negocio. Puedes enviarme tu decisión directamente por WhatsApp.
+        Visualiza las propuestas y elige la que mejor representa tu negocio. Puedes enviarme tu decisión directamente por WhatsApp.
       </p>
     </div>
 
     <!-- Panel de botones para visualizar versiones -->
     <div class="flex flex-wrap justify-center gap-5 md:gap-6 mb-6">
-      <button id="btnVersion1" class="btn-version group relative px-8 py-3.5 rounded-2xl font-bold text-lg shadow-md transition-all duration-300 flex items-center gap-3 bg-white border-2 border-indigo-200 text-indigo-700 hover:bg-indigo-50 hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-300">
+      <button id="btnVersion1" class="btn-version group relative px-8 py-3.5 rounded-2xl font-bold text-lg shadow-md transition-all duration-300 flex items-center gap-3 bg-white border-2 border-indigo-200 text-indigo-700 hover:bg-indigo-50 hover:border-indigo-400 focus:outline-none">
         <span class="text-2xl">①</span>
         <span>Versión 1 · Logo genérico moderno</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 group-hover:translate-x-0.5 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </button>
 
-      <button id="btnVersion2" class="btn-version group relative px-8 py-3.5 rounded-2xl font-bold text-lg shadow-md transition-all duration-300 flex items-center gap-3 bg-gradient-to-r from-indigo-600 to-indigo-500 text-white hover:from-indigo-700 hover:to-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-400">
+      <!-- ===== VERSIÓN 2: ahora con estilo base blanco como los demás ===== -->
+      <button id="btnVersion2" class="btn-version group relative px-8 py-3.5 rounded-2xl font-bold text-lg shadow-md transition-all duration-300 flex items-center gap-3 bg-white border-2 border-indigo-200 text-indigo-700 hover:bg-indigo-50 hover:border-indigo-400 focus:outline-none">
         <span class="text-2xl">②</span>
-        <span>Versión 2 · Logo original</span>
+        <span>Versión 2 · igual que la 1 pero con tu Logo original</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 group-hover:translate-x-0.5 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </button>
 
-      <button id="btnVersion3" class="btn-version group relative px-8 py-3.5 rounded-2xl font-bold text-lg shadow-md transition-all duration-300 flex items-center gap-3 bg-white border-2 border-indigo-200 text-indigo-700 hover:bg-indigo-50 hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-300">
+      <button id="btnVersion3" class="btn-version group relative px-8 py-3.5 rounded-2xl font-bold text-lg shadow-md transition-all duration-300 flex items-center gap-3 bg-white border-2 border-indigo-200 text-indigo-700 hover:bg-indigo-50 hover:border-indigo-400 focus:outline-none">
         <span class="text-2xl">③</span>
-        <span>Versión 3 · Diseño alternativo</span>
+        <span>Versión 3 · Diseño alternativo Moderno</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 group-hover:translate-x-0.5 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </button>
 
-      <button id="btnVersion4" class="btn-version group relative px-8 py-3.5 rounded-2xl font-bold text-lg shadow-md transition-all duration-300 flex items-center gap-3 bg-white border-2 border-indigo-200 text-indigo-700 hover:bg-indigo-50 hover:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-300">
+      <button id="btnVersion4" class="btn-version group relative px-8 py-3.5 rounded-2xl font-bold text-lg shadow-md transition-all duration-300 flex items-center gap-3 bg-white border-2 border-indigo-200 text-indigo-700 hover:bg-indigo-50 hover:border-indigo-400 focus:outline-none">
         <span class="text-2xl">④</span>
-        <span>Versión 4 · Propuesta premium</span>
+        <span>Versión 4 · Tipo App Movil</span>
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="ml-1 group-hover:translate-x-0.5 transition-transform"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
       </button>
     </div>
@@ -225,8 +233,8 @@
     <div class="max-w-7xl mx-auto px-5 text-center text-slate-500 text-sm flex flex-wrap justify-between items-center gap-3">
       <span>© 2025 Tecnologías Onix · Comparador profesional para clientes</span>
       <div class="flex gap-5">
-        <a href="#" class="hover:text-indigo-600 transition">Acerca del demo</a>
-        <a href="#" class="hover:text-indigo-600 transition">Personalizar URLs</a>
+        <a href="#" class="hover:text-indigo-600 transition"></a>
+        <a href="#" class="hover:text-indigo-600 transition"></a>
       </div>
     </div>
   </footer>
@@ -271,19 +279,19 @@
     function clearAllHighlights() {
       allVersionButtons.forEach(btn => {
         if (btn) {
-          btn.classList.remove('ring-2', 'ring-indigo-300', 'ring-offset-2');
+          btn.classList.remove('btn-version-active');
         }
       });
     }
 
     /**
-     * Aplica el highlight al botón activo
+     * Aplica el highlight al botón activo (cambio de color + anillo)
      * @param {HTMLElement} button - El botón a resaltar
      */
     function highlightButton(button) {
       clearAllHighlights();
       if (button) {
-        button.classList.add('ring-2', 'ring-indigo-300', 'ring-offset-2');
+        button.classList.add('btn-version-active');
       }
     }
 
