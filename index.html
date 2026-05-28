@@ -1734,9 +1734,14 @@ footer {
           <label>Mensaje</label>
           <textarea name="mensaje" placeholder="Cuéntanos sobre tu proyecto…" required></textarea>
         </div>
-        <button type="submit" id="submitBtn" class="btn-fill" style="width:100%;justify-content:center;background:var(--blue);border-radius:10px;border:none;font-family:var(--sans);font-size:14px;">
-          <i class="fas fa-paper-plane"></i> <span id="btnText">Enviar mensaje</span>
-        </button>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;">
+          <button type="submit" id="submitBtn" class="btn-fill" style="flex:1;min-width:160px;justify-content:center;background:#25d366;border-radius:10px;border:none;font-family:var(--sans);font-size:14px;">
+            <i class="fab fa-whatsapp"></i> <span id="btnText">Enviar por WhatsApp</span>
+          </button>
+          <button type="button" id="submitEmailBtn" class="btn-fill" style="flex:1;min-width:160px;justify-content:center;background:var(--blue);border-radius:10px;border:none;font-family:var(--sans);font-size:14px;" onclick="submitEmail(event)">
+            <i class="fas fa-envelope"></i> <span id="btnEmailText">Enviar por Email</span>
+          </button>
+        </div>
         <div id="formMsg" style="display:none;margin-top:16px;padding:14px 18px;border-radius:10px;font-size:14px;text-align:center;"></div>
       </form>
     </div>
@@ -1802,17 +1807,53 @@ footer {
 </a>
 
 <script>
-async function submitForm(e) {
+// ─── WhatsApp ────────────────────────────────────────────────────────────────
+function submitForm(e) {
   e.preventDefault();
-  const btn = document.getElementById('submitBtn');
-  const btnText = document.getElementById('btnText');
+  const form = e.target;
+  if (!form.checkValidity()) { form.reportValidity(); return; }
+
+  const nombre   = form.nombre.value.trim();
+  const empresa  = form.empresa.value.trim();
+  const email    = form.email.value.trim();
+  const servicio = form.servicio.value.trim();
+  const mensaje  = form.mensaje.value.trim();
+
+  const texto =
+    `*Nuevo contacto desde la web*\n` +
+    `👤 *Nombre:* ${nombre}\n` +
+    (empresa  ? `🏢 *Empresa:* ${empresa}\n`   : '') +
+    `📧 *Email:* ${email}\n` +
+    (servicio ? `🛠️ *Servicio:* ${servicio}\n` : '') +
+    `💬 *Mensaje:* ${mensaje}`;
+
+  const whatsappURL = `https://wa.me/34643229507?text=${encodeURIComponent(texto)}`;
+  window.open(whatsappURL, '_blank');
+
   const msg = document.getElementById('formMsg');
+  msg.style.display = 'block';
+  msg.style.background = 'rgba(37,211,102,0.12)';
+  msg.style.border = '1px solid rgba(37,211,102,0.3)';
+  msg.style.color = '#25d366';
+  msg.textContent = '✓ Abriendo WhatsApp con tu mensaje…';
+  form.reset();
+  setTimeout(() => { msg.style.display = 'none'; }, 5000);
+}
+
+// ─── Email (Web3Forms) ───────────────────────────────────────────────────────
+async function submitEmail(e) {
+  const form = document.getElementById('contactForm');
+  if (!form.checkValidity()) { form.reportValidity(); return; }
+
+  const btn     = document.getElementById('submitEmailBtn');
+  const btnText = document.getElementById('btnEmailText');
+  const msg     = document.getElementById('formMsg');
 
   btnText.textContent = 'Enviando…';
   btn.disabled = true;
   btn.style.opacity = '0.7';
 
-  const formData = new FormData(e.target);
+  const formData = new FormData(form);
   const data = Object.fromEntries(formData);
 
   try {
@@ -1827,8 +1868,8 @@ async function submitForm(e) {
       msg.style.background = 'rgba(74,222,128,0.12)';
       msg.style.border = '1px solid rgba(74,222,128,0.3)';
       msg.style.color = '#4ade80';
-      msg.textContent = '✓ Mensaje enviado correctamente. Te contactamos pronto.';
-      e.target.reset();
+      msg.textContent = '✓ Email enviado correctamente. Te contactamos pronto.';
+      form.reset();
     } else {
       throw new Error();
     }
@@ -1840,7 +1881,7 @@ async function submitForm(e) {
     msg.textContent = '✗ Algo salió mal. Inténtalo de nuevo o escríbenos por WhatsApp.';
   }
 
-  btnText.textContent = 'Enviar mensaje';
+  btnText.textContent = 'Enviar por Email';
   btn.disabled = false;
   btn.style.opacity = '1';
 }
