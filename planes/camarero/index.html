@@ -256,14 +256,12 @@
 
   <script>
     // =========================================================================
-    // CONFIGURACIÓN — sustituye por tu Payment Link real de Stripe.
-    //
-    // Crea el Payment Link en el Dashboard de Stripe (Payment Links → New)
-    // para el precio de 29,99 €/mes en modo suscripción, con periodo de
-    // prueba de 14 días configurado en el propio Price/Payment Link.
-    // Pega aquí la URL que te da Stripe (empieza por https://buy.stripe.com/...).
+    // Payment Link de Stripe (Dashboard → Payment Links) para el plan Pro
+    // 29,99 €/mes en modo suscripción, con 14 días de prueba configurados en
+    // el propio Price/Payment Link. Si en el futuro se cambia de precio o se
+    // regenera el link, solo hay que sustituir esta URL.
     // =========================================================================
-    const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/PON_TU_PAYMENT_LINK_AQUI';
+    const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/bJe3cu9do9Do6MuaYu9Ve06';
 
     // Mismas features que se muestran en panel.html → "¿Qué incluye el plan Pro?"
     const PRO_FEATURES = [
