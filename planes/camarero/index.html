@@ -1,549 +1,124 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#1A1A18">
-
-  <title>Planes y Precios – Camarero Digital</title>
-  <meta name="description" content="Elige el plan de Camarero Digital: 14 días de prueba gratuita y después 29,99 €/mes, sin permanencia. Carta digital QR y pedidos online para tu restaurante.">
-  <meta name="robots" content="index, follow">
-  <link rel="canonical" href="https://tecnologiasonix.com/planes/camarero/index.html">
-
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Camarero Digital">
-  <meta property="og:locale" content="es_ES">
-  <meta property="og:url" content="https://tecnologiasonix.com/planes/camarero/index.html">
-  <meta property="og:title" content="Planes y Precios – Camarero Digital">
-  <meta property="og:description" content="14 días de prueba gratuita y después 29,99 €/mes, sin permanencia. Carta digital QR y pedidos online para tu restaurante.">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="Planes y Precios – Camarero Digital">
-  <meta name="twitter:description" content="14 días de prueba gratuita y después 29,99 €/mes, sin permanencia.">
-
-  <link rel="icon" type="image/png" href="__ICON_DATA_URI__">
-
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
-
-  <!--
-    Página pública e independiente de la app (vive en otro repo/dominio:
-    tecnologiasonix.com/planes/camarero/). Aquí, y solo aquí, se muestra la
-    información comercial del plan (precio, condiciones) y el flujo que
-    activa realmente la suscripción del restaurante.
-
-    Por qué necesita login de Google (Firebase) igual que la app:
-    el endpoint que crea la sesión de pago (/api/create-checkout-session,
-    en el dominio de la app) exige un idToken de Firebase y comprueba que
-    el usuario autenticado es dueño del restaurantId recibido — así el
-    checkout de Stripe sale con metadata.restaurantId correcto, y el
-    webhook (api/webhook.js) puede activar el tenant que toca en Firebase.
-    Sin ese login, no hay forma de que el pago activo el restaurante
-    correcto de forma segura. Ver login() más abajo.
-
-    Flujo:
-      1) Dentro de la TWA de Android, el modal de aviso de pago externo
-         (app.js → abrirPagoExterno) trae al usuario aquí con
-         ?restaurantId=<uid del owner>.
-      2) Esta página pide "Continuar con Google" (mismo proveedor que la
-         app) y, tras el login, verifica en Firebase que el uid logueado
-         es dueño de ese restaurantId exacto.
-      3) Si coincide, llama al MISMO backend que usa panel.html
-         (create-checkout-session.js) con el idToken — no un Payment Link
-         suelto — para que el checkout resultante lleve el restaurantId
-         real en metadata.
-      4) Si no viene restaurantId en la URL (alguien llega aquí sin pasar
-         por la app, por ejemplo desde el Aviso Legal), el botón lleva
-         igualmente a iniciar sesión y, tras loguearse, usa su propio uid
-         como restaurantId (mismo criterio que loginWithGoogle() en la
-         app: restaurantId = uid del owner).
-  -->
-
-  <style>
-    :root{
-      --bg:#F4F2EE; --surface:#FFFFFF; --surface2:#F9F8F6;
-      --border:#E5E2DC; --ink:#1A1A18; --ink-muted:#7A7870; --ink-dim:#BEBAB2;
-      --gold:#C9A84C; --gold-deep:#9C7F33; --success:#2D9B6F; --danger:#C4453B;
-      --radius:16px; --radius-sm:8px;
-      --shadow:0 1px 3px rgba(0,0,0,0.08),0 4px 16px rgba(0,0,0,0.06);
-      --shadow-lg:0 16px 48px rgba(0,0,0,0.14);
-    }
-    *,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; }
-    html{ scroll-behavior:smooth; }
-    body{ font-family:'Mulish',sans-serif; background:var(--bg); color:var(--ink); overflow-x:hidden; min-height:100vh; display:flex; flex-direction:column; }
-    a{ color:inherit; text-decoration:none; }
-
-    nav{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; background:rgba(244,242,238,0.85); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:50; }
-    .brand{ display:flex; align-items:center; gap:10px; font-family:'Syne',sans-serif; font-weight:800; font-size:1.05rem; letter-spacing:-0.01em; }
-    .brand-icon{ width:34px; height:34px; border-radius:10px; background:var(--ink); display:flex; align-items:center; justify-content:center; overflow:hidden; }
-    .brand-icon img{ width:26px; height:26px; object-fit:contain; mix-blend-mode:screen; filter:invert(1); }
-    .nav-right{ display:flex; align-items:center; gap:10px; }
-    .btn-back{ display:inline-flex; align-items:center; gap:7px; font-size:0.83rem; font-weight:700; color:var(--ink-muted); padding:9px 16px; border-radius:999px; border:1.5px solid var(--border); background:transparent; cursor:pointer; transition:color 0.2s ease, border-color 0.2s ease; }
-    .btn-back:hover{ color:var(--ink); border-color:var(--ink-dim); }
-
-    .user-chip{ display:flex; align-items:center; gap:8px; font-size:0.82rem; font-weight:700; color:var(--ink); padding:6px 14px 6px 6px; border-radius:999px; background:var(--surface2); border:1px solid var(--border); }
-    .user-chip img{ width:24px; height:24px; border-radius:50%; object-fit:cover; }
-    .user-chip button{ border:none; background:none; color:var(--ink-dim); cursor:pointer; font-size:0.78rem; text-decoration:underline; margin-left:4px; }
-
-    main{ flex:1; }
-    .plans-wrap{ max-width:980px; margin:0 auto; padding:56px 24px 40px; }
-
-    .plans-head{ text-align:center; max-width:600px; margin:0 auto 40px; }
-    .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:0.78rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-deep); background:rgba(201,168,76,0.12); padding:7px 14px; border-radius:999px; margin-bottom:18px; }
-    .plans-head h1{ font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(1.9rem,4vw,2.6rem); letter-spacing:-0.02em; line-height:1.1; margin-bottom:14px; }
-    .plans-head p{ font-size:1rem; color:var(--ink-muted); line-height:1.6; }
-
-    /* Banner de estado (identidad / suscripción ya activa / errores) */
-    .status-banner{ display:none; max-width:640px; margin:0 auto 28px; padding:16px 20px; border-radius:var(--radius-sm); font-size:0.87rem; line-height:1.55; gap:12px; align-items:flex-start; }
-    .status-banner.show{ display:flex; }
-    .status-banner i{ margin-top:2px; flex-shrink:0; }
-    .status-banner.info{ background:rgba(201,168,76,0.1); border:1px solid rgba(201,168,76,0.35); color:#7a5f1f; }
-    .status-banner.success{ background:rgba(45,155,111,0.1); border:1px solid rgba(45,155,111,0.35); color:#1f6e4d; }
-    .status-banner.error{ background:rgba(196,69,59,0.08); border:1px solid rgba(196,69,59,0.3); color:var(--danger); }
-
-    .plans-grid{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:24px; align-items:start; }
-    @media (max-width:760px){ .plans-grid{ grid-template-columns:1fr; } }
-
-    .plan-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:36px 32px; position:relative; }
-    .plan-card.pro{ border:1.5px solid var(--gold); box-shadow:var(--shadow-lg); }
-    .plan-tag{ position:absolute; top:-13px; left:32px; background:var(--ink); color:#fff; font-family:'Syne',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.03em; padding:6px 14px; border-radius:999px; }
-
-    .plan-name{ font-size:0.85rem; font-weight:700; color:var(--ink-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:10px; }
-    .plan-price{ display:flex; align-items:flex-end; gap:6px; margin-bottom:6px; }
-    .plan-price .amount{ font-family:'Syne',sans-serif; font-weight:800; font-size:2.7rem; letter-spacing:-0.02em; }
-    .plan-price .period{ color:var(--ink-dim); font-size:0.92rem; padding-bottom:6px; }
-    .plan-note{ font-size:0.82rem; color:var(--ink-dim); margin-bottom:26px; }
-
-    .plan-features{ list-style:none; margin-bottom:28px; display:flex; flex-direction:column; gap:12px; }
-    .plan-features li{ display:flex; align-items:flex-start; gap:10px; font-size:0.9rem; color:var(--ink); line-height:1.4; }
-    .plan-features li i{ color:var(--success); font-size:0.9rem; margin-top:2px; flex-shrink:0; }
-
-    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; font-family:'Mulish',sans-serif; font-weight:700; font-size:0.95rem; padding:15px 22px; border-radius:999px; border:none; cursor:pointer; transition:transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease; }
-    .btn-primary{ background:var(--ink); color:#fff; box-shadow:var(--shadow); }
-    .btn-primary:hover{ transform:translateY(-1px); box-shadow:var(--shadow-lg); }
-    .btn-primary:disabled{ opacity:0.6; cursor:default; transform:none; }
-    .btn-ghost{ background:var(--surface2); color:var(--ink); border:1px solid var(--border); }
-    .btn-ghost:hover{ border-color:var(--ink-dim); }
-
-    .plan-fineprint{ text-align:center; font-size:0.78rem; color:var(--ink-dim); margin-top:14px; }
-    .plan-fineprint i{ margin-right:4px; }
-
-    .plan-card.alt{ background:var(--surface2); }
-    .alt-title{ font-family:'Syne',sans-serif; font-weight:800; font-size:1.25rem; margin-bottom:8px; letter-spacing:-0.01em; }
-    .alt-desc{ font-size:0.88rem; color:var(--ink-muted); line-height:1.6; margin-bottom:24px; }
-    .alt-actions{ display:flex; flex-direction:column; gap:10px; }
-
-    .trust-row{ display:flex; align-items:center; justify-content:center; gap:22px; flex-wrap:wrap; margin-top:44px; padding-top:28px; border-top:1px solid var(--border); }
-    .trust-item{ display:flex; align-items:center; gap:8px; font-size:0.8rem; color:var(--ink-muted); font-weight:600; }
-    .trust-item i{ color:var(--gold-deep); }
-
-    .faq{ max-width:720px; margin:56px auto 0; }
-    .faq h2{ font-family:'Syne',sans-serif; font-weight:800; font-size:1.3rem; text-align:center; margin-bottom:26px; letter-spacing:-0.01em; }
-    .faq-item{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:18px 20px; margin-bottom:10px; }
-    .faq-item h3{ font-family:'Syne',sans-serif; font-size:0.92rem; font-weight:700; margin-bottom:6px; }
-    .faq-item p{ font-size:0.87rem; color:var(--ink-muted); line-height:1.6; }
-
-    #toast{ position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--ink); color:#fff; padding:13px 22px; border-radius:999px; font-size:0.85rem; font-weight:600; box-shadow:var(--shadow-lg); opacity:0; pointer-events:none; transition:opacity 0.25s ease, transform 0.25s ease; z-index:200; max-width:90vw; text-align:center; }
-    #toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
-
-    footer{ border-top:1px solid var(--border); background:var(--surface); }
-    .footer-inner{ max-width:1120px; margin:0 auto; padding:28px 24px; display:flex; flex-direction:column; align-items:center; gap:14px; }
-    .footer-brand{ display:flex; align-items:center; gap:9px; font-family:'Syne',sans-serif; font-weight:800; font-size:0.88rem; color:var(--ink); }
-    .footer-brand-icon{ width:24px; height:24px; border-radius:6px; background:var(--ink); display:flex; align-items:center; justify-content:center; overflow:hidden; }
-    .footer-brand-icon img{ width:17px; height:17px; object-fit:contain; mix-blend-mode:screen; filter:invert(1); }
-    .footer-links{ display:flex; align-items:center; gap:2px; flex-wrap:wrap; justify-content:center; }
-    .footer-links a{ font-size:0.78rem; font-weight:600; color:var(--ink-muted); padding:4px 9px; border-radius:999px; transition:color 0.2s ease, background 0.2s ease; }
-    .footer-links a:hover{ color:var(--ink); background:var(--surface2); }
-    .footer-dot{ color:var(--ink-dim); font-size:0.78rem; padding:0 2px; }
-    .footer-contact{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:center; font-size:0.8rem; color:var(--ink-muted); }
-    .footer-contact a{ display:inline-flex; align-items:center; gap:6px; font-weight:600; }
-    .footer-contact a:hover{ color:var(--ink); }
-    .footer-copy{ font-size:0.73rem; color:var(--ink-dim); text-align:center; line-height:1.7; }
-    .footer-copy a{ color:var(--ink-muted); font-weight:700; transition:color 0.2s ease; }
-    .footer-copy a:hover{ color:var(--ink); }
-  </style>
-</head>
-<body>
-
-  <nav>
-    <a class="brand" href="https://camarero.tecnologiasonix.com/">
-      <div class="brand-icon"><img src="__ICON_DATA_URI__" alt="Camarero Digital"></div>
-      Camarero Digital
-    </a>
-    <div class="nav-right" id="navRight">
-      <a class="btn-back" href="https://camarero.tecnologiasonix.com/"><i class="fas fa-arrow-left"></i> Volver a la web</a>
-    </div>
-  </nav>
-
-  <main>
-    <div class="plans-wrap">
-
-      <div class="plans-head">
-        <div class="eyebrow"><i class="fas fa-crown"></i> Planes</div>
-        <h1>Elige tu plan de Camarero Digital</h1>
-        <p>Carta digital QR y pedidos online para tu restaurante. Empieza con 14 días de prueba gratuita, sin tarjeta.</p>
-      </div>
-
-      <div id="statusBanner" class="status-banner">
-        <i class="fas fa-circle-info"></i>
-        <span id="statusBannerText"></span>
-      </div>
-
-      <div class="plans-grid">
-
-        <!-- Plan Pro (mensual, Stripe) -->
-        <div class="plan-card pro">
-          <div class="plan-tag"><i class="fas fa-star"></i> Recomendado</div>
-          <div class="plan-name">Camarero Digital Pro</div>
-          <div class="plan-price">
-            <span class="amount">29,99&nbsp;€</span>
-            <span class="period">/ mes</span>
-          </div>
-          <p class="plan-note">14 días de prueba gratuita · Sin permanencia · Cancela cuando quieras</p>
-
-          <ul class="plan-features" id="proFeatures"></ul>
-
-          <button type="button" id="mainBtn" class="btn btn-primary">
-            <i class="fab fa-google"></i> <span id="mainBtnLabel">Continuar con Google para suscribirte</span>
-          </button>
-          <p class="plan-fineprint"><i class="fas fa-lock"></i>Pago seguro procesado por Stripe</p>
-        </div>
-
-        <!-- Configuración a medida / contacto -->
-        <div class="plan-card alt">
-          <div class="alt-title">¿Prefieres que lo configuremos nosotros?</div>
-          <p class="alt-desc">Ofrecemos un servicio de configuración completa a cargo de nuestro equipo (carta, mesas, QR e instalación de NFC), con un coste adicional según el tipo de instalación. También somos tu soporte si necesitas ayuda después de empezar.</p>
-          <div class="alt-actions">
-            <a href="mailto:info@tecnologiasonix.com" class="btn btn-ghost"><i class="fas fa-envelope"></i> info@tecnologiasonix.com</a>
-            <a href="https://wa.me/34643229507" target="_blank" rel="noopener noreferrer" class="btn btn-ghost"><i class="fab fa-whatsapp"></i> WhatsApp +34 643 22 95 07</a>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="trust-row">
-        <div class="trust-item"><i class="fas fa-shield-halved"></i> Pago seguro con Stripe</div>
-        <div class="trust-item"><i class="fas fa-rotate-left"></i> Cancela cuando quieras</div>
-        <div class="trust-item"><i class="fas fa-headset"></i> Soporte incluido</div>
-      </div>
-
-      <div class="faq">
-        <h2>Preguntas frecuentes</h2>
-        <div class="faq-item">
-          <h3>¿Por qué me pide iniciar sesión con Google?</h3>
-          <p>Para activar tu suscripción en el restaurante correcto. Usamos la misma cuenta de Google con la que entras al panel de Camarero Digital: así nos asegura que el pago se asocia a tu restaurante y no a otro.</p>
-        </div>
-        <div class="faq-item">
-          <h3>¿Qué pasa cuando termina la prueba gratuita?</h3>
-          <p>A los 14 días, si no cancelas antes, se activa la suscripción mensual de 29,99 €. Puedes cancelar en cualquier momento desde el panel de tu restaurante, sin permanencia ni penalización.</p>
-        </div>
-        <div class="faq-item">
-          <h3>¿Dónde gestiono mi suscripción una vez contratada?</h3>
-          <p>Desde el panel de administración de tu restaurante, en el apartado de suscripción, puedes actualizar tu método de pago, ver tus facturas o cancelar el plan cuando quieras.</p>
-        </div>
-        <div class="faq-item">
-          <h3>¿Cómo se procesa el pago?</h3>
-          <p>A través de Stripe, una pasarela de pago externa. Camarero Digital / Tecnologías Onix no almacena los datos de tu tarjeta en ningún momento.</p>
-        </div>
-      </div>
-
-    </div>
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="footer-brand-icon"><img src="__ICON_DATA_URI__" alt=""></div>
-        Camarero Digital
-      </div>
-      <nav class="footer-links" aria-label="Legal">
-        <a href="https://camarero.tecnologiasonix.com/aviso-legal.html">Aviso legal</a>
-        <span class="footer-dot" aria-hidden="true">·</span>
-        <a href="https://camarero.tecnologiasonix.com/privacidad.html">Privacidad</a>
-        <span class="footer-dot" aria-hidden="true">·</span>
-        <a href="https://camarero.tecnologiasonix.com/terminos.html">Términos de uso</a>
-      </nav>
-      <div class="footer-contact">
-        <a href="mailto:info@tecnologiasonix.com"><i class="fas fa-envelope"></i>info@tecnologiasonix.com</a>
-        <span class="footer-dot" aria-hidden="true">·</span>
-        <a href="https://wa.me/34643229507"><i class="fab fa-whatsapp"></i>+34 643 22 95 07</a>
-      </div>
-      <p class="footer-copy">
-        © <span id="year"></span> Camarero Digital &nbsp;·&nbsp;
-        Un producto de <a href="https://tecnologiasonix.com" target="_blank" rel="noopener noreferrer">Tecnologías Onix</a>
-      </p>
-    </div>
-  </footer>
-
-  <div id="toast"></div>
-
-  <script type="module">
-    import { initializeApp }
-      from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
-    import { getDatabase, ref, get }
-      from "https://www.gstatic.com/firebasejs/9.23.0/firebase-database.js";
-    import { getAuth, onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup }
-      from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-
-    // Misma config que la app (mismo proyecto Firebase). No es un secreto:
-    // la apiKey de Firebase Web es pública por diseño y su seguridad real
-    // vive en las reglas de Realtime Database / Auth, no aquí.
-    const firebaseConfig = {
-      apiKey:            "AIzaSyDPbN_dr1LzVhksnFmzeKOLpHAZZRSxWv4",
-      authDomain:        "tecnologiasonix-733fc.firebaseapp.com",
-      databaseURL:       "https://tecnologiasonix-733fc-default-rtdb.europe-west1.firebasedatabase.app",
-      projectId:         "tecnologiasonix-733fc",
-      storageBucket:     "tecnologiasonix-733fc.firebasestorage.app",
-      messagingSenderId: "139377195491",
-      appId:             "1:139377195491:web:0727f6e57cc23351bd88d6"
-    };
-
-    const fbApp = initializeApp(firebaseConfig);
-    const db    = getDatabase(fbApp);
-    const auth  = getAuth(fbApp);
-
-    // ─── CONFIGURACIÓN ────────────────────────────────────────────────────
-    // Dominio real donde está desplegada la app (Vercel). Aquí vive el
-    // backend que crea la sesión de Stripe Checkout con el restaurantId
-    // correcto en metadata, para que el webhook active el tenant que toca.
-    const APP_API_BASE = 'https://camarero.tecnologiasonix.com';
-
-    const PRO_FEATURES = [
-      'Carta digital QR ilimitada para todas tus mesas',
-      'Pedidos en tiempo real con notificaciones sonoras',
-      'Panel de administración completo',
-      'Equipo ilimitado con roles (Admin / Recepción)',
-      'Página de recepción de comandas para cocina/barra',
-      'Soporte prioritario incluido',
-    ];
-
-    const featuresList = document.getElementById('proFeatures');
-    PRO_FEATURES.forEach((f) => {
-      const li = document.createElement('li');
-      li.innerHTML = `<i class="fas fa-circle-check"></i><span>${f}</span>`;
-      featuresList.appendChild(li);
-    });
-
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    function showToast(msg) {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.classList.add('show');
-      clearTimeout(window._toastTimer);
-      window._toastTimer = setTimeout(() => t.classList.remove('show'), 4200);
-    }
-
-    function showBanner(kind, html) {
-      const b = document.getElementById('statusBanner');
-      const icon = kind === 'success' ? 'fa-circle-check' : kind === 'error' ? 'fa-triangle-exclamation' : 'fa-circle-info';
-      b.className = `status-banner show ${kind}`;
-      b.querySelector('i').className = `fas ${icon}`;
-      document.getElementById('statusBannerText').innerHTML = html;
-    }
-    function hideBanner() {
-      document.getElementById('statusBanner').classList.remove('show');
-    }
-
-    const mainBtn = document.getElementById('mainBtn');
-    const mainBtnLabel = document.getElementById('mainBtnLabel');
-    const mainBtnIcon = mainBtn.querySelector('i');
-    const navRight = document.getElementById('navRight');
-
-    const searchParams = new URLSearchParams(window.location.search);
-    // restaurantId con el que se llegó desde la app (dueño del restaurante
-    // que quiere pagar). Si no viene ninguno, quien inicie sesión aquí se
-    // suscribe a su propio restaurante (restaurantId = su propio uid, igual
-    // que hace la app al registrarse).
-    const restaurantIdParam = searchParams.get('restaurantId') || searchParams.get('tenantId');
-
-    let estadoBotón = 'login'; // 'login' | 'checkout' | 'ya-activo' | 'no-autorizado'
-    let usuarioActual = null;
-
-    function setBotonEstado(estado, opts = {}) {
-      estadoBotón = estado;
-      mainBtn.disabled = false;
-      if (estado === 'login') {
-        mainBtnIcon.className = 'fab fa-google';
-        mainBtnLabel.textContent = 'Continuar con Google para suscribirte';
-      } else if (estado === 'checkout') {
-        mainBtnIcon.className = 'fas fa-rocket';
-        mainBtnLabel.textContent = opts.label || 'Empezar prueba gratuita';
-      } else if (estado === 'ya-activo') {
-        mainBtnIcon.className = 'fas fa-circle-check';
-        mainBtnLabel.textContent = 'Ya tienes Pro activo — ir al panel';
-      } else if (estado === 'no-autorizado') {
-        mainBtnIcon.className = 'fas fa-arrow-right-from-bracket';
-        mainBtnLabel.textContent = 'Cambiar de cuenta de Google';
-      }
-    }
-
-    function renderUserChip(user) {
-      navRight.innerHTML = `
-        <div class="user-chip">
-          <img src="${user.photoURL || ''}" alt="" onerror="this.style.display='none'">
-          <span>${user.displayName || user.email || 'Tu cuenta'}</span>
-          <button type="button" id="logoutBtn">Cambiar cuenta</button>
-        </div>`;
-      document.getElementById('logoutBtn').addEventListener('click', async () => {
-        await signOut(auth);
-      });
-    }
-
-    function renderNavDefault() {
-      navRight.innerHTML = `<a class="btn-back" href="https://camarero.tecnologiasonix.com/"><i class="fas fa-arrow-left"></i> Volver a la web</a>`;
-    }
-
-    // ─── LOGIN (sin crear restaurante — solo autenticar) ──────────────────
-    // A diferencia de loginWithGoogle() en app.js, aquí NO se llama a
-    // asegurarUsuarioMultiTenant(): esta página no debe crear restaurantes
-    // nuevos ni pruebas gratuitas por su cuenta. Solo autentica y, después,
-    // comprueba contra Firebase quién es el dueño real del restaurantId.
-    async function loginConGoogle() {
-      const provider = new GoogleAuthProvider();
-      provider.setCustomParameters({ prompt: 'select_account' });
-      await signInWithPopup(auth, provider);
-    }
-
-    // Tras el login, decide si el usuario puede continuar y con qué
-    // restaurantId. Devuelve { ok, restaurantId, motivo }.
-    async function resolverRestaurantId(user) {
-      const miSnap = await get(ref(db, `usuarios/${user.uid}/restaurantId`));
-      const miRestaurantId = miSnap.exists() ? miSnap.val() : null;
-
-      if (!restaurantIdParam) {
-        // Nadie especificó restaurantId por URL: solo tiene sentido seguir
-        // si esta cuenta YA es owner de un restaurante (tiene restaurantId
-        // propio). Si es una cuenta completamente nueva, no la dejamos
-        // continuar desde aquí para no crear un restaurante "a ciegas":
-        // debe registrarse primero desde la app.
-        if (miRestaurantId) return { ok: true, restaurantId: miRestaurantId };
-        return { ok: false, motivo: 'sin-restaurante' };
-      }
-
-      if (miRestaurantId && miRestaurantId === restaurantIdParam) {
-        return { ok: true, restaurantId: restaurantIdParam };
-      }
-      return { ok: false, motivo: 'no-coincide' };
-    }
-
-    async function llamarCheckout(restaurantId, idToken) {
-      const resp = await fetch(`${APP_API_BASE}/api/create-checkout-session`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${idToken}`,
-        },
-        body: JSON.stringify({ restaurantId }),
-      });
-      const data = await resp.json();
-      if (!resp.ok) throw new Error(data.error || 'Error al iniciar el checkout');
-      if (!data.url) throw new Error('El servidor no devolvió una URL de checkout');
-      return data.url;
-    }
-
-    async function comprobarSuscripcionActiva(restaurantId) {
-      try {
-        const snap = await get(ref(db, `restaurantes/${restaurantId}/suscripcion`));
-        if (!snap.exists()) return null;
-        return snap.val();
-      } catch (e) {
-        return null;
-      }
-    }
-
-    // ─── Estado de sesión ──────────────────────────────────────────────────
-    let restaurantIdResuelto = null;
-
-    onAuthStateChanged(auth, async (user) => {
-      usuarioActual = user;
-
-      if (!user) {
-        renderNavDefault();
-        setBotonEstado('login');
-        hideBanner();
-        return;
-      }
-
-      renderUserChip(user);
-      mainBtn.disabled = true;
-      mainBtnLabel.textContent = 'Comprobando tu cuenta…';
-
-      const resultado = await resolverRestaurantId(user);
-
-      if (!resultado.ok) {
-        if (resultado.motivo === 'no-coincide') {
-          showBanner('error', 'Esta cuenta de Google no es la propietaria de ese restaurante. Inicia sesión con la misma cuenta que usas en el panel de Camarero Digital, o pulsa «Cambiar cuenta».');
-        } else {
-          showBanner('error', 'Esta cuenta de Google todavía no tiene un restaurante registrado en Camarero Digital. Regístrate primero desde la app y vuelve aquí para suscribirte.');
-        }
-        setBotonEstado('no-autorizado');
-        return;
-      }
-
-      restaurantIdResuelto = resultado.restaurantId;
-      hideBanner();
-
-      const subs = await comprobarSuscripcionActiva(restaurantIdResuelto);
-      if (subs && ['active', 'trialing'].includes(subs.status)) {
-        showBanner('success', subs.status === 'trialing'
-          ? 'Ya tienes tu período de prueba en marcha. Puedes gestionarlo desde el panel de tu restaurante.'
-          : 'Tu suscripción Pro ya está activa. Puedes gestionarla desde el panel de tu restaurante.');
-        setBotonEstado('ya-activo');
-        return;
-      }
-
-      setBotonEstado('checkout', {
-        label: subs && subs.status === 'canceled' ? 'Reactivar plan' : 'Empezar prueba gratuita',
-      });
-    });
-
-    // ─── Click del botón principal ────────────────────────────────────────
-    mainBtn.addEventListener('click', async () => {
-      if (estadoBotón === 'login') {
-        mainBtn.disabled = true;
-        mainBtnLabel.textContent = 'Conectando…';
-        try {
-          await loginConGoogle();
-        } catch (e) {
-          showToast('No se pudo iniciar sesión con Google. Inténtalo de nuevo.');
-          setBotonEstado('login');
-        }
-        return;
-      }
-
-      if (estadoBotón === 'no-autorizado') {
-        await signOut(auth);
-        return;
-      }
-
-      if (estadoBotón === 'ya-activo') {
-        window.location.href = `${APP_API_BASE}/panel.html`;
-        return;
-      }
-
-      if (estadoBotón === 'checkout') {
-        if (!usuarioActual || !restaurantIdResuelto) return;
-        const original = mainBtn.innerHTML;
-        mainBtn.disabled = true;
-        mainBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Un momento…';
-        try {
-          const idToken = await usuarioActual.getIdToken();
-          const url = await llamarCheckout(restaurantIdResuelto, idToken);
-          window.location.href = url;
-        } catch (e) {
-          showToast('Error: ' + (e.message || 'no se pudo iniciar el pago'));
-          mainBtn.disabled = false;
-          mainBtn.innerHTML = original;
-        }
-      }
-    });
-
-    // Banner si se vuelve aquí con ?checkout=cancel (por si en el futuro se
-    // enlaza cancel_url a esta página en vez de a panel.html).
-    if (searchParams.get('checkout') === 'cancel') {
-      showToast('Pago cancelado. Puedes suscribirte cuando quieras.');
-    }
-  </script>
-
-</body>
-</html>
+// api/helpers.js
+// Utilidades compartidas por las funciones serverless de Stripe.
+
+/**
+ * Lee el body de la petición como Buffer crudo.
+ * Necesario porque en Vercel Serverless Functions (no Next.js) no hay
+ * bodyParser automático, y el webhook de Stripe necesita el body sin
+ * procesar para verificar la firma.
+ */
+function getRawBody(req) {
+  if (Buffer.isBuffer(req.rawBody)) return Promise.resolve(req.rawBody);
+  if (typeof req.rawBody === 'string') return Promise.resolve(Buffer.from(req.rawBody, 'utf8'));
+  if (Buffer.isBuffer(req.body)) return Promise.resolve(req.body);
+  if (typeof req.body === 'string') return Promise.resolve(Buffer.from(req.body, 'utf8'));
+
+  return new Promise((resolve, reject) => {
+    const chunks = [];
+    req.on('data', (chunk) => chunks.push(chunk));
+    req.on('end', () => resolve(Buffer.concat(chunks)));
+    req.on('error', reject);
+  });
+}
+
+/**
+ * Lee y parsea el body como JSON. Lanza un error con statusCode 400 si el
+ * JSON es inválido.
+ */
+async function readJsonBody(req) {
+  if (req.body && typeof req.body === 'object' && !Buffer.isBuffer(req.body)) return req.body;
+
+  const raw = await getRawBody(req);
+  if (!raw || raw.length === 0) return {};
+  try {
+    return JSON.parse(raw.toString('utf8'));
+  } catch (err) {
+    const e = new Error('JSON inválido en el cuerpo de la petición');
+    e.statusCode = 400;
+    throw e;
+  }
+}
+
+/**
+ * Verifica el ID token de Firebase enviado en el header
+ * "Authorization: Bearer <token>" y comprueba que el usuario autenticado
+ * pertenece realmente al restaurantId que está pidiendo. Así evitamos que
+ * un usuario pueda crear sesiones de Checkout/Portal para el restaurante
+ * de otra persona.
+ *
+ * Lanza un error con `statusCode` (401/403/400) si algo falla.
+ * Devuelve el decoded token de Firebase si todo es correcto.
+ */
+async function verificarUsuarioRestaurante(req, admin, restaurantId) {
+  const authHeader = req.headers['authorization'] || '';
+  const idToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7).trim() : null;
+
+  if (!idToken) {
+    const e = new Error('No autenticado: falta el token de Firebase');
+    e.statusCode = 401;
+    throw e;
+  }
+
+  if (!restaurantId) {
+    const e = new Error('restaurantId requerido');
+    e.statusCode = 400;
+    throw e;
+  }
+
+  let decoded;
+  try {
+    decoded = await admin.auth().verifyIdToken(idToken);
+  } catch (err) {
+    const e = new Error('Token inválido o expirado');
+    e.statusCode = 401;
+    throw e;
+  }
+
+  const snap = await admin.database().ref(`usuarios/${decoded.uid}/restaurantId`).get();
+  const miRestaurantId = snap.exists() ? snap.val() : null;
+
+  if (!miRestaurantId || miRestaurantId !== restaurantId) {
+    const e = new Error('No tienes permiso sobre este restaurante');
+    e.statusCode = 403;
+    throw e;
+  }
+
+  return decoded;
+}
+
+// Orígenes permitidos a llamar a estos endpoints vía fetch() desde el
+// navegador. Incluye la propia app y la página externa de planes
+// (tecnologiasonix.com/planes/camarero/), que es la que ahora inicia el
+// checkout de Stripe cuando el usuario pulsa "pagar" en ella.
+const ALLOWED_CORS_ORIGINS = [
+  'https://tecnologiasonix.com',
+  'https://www.tecnologiasonix.com',
+];
+
+/**
+ * Aplica las cabeceras CORS necesarias para que la página externa de
+ * planes pueda llamar a este endpoint desde el navegador del usuario, y
+ * responde directamente a las peticiones preflight (OPTIONS).
+ *
+ * Devuelve `true` si ya se ha respondido a la petición (era un preflight
+ * OPTIONS) y el handler que llama a esta función debe devolver
+ * inmediatamente sin seguir procesando. Devuelve `false` si debe continuar
+ * con normalidad (GET/POST reales).
+ */
+function aplicarCors(req, res) {
+  const origin = req.headers['origin'];
+  if (origin && ALLOWED_CORS_ORIGINS.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader('Vary', 'Origin');
+  }
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+
+  if (req.method === 'OPTIONS') {
+    res.status(204).end();
+    return true;
+  }
+  return false;
+}
+
+module.exports = { getRawBody, readJsonBody, verificarUsuarioRestaurante, aplicarCors };
