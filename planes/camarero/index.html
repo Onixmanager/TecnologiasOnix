@@ -1,124 +1,380 @@
-// api/helpers.js
-// Utilidades compartidas por las funciones serverless de Stripe.
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1A1A18">
 
-/**
- * Lee el body de la petición como Buffer crudo.
- * Necesario porque en Vercel Serverless Functions (no Next.js) no hay
- * bodyParser automático, y el webhook de Stripe necesita el body sin
- * procesar para verificar la firma.
- */
-function getRawBody(req) {
-  if (Buffer.isBuffer(req.rawBody)) return Promise.resolve(req.rawBody);
-  if (typeof req.rawBody === 'string') return Promise.resolve(Buffer.from(req.rawBody, 'utf8'));
-  if (Buffer.isBuffer(req.body)) return Promise.resolve(req.body);
-  if (typeof req.body === 'string') return Promise.resolve(Buffer.from(req.body, 'utf8'));
+  <title>Planes y Precios – Camarero Digital</title>
+  <meta name="description" content="Elige el plan de Camarero Digital: 14 días de prueba gratuita y después 29,99 €/mes, sin permanencia. Carta digital QR y pedidos online para tu restaurante.">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://tecnologiasonix.com/planes/camarero/index.html">
 
-  return new Promise((resolve, reject) => {
-    const chunks = [];
-    req.on('data', (chunk) => chunks.push(chunk));
-    req.on('end', () => resolve(Buffer.concat(chunks)));
-    req.on('error', reject);
-  });
-}
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Camarero Digital">
+  <meta property="og:locale" content="es_ES">
+  <meta property="og:url" content="https://tecnologiasonix.com/planes/camarero/index.html">
+  <meta property="og:title" content="Planes y Precios – Camarero Digital">
+  <meta property="og:description" content="14 días de prueba gratuita y después 29,99 €/mes, sin permanencia. Carta digital QR y pedidos online para tu restaurante.">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="Planes y Precios – Camarero Digital">
+  <meta name="twitter:description" content="14 días de prueba gratuita y después 29,99 €/mes, sin permanencia.">
 
-/**
- * Lee y parsea el body como JSON. Lanza un error con statusCode 400 si el
- * JSON es inválido.
- */
-async function readJsonBody(req) {
-  if (req.body && typeof req.body === 'object' && !Buffer.isBuffer(req.body)) return req.body;
+  <link rel="icon" type="image/png" href="data:image/png;base64,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">
 
-  const raw = await getRawBody(req);
-  if (!raw || raw.length === 0) return {};
-  try {
-    return JSON.parse(raw.toString('utf8'));
-  } catch (err) {
-    const e = new Error('JSON inválido en el cuerpo de la petición');
-    e.statusCode = 400;
-    throw e;
-  }
-}
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Mulish:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css" rel="stylesheet">
 
-/**
- * Verifica el ID token de Firebase enviado en el header
- * "Authorization: Bearer <token>" y comprueba que el usuario autenticado
- * pertenece realmente al restaurantId que está pidiendo. Así evitamos que
- * un usuario pueda crear sesiones de Checkout/Portal para el restaurante
- * de otra persona.
- *
- * Lanza un error con `statusCode` (401/403/400) si algo falla.
- * Devuelve el decoded token de Firebase si todo es correcto.
- */
-async function verificarUsuarioRestaurante(req, admin, restaurantId) {
-  const authHeader = req.headers['authorization'] || '';
-  const idToken = authHeader.startsWith('Bearer ') ? authHeader.slice(7).trim() : null;
+  <!--
+    Página pública e independiente de la app (vive en otro repo/dominio:
+    tecnologiasonix.com/planes/camarero/). Aquí, y solo aquí, se muestra la
+    información comercial del plan (precio, condiciones) y el botón que
+    inicia el pago con Stripe. Dentro de la app (panel.html) el flujo normal
+    de "Gestionar suscripción" sigue usando su propio backend autenticado
+    (Firebase + /api/create-checkout-session); esta página es la puerta de
+    entrada pública para quien todavía no tiene cuenta, y el enlace al que
+    remite el Aviso Legal / avisos de pago externo.
+  -->
 
-  if (!idToken) {
-    const e = new Error('No autenticado: falta el token de Firebase');
-    e.statusCode = 401;
-    throw e;
-  }
+  <style>
+    :root{
+      --bg:#F4F2EE; --surface:#FFFFFF; --surface2:#F9F8F6;
+      --border:#E5E2DC; --ink:#1A1A18; --ink-muted:#7A7870; --ink-dim:#BEBAB2;
+      --gold:#C9A84C; --gold-deep:#9C7F33; --success:#2D9B6F;
+      --radius:16px; --radius-sm:8px;
+      --shadow:0 1px 3px rgba(0,0,0,0.08),0 4px 16px rgba(0,0,0,0.06);
+      --shadow-lg:0 16px 48px rgba(0,0,0,0.14);
+    }
+    *,*::before,*::after{ margin:0; padding:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; }
+    html{ scroll-behavior:smooth; }
+    body{ font-family:'Mulish',sans-serif; background:var(--bg); color:var(--ink); overflow-x:hidden; min-height:100vh; display:flex; flex-direction:column; }
+    a{ color:inherit; text-decoration:none; }
 
-  if (!restaurantId) {
-    const e = new Error('restaurantId requerido');
-    e.statusCode = 400;
-    throw e;
-  }
+    nav{ display:flex; align-items:center; justify-content:space-between; padding:18px 24px; background:rgba(244,242,238,0.85); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); position:sticky; top:0; z-index:50; }
+    .brand{ display:flex; align-items:center; gap:10px; font-family:'Syne',sans-serif; font-weight:800; font-size:1.05rem; letter-spacing:-0.01em; }
+    .brand-icon{ width:34px; height:34px; border-radius:10px; background:var(--ink); display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .brand-icon img{ width:26px; height:26px; object-fit:contain; mix-blend-mode:screen; filter:invert(1); }
+    .btn-back{ display:inline-flex; align-items:center; gap:7px; font-size:0.83rem; font-weight:700; color:var(--ink-muted); padding:9px 16px; border-radius:999px; border:1.5px solid var(--border); background:transparent; cursor:pointer; transition:color 0.2s ease, border-color 0.2s ease; }
+    .btn-back:hover{ color:var(--ink); border-color:var(--ink-dim); }
 
-  let decoded;
-  try {
-    decoded = await admin.auth().verifyIdToken(idToken);
-  } catch (err) {
-    const e = new Error('Token inválido o expirado');
-    e.statusCode = 401;
-    throw e;
-  }
+    main{ flex:1; }
+    .plans-wrap{ max-width:980px; margin:0 auto; padding:56px 24px 40px; }
 
-  const snap = await admin.database().ref(`usuarios/${decoded.uid}/restaurantId`).get();
-  const miRestaurantId = snap.exists() ? snap.val() : null;
+    .plans-head{ text-align:center; max-width:600px; margin:0 auto 48px; }
+    .eyebrow{ display:inline-flex; align-items:center; gap:8px; font-size:0.78rem; font-weight:700; letter-spacing:0.08em; text-transform:uppercase; color:var(--gold-deep); background:rgba(201,168,76,0.12); padding:7px 14px; border-radius:999px; margin-bottom:18px; }
+    .plans-head h1{ font-family:'Syne',sans-serif; font-weight:800; font-size:clamp(1.9rem,4vw,2.6rem); letter-spacing:-0.02em; line-height:1.1; margin-bottom:14px; }
+    .plans-head p{ font-size:1rem; color:var(--ink-muted); line-height:1.6; }
 
-  if (!miRestaurantId || miRestaurantId !== restaurantId) {
-    const e = new Error('No tienes permiso sobre este restaurante');
-    e.statusCode = 403;
-    throw e;
-  }
+    .plans-grid{ display:grid; grid-template-columns:1.15fr 0.85fr; gap:24px; align-items:start; }
+    @media (max-width:760px){ .plans-grid{ grid-template-columns:1fr; } }
 
-  return decoded;
-}
+    .plan-card{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius); padding:36px 32px; position:relative; }
+    .plan-card.pro{ border:1.5px solid var(--gold); box-shadow:var(--shadow-lg); }
+    .plan-tag{ position:absolute; top:-13px; left:32px; background:var(--ink); color:#fff; font-family:'Syne',sans-serif; font-size:0.72rem; font-weight:700; letter-spacing:0.03em; padding:6px 14px; border-radius:999px; }
 
-// Orígenes permitidos a llamar a estos endpoints vía fetch() desde el
-// navegador. Incluye la propia app y la página externa de planes
-// (tecnologiasonix.com/planes/camarero/), que es la que ahora inicia el
-// checkout de Stripe cuando el usuario pulsa "pagar" en ella.
-const ALLOWED_CORS_ORIGINS = [
-  'https://tecnologiasonix.com',
-  'https://www.tecnologiasonix.com',
-];
+    .plan-name{ font-size:0.85rem; font-weight:700; color:var(--ink-muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:10px; }
+    .plan-price{ display:flex; align-items:flex-end; gap:6px; margin-bottom:6px; }
+    .plan-price .amount{ font-family:'Syne',sans-serif; font-weight:800; font-size:2.7rem; letter-spacing:-0.02em; }
+    .plan-price .period{ color:var(--ink-dim); font-size:0.92rem; padding-bottom:6px; }
+    .plan-note{ font-size:0.82rem; color:var(--ink-dim); margin-bottom:26px; }
 
-/**
- * Aplica las cabeceras CORS necesarias para que la página externa de
- * planes pueda llamar a este endpoint desde el navegador del usuario, y
- * responde directamente a las peticiones preflight (OPTIONS).
- *
- * Devuelve `true` si ya se ha respondido a la petición (era un preflight
- * OPTIONS) y el handler que llama a esta función debe devolver
- * inmediatamente sin seguir procesando. Devuelve `false` si debe continuar
- * con normalidad (GET/POST reales).
- */
-function aplicarCors(req, res) {
-  const origin = req.headers['origin'];
-  if (origin && ALLOWED_CORS_ORIGINS.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
-    res.setHeader('Vary', 'Origin');
-  }
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    .plan-features{ list-style:none; margin-bottom:28px; display:flex; flex-direction:column; gap:12px; }
+    .plan-features li{ display:flex; align-items:flex-start; gap:10px; font-size:0.9rem; color:var(--ink); line-height:1.4; }
+    .plan-features li i{ color:var(--success); font-size:0.9rem; margin-top:2px; flex-shrink:0; }
 
-  if (req.method === 'OPTIONS') {
-    res.status(204).end();
-    return true;
-  }
-  return false;
-}
+    .btn{ display:inline-flex; align-items:center; justify-content:center; gap:10px; width:100%; font-family:'Mulish',sans-serif; font-weight:700; font-size:0.95rem; padding:15px 22px; border-radius:999px; border:none; cursor:pointer; transition:transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease; }
+    .btn-primary{ background:var(--ink); color:#fff; box-shadow:var(--shadow); }
+    .btn-primary:hover{ transform:translateY(-1px); box-shadow:var(--shadow-lg); }
+    .btn-primary:disabled{ opacity:0.6; cursor:default; transform:none; }
+    .btn-ghost{ background:var(--surface2); color:var(--ink); border:1px solid var(--border); }
+    .btn-ghost:hover{ border-color:var(--ink-dim); }
 
-module.exports = { getRawBody, readJsonBody, verificarUsuarioRestaurante, aplicarCors };
+    .plan-fineprint{ text-align:center; font-size:0.78rem; color:var(--ink-dim); margin-top:14px; }
+    .plan-fineprint i{ margin-right:4px; }
+
+    .plan-card.alt{ background:var(--surface2); }
+    .alt-title{ font-family:'Syne',sans-serif; font-weight:800; font-size:1.25rem; margin-bottom:8px; letter-spacing:-0.01em; }
+    .alt-desc{ font-size:0.88rem; color:var(--ink-muted); line-height:1.6; margin-bottom:24px; }
+    .alt-actions{ display:flex; flex-direction:column; gap:10px; }
+
+    .trust-row{ display:flex; align-items:center; justify-content:center; gap:22px; flex-wrap:wrap; margin-top:44px; padding-top:28px; border-top:1px solid var(--border); }
+    .trust-item{ display:flex; align-items:center; gap:8px; font-size:0.8rem; color:var(--ink-muted); font-weight:600; }
+    .trust-item i{ color:var(--gold-deep); }
+
+    .faq{ max-width:720px; margin:56px auto 0; }
+    .faq h2{ font-family:'Syne',sans-serif; font-weight:800; font-size:1.3rem; text-align:center; margin-bottom:26px; letter-spacing:-0.01em; }
+    .faq-item{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-sm); padding:18px 20px; margin-bottom:10px; }
+    .faq-item h3{ font-family:'Syne',sans-serif; font-size:0.92rem; font-weight:700; margin-bottom:6px; }
+    .faq-item p{ font-size:0.87rem; color:var(--ink-muted); line-height:1.6; }
+
+    #toast{ position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(20px); background:var(--ink); color:#fff; padding:13px 22px; border-radius:999px; font-size:0.85rem; font-weight:600; box-shadow:var(--shadow-lg); opacity:0; pointer-events:none; transition:opacity 0.25s ease, transform 0.25s ease; z-index:200; max-width:90vw; text-align:center; }
+    #toast.show{ opacity:1; transform:translateX(-50%) translateY(0); }
+
+    /* Modal aviso de pago externo (paridad con panel.html dentro de la TWA de Android) */
+    #extPayOv{ position:fixed; inset:0; background:rgba(10,10,8,.9); backdrop-filter:blur(12px); -webkit-backdrop-filter:blur(12px); z-index:1000; display:none; align-items:center; justify-content:center; padding:24px; }
+    #extPayOv.show{ display:flex; }
+    #extPayCard{ background:#fff; border-radius:20px; padding:36px 32px; max-width:400px; width:100%; text-align:center; box-shadow:0 32px 80px rgba(0,0,0,.5); }
+    #extPayIco{ width:52px; height:52px; border-radius:16px; background:var(--ink); display:flex; align-items:center; justify-content:center; margin:0 auto 16px; color:var(--gold); font-size:1.25rem; }
+    #extPayTitle{ font-family:'Syne',sans-serif; font-weight:800; font-size:1.2rem; color:var(--ink); margin-bottom:10px; letter-spacing:-.01em; line-height:1.3; }
+    #extPayDesc{ font-size:.86rem; color:var(--ink-muted); line-height:1.6; margin-bottom:24px; }
+    #extPayBtns{ display:flex; flex-direction:column; gap:10px; }
+    #extPayGo{ padding:14px 24px; border-radius:999px; border:none; background:var(--ink); color:#fff; font-family:'Syne',sans-serif; font-size:.9rem; font-weight:700; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; }
+    #extPayCancel{ padding:12px 24px; border-radius:999px; border:none; background:none; color:var(--ink-muted); font-size:.85rem; cursor:pointer; text-decoration:underline; }
+
+    footer{ border-top:1px solid var(--border); background:var(--surface); }
+    .footer-inner{ max-width:1120px; margin:0 auto; padding:28px 24px; display:flex; flex-direction:column; align-items:center; gap:14px; }
+    .footer-brand{ display:flex; align-items:center; gap:9px; font-family:'Syne',sans-serif; font-weight:800; font-size:0.88rem; color:var(--ink); }
+    .footer-brand-icon{ width:24px; height:24px; border-radius:6px; background:var(--ink); display:flex; align-items:center; justify-content:center; overflow:hidden; }
+    .footer-brand-icon img{ width:17px; height:17px; object-fit:contain; mix-blend-mode:screen; filter:invert(1); }
+    .footer-links{ display:flex; align-items:center; gap:2px; flex-wrap:wrap; justify-content:center; }
+    .footer-links a{ font-size:0.78rem; font-weight:600; color:var(--ink-muted); padding:4px 9px; border-radius:999px; transition:color 0.2s ease, background 0.2s ease; }
+    .footer-links a:hover{ color:var(--ink); background:var(--surface2); }
+    .footer-dot{ color:var(--ink-dim); font-size:0.78rem; padding:0 2px; }
+    .footer-contact{ display:flex; align-items:center; gap:14px; flex-wrap:wrap; justify-content:center; font-size:0.8rem; color:var(--ink-muted); }
+    .footer-contact a{ display:inline-flex; align-items:center; gap:6px; font-weight:600; }
+    .footer-contact a:hover{ color:var(--ink); }
+    .footer-copy{ font-size:0.73rem; color:var(--ink-dim); text-align:center; line-height:1.7; }
+    .footer-copy a{ color:var(--ink-muted); font-weight:700; transition:color 0.2s ease; }
+    .footer-copy a:hover{ color:var(--ink); }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="brand" href="https://camarero.digital/">
+      <div class="brand-icon"><img src="data:image/png;base64,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" alt="Camarero Digital"></div>
+      Camarero Digital
+    </a>
+    <a class="btn-back" href="https://camarero.digital/"><i class="fas fa-arrow-left"></i> Volver a la web</a>
+  </nav>
+
+  <main>
+    <div class="plans-wrap">
+
+      <div class="plans-head">
+        <div class="eyebrow"><i class="fas fa-crown"></i> Planes</div>
+        <h1>Elige tu plan de Camarero Digital</h1>
+        <p>Carta digital QR y pedidos online para tu restaurante. Empieza con 14 días de prueba gratuita, sin tarjeta.</p>
+      </div>
+
+      <div class="plans-grid">
+
+        <!-- Plan Pro (mensual, Stripe) -->
+        <div class="plan-card pro">
+          <div class="plan-tag"><i class="fas fa-star"></i> Recomendado</div>
+          <div class="plan-name">Camarero Digital Pro</div>
+          <div class="plan-price">
+            <span class="amount">29,99&nbsp;€</span>
+            <span class="period">/ mes</span>
+          </div>
+          <p class="plan-note">14 días de prueba gratuita · Sin permanencia · Cancela cuando quieras</p>
+
+          <ul class="plan-features" id="proFeatures"></ul>
+
+          <button type="button" id="stripeBtn" class="btn btn-primary">
+            <i class="fas fa-rocket"></i> <span id="stripeBtnLabel">Empezar prueba gratuita</span>
+          </button>
+          <p class="plan-fineprint"><i class="fas fa-lock"></i>Pago seguro procesado por Stripe</p>
+        </div>
+
+        <!-- Configuración a medida / contacto -->
+        <div class="plan-card alt">
+          <div class="alt-title">¿Prefieres que lo configuremos nosotros?</div>
+          <p class="alt-desc">Ofrecemos un servicio de configuración completa a cargo de nuestro equipo (carta, mesas, QR e instalación de NFC), con un coste adicional según el tipo de instalación. También somos tu soporte si necesitas ayuda después de empezar.</p>
+          <div class="alt-actions">
+            <a href="mailto:info@tecnologiasonix.com" class="btn btn-ghost"><i class="fas fa-envelope"></i> info@tecnologiasonix.com</a>
+            <a href="https://wa.me/34643229507" target="_blank" rel="noopener noreferrer" class="btn btn-ghost"><i class="fab fa-whatsapp"></i> WhatsApp +34 643 22 95 07</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="trust-row">
+        <div class="trust-item"><i class="fas fa-shield-halved"></i> Pago seguro con Stripe</div>
+        <div class="trust-item"><i class="fas fa-rotate-left"></i> Cancela cuando quieras</div>
+        <div class="trust-item"><i class="fas fa-headset"></i> Soporte incluido</div>
+      </div>
+
+      <div class="faq">
+        <h2>Preguntas frecuentes</h2>
+        <div class="faq-item">
+          <h3>¿Qué pasa cuando termina la prueba gratuita?</h3>
+          <p>A los 14 días, si no cancelas antes, se activa la suscripción mensual de 29,99 €. Puedes cancelar en cualquier momento desde el panel de tu restaurante, sin permanencia ni penalización.</p>
+        </div>
+        <div class="faq-item">
+          <h3>¿Dónde gestiono mi suscripción una vez contratada?</h3>
+          <p>Desde el panel de administración de tu restaurante, en el apartado de suscripción, puedes actualizar tu método de pago, ver tus facturas o cancelar el plan cuando quieras.</p>
+        </div>
+        <div class="faq-item">
+          <h3>¿Cómo se procesa el pago?</h3>
+          <p>A través de Stripe, una pasarela de pago externa. Camarero Digital / Tecnologías Onix no almacena los datos de tu tarjeta en ningún momento.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="footer-brand-icon"><img src="data:image/png;base64,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" alt=""></div>
+        Camarero Digital
+      </div>
+      <nav class="footer-links" aria-label="Legal">
+        <a href="https://camarero.digital/aviso-legal.html">Aviso legal</a>
+        <span class="footer-dot" aria-hidden="true">·</span>
+        <a href="https://camarero.digital/privacidad.html">Privacidad</a>
+        <span class="footer-dot" aria-hidden="true">·</span>
+        <a href="https://camarero.digital/terminos.html">Términos de uso</a>
+      </nav>
+      <div class="footer-contact">
+        <a href="mailto:info@tecnologiasonix.com"><i class="fas fa-envelope"></i>info@tecnologiasonix.com</a>
+        <span class="footer-dot" aria-hidden="true">·</span>
+        <a href="https://wa.me/34643229507"><i class="fab fa-whatsapp"></i>+34 643 22 95 07</a>
+      </div>
+      <p class="footer-copy">
+        © <span id="year"></span> Camarero Digital &nbsp;·&nbsp;
+        Un producto de <a href="https://tecnologiasonix.com" target="_blank" rel="noopener noreferrer">Tecnologías Onix</a>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Modal de aviso de pago externo (paridad con panel.html dentro de la app instalada / TWA) -->
+  <div id="extPayOv">
+    <div id="extPayCard">
+      <div id="extPayIco"><i class="fas fa-arrow-up-right-from-square"></i></div>
+      <h2 id="extPayTitle">Vas a continuar en Stripe</h2>
+      <p id="extPayDesc">El pago se gestiona de forma segura en una pestaña externa, con Stripe como procesador de pagos. Al continuar se abrirá esa pestaña.</p>
+      <div id="extPayBtns">
+        <button id="extPayGo" type="button"><i class="fas fa-arrow-up-right-from-square"></i> Continuar al pago</button>
+        <button id="extPayCancel" type="button">Cancelar</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+
+  <script>
+    // =========================================================================
+    // CONFIGURACIÓN — sustituye por tu Payment Link real de Stripe.
+    //
+    // Crea el Payment Link en el Dashboard de Stripe (Payment Links → New)
+    // para el precio de 29,99 €/mes en modo suscripción, con periodo de
+    // prueba de 14 días configurado en el propio Price/Payment Link.
+    // Pega aquí la URL que te da Stripe (empieza por https://buy.stripe.com/...).
+    // =========================================================================
+    const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/PON_TU_PAYMENT_LINK_AQUI';
+
+    // Mismas features que se muestran en panel.html → "¿Qué incluye el plan Pro?"
+    const PRO_FEATURES = [
+      'Carta digital QR ilimitada para todas tus mesas',
+      'Pedidos en tiempo real con notificaciones sonoras',
+      'Panel de administración completo',
+      'Equipo ilimitado con roles (Admin / Recepción)',
+      'Página de recepción de comandas para cocina/barra',
+      'Soporte prioritario incluido',
+    ];
+
+    const featuresList = document.getElementById('proFeatures');
+    PRO_FEATURES.forEach((f) => {
+      const li = document.createElement('li');
+      li.innerHTML = `<i class="fas fa-circle-check"></i><span>${f}</span>`;
+      featuresList.appendChild(li);
+    });
+
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      clearTimeout(window._toastTimer);
+      window._toastTimer = setTimeout(() => t.classList.remove('show'), 3800);
+    }
+
+    // buildStripeUrl(paymentLink, restaurantId) — añade client_reference_id
+    // para poder identificar qué restaurante ha pagado desde el webhook de
+    // Stripe (api/webhook.js), igual que hace panel.html vía
+    // create-checkout-session.js con client_reference_id: restaurantId.
+    function buildStripeUrl(paymentLink, restaurantId) {
+      if (!paymentLink) return paymentLink;
+      if (!restaurantId) return paymentLink;
+      const separator = paymentLink.includes('?') ? '&' : '?';
+      return `${paymentLink}${separator}client_reference_id=${encodeURIComponent(restaurantId)}`;
+    }
+
+    // corriendoEnGooglePlayTWA() — misma detección que en app.js: si el
+    // "referrer" con el que Android abrió la página es "android-app://...",
+    // significa que se abrió desde la app instalada (TWA), no desde un
+    // navegador normal.
+    const TWA_PACKAGE_NAME = 'com.tecnologiasonix.camarero.twa';
+    function corriendoEnGooglePlayTWA() {
+      const referrer = document.referrer || '';
+      return referrer.startsWith(`android-app://${TWA_PACKAGE_NAME}`);
+    }
+
+    function mostrarAvisoPagoExterno() {
+      return new Promise((resolve) => {
+        const ov = document.getElementById('extPayOv');
+        ov.classList.add('show');
+        const cerrar = (resultado) => {
+          ov.classList.remove('show');
+          resolve(resultado);
+        };
+        document.getElementById('extPayGo').onclick = () => cerrar(true);
+        document.getElementById('extPayCancel').onclick = () => cerrar(false);
+      });
+    }
+
+    // abrirPagoExterno(url) — misma lógica que abrirPagoExterno() en app.js:
+    // navegador normal → misma pestaña; dentro de la TWA de Android →
+    // aviso previo + apertura en pestaña externa (política de Google Play
+    // sobre sistemas de facturación externos).
+    async function abrirPagoExterno(url) {
+      if (!corriendoEnGooglePlayTWA()) {
+        window.location.href = url;
+        return;
+      }
+      const confirmado = await mostrarAvisoPagoExterno();
+      if (!confirmado) return;
+      const nuevaVentana = window.open(url, '_blank', 'noopener');
+      if (!nuevaVentana) window.location.href = url;
+    }
+
+    const searchParams = new URLSearchParams(window.location.search);
+    const restaurantId = searchParams.get('restaurantId') || searchParams.get('tenantId');
+    const stripeBtn = document.getElementById('stripeBtn');
+    const stripeBtnLabel = document.getElementById('stripeBtnLabel');
+
+    if (restaurantId) {
+      stripeBtnLabel.textContent = 'Continuar con Stripe';
+      stripeBtn.querySelector('i').className = 'fas fa-credit-card';
+    }
+
+    stripeBtn.addEventListener('click', async () => {
+      if (!STRIPE_PAYMENT_LINK || STRIPE_PAYMENT_LINK.includes('PON_TU_PAYMENT_LINK_AQUI')) {
+        showToast('Falta configurar el enlace de pago de Stripe en esta página.');
+        return;
+      }
+      const original = stripeBtn.innerHTML;
+      stripeBtn.disabled = true;
+      stripeBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Un momento…';
+      try {
+        const url = buildStripeUrl(STRIPE_PAYMENT_LINK, restaurantId);
+        await abrirPagoExterno(url);
+      } finally {
+        stripeBtn.disabled = false;
+        stripeBtn.innerHTML = original;
+      }
+    });
+
+    // Banner si Stripe redirige de vuelta con ?checkout=cancel (por si en el
+    // futuro se enlaza cancel_url del Payment Link a esta misma página).
+    const checkoutParam = searchParams.get('checkout');
+    if (checkoutParam === 'cancel') {
+      showToast('Pago cancelado. Puedes suscribirte cuando quieras.');
+    }
+  </script>
+
+</body>
+</html>
